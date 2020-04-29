@@ -1,0 +1,26 @@
+{
+  "name": "covid_royale",
+  "version": "1.0.0",
+  "description": "Online Multiplayer Game to spread awareness about COVID-19",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blakezik/covid_royale.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Blakezik/covid_royale/issues"
+  },
+  "homepage": "https://github.com/Blakezik/covid_royale#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3",
+    "phaser": "^3.23.0",
+    "socket.io": "^2.3.0"
+  }
+}
