@@ -15,7 +15,7 @@ const config = {
     } 
   };
 
-
+this.socket = io();
 const game = new Phaser.Game(config);
 
 function preload() {}
