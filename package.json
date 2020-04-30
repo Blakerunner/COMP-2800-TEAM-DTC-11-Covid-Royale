@@ -1,34 +1,29 @@
 {
-  "name": "covid_royale",
+  "name": "comp-2800-team-dtc-11-covid-royale",
   "version": "1.0.0",
   "description": "Online Multiplayer Game to spread awareness about COVID-19",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "open-cli http://localhost:3000 & nodemon server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Blakezik/covid_royale.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Blakezik/covid_royale/issues"
-  },
-  "homepage": "https://github.com/Blakezik/covid_royale#readme",
+  "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "nodemon": "^2.0.3",
-    "open-cli": "^6.0.1",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "phaser": "^3.23.0",
-    "socket.io": "^2.3.0",
-    "typescript": "^3.8.3"
-  }
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blakezik/COMP-2800-TEAM-DTC-11-Covid-Royale.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Blakezik/COMP-2800-TEAM-DTC-11-Covid-Royale/issues"
+  },
+  "homepage": "https://github.com/Blakezik/COMP-2800-TEAM-DTC-11-Covid-Royale#readme"
 }
