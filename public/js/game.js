@@ -27,15 +27,17 @@ function preload() {
 }
 
 function create() {
-
+  
   // CAMERA SETUP
     // 1600x1600 for current tilemap size
     this.cameras.main.setBounds(0, 0, 800, 800);
-    this.cameras.main.setZoom(2);
+    this.cameras.main.setZoom(2.5);
     this.cameras.main.centerOn(400, 300);
     this.cameras.roundPixels = true;
 
     // MAP SETUP
+    // set game world boundary
+    // game.world.setBounds(0, 0, 800, 800);
 
     // generated tiled map
     const map = this.add.tilemap("map");
@@ -103,8 +105,14 @@ function create() {
     });
 
     function addPlayer(self, playerInfo) {
+      // generate 
       self.player = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       self.player.setCollideWorldBounds(true);
+
+      // set camera to follow player
+      self.cameras.main.startFollow(self.player);
+
+      // Player Animations
 
       self.anims.create({
           key: 'walkDown',
@@ -118,6 +126,59 @@ function create() {
             zeroPad: 2
           })
       });
+
+      self.anims.create({
+          key: 'walkUp',
+          repeat: -1,
+          frameRate: 10,
+          frames: self.anims.generateFrameNames("character", {
+            prefix: "character_",
+            suffix: ".png",
+            start: 20,
+            end: 23,
+            zeroPad: 2
+          })
+      });
+
+      self.anims.create({
+          key: 'walkLeft',
+          repeat: -1,
+          frameRate: 10,
+          frames: self.anims.generateFrameNames("character", {
+            prefix: "character_",
+            suffix: ".png",
+            start: 28,
+            end: 31,
+            zeroPad: 2
+          })
+      });
+
+      self.anims.create({
+        key: 'walkRight',
+        repeat: -1,
+        frameRate: 10,
+        frames: self.anims.generateFrameNames("character", {
+          prefix: "character_",
+          suffix: ".png",
+          start: 9,
+          end: 12,
+          zeroPad: 2
+        })
+      });
+
+      self.anims.create({
+        key: 'stand',
+        repeat: -1,
+        frameRate: 10,
+        frames: self.anims.generateFrameNames("character", {
+          prefix: "character_",
+          suffix: ".png",
+          start: 28,
+          end: 31,
+          zeroPad: 2
+        })
+      });
+
     }
 
     function addOtherPlayers(self, playerInfo) {
@@ -131,6 +192,7 @@ function create() {
     self.cursors = this.input.keyboard.createCursorKeys();
 
     // TESTING
+    
   }
 
 function update() {
@@ -166,7 +228,7 @@ function update() {
       else {
         this.player.setVelocityX(0);
         this.player.setVelocityY(0);
-        this.player.anims.play('stand');
+        // this.player.anims.play('stand');
       }
 
       // emit player movement
