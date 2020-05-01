@@ -33,6 +33,13 @@ function preload() {
     this.load.tilemapTiledJSON("top_skirt", "./assets/maps/map_skirts/top_skirt.json");
     this.load.tilemapTiledJSON("chunk1", "./assets/maps/map_chunks/chunk1.json");
     this.load.tilemapTiledJSON("chunk2", "./assets/maps/map_chunks/chunk2.json");
+    this.load.tilemapTiledJSON("chunk3", "./assets/maps/map_chunks/chunk3.json");
+    this.load.tilemapTiledJSON("chunk4", "./assets/maps/map_chunks/chunk4.json");
+    this.load.tilemapTiledJSON("chunk5", "./assets/maps/map_chunks/chunk5.json");
+    this.load.tilemapTiledJSON("chunk6", "./assets/maps/map_chunks/chunk6.json");
+    this.load.tilemapTiledJSON("chunk7", "./assets/maps/map_chunks/chunk7.json");
+    this.load.tilemapTiledJSON("chunk8", "./assets/maps/map_chunks/chunk8.json");
+    this.load.tilemapTiledJSON("chunk9", "./assets/maps/map_chunks/chunk9.json");
     this.load.atlas("character", "./assets/img/characterSprites.png", "./assets/img/characterSprites.json");
 }
 
@@ -60,6 +67,14 @@ function create() {
     const bottom_skirt = this.add.tilemap("bottom_skirt");
     const chunk1 = this.add.tilemap("chunk1");
     const chunk2 = this.add.tilemap("chunk2");
+    const chunk3 = this.add.tilemap("chunk3");
+    const chunk4 = this.add.tilemap("chunk4");
+    const chunk5 = this.add.tilemap("chunk5");
+    const chunk6 = this.add.tilemap("chunk6");
+    const chunk7 = this.add.tilemap("chunk7");
+    const chunk8 = this.add.tilemap("chunk8");
+    const chunk9 = this.add.tilemap("chunk9");
+    //I think these can be heavily condensed to only one for the overworld and one for the objects
     const top_left_skirt_overworld = top_left_skirt.addTilesetImage("overworld");
     const top_right_skirt_overworld = top_right_skirt.addTilesetImage("overworld");
     const top_skirt_overworld = top_skirt.addTilesetImage("overworld");
@@ -95,10 +110,62 @@ function create() {
     //bottom right corner skirt layer
     const bottom_right_skirt_baseLayer = bottom_right_skirt.createStaticLayer("base", [bottom_right_skirt_overworld], 1040, 1040).setDepth(-2);
 
-    const chunk_array = new Array(chunk1, chunk2)
+    // array filled with chunks
+    const chunk_array = new Array(chunk1, chunk2, chunk3, chunk4, chunk5, chunk6, chunk7, chunk8, chunk9);
 
     //randomly generated layers
-    // var first_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var first_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const first_chunk_top = first_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*0).setDepth(1);
+    const first_chunk_middle = first_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*0).setDepth(-1);
+    const first_chunk_bottom = first_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*0).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(first_chunk), 1);
+
+    var second_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const second_chunk_top = second_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*0).setDepth(1);
+    const second_chunk_middle = second_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*0).setDepth(-1);
+    const second_chunk_bottom = second_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*0).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(second_chunk), 1);
+
+    var third_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const third_chunk_top = third_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*0).setDepth(1);
+    const third_chunk_middle = third_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*0).setDepth(-1);
+    const third_chunk_bottom = third_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*0).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(third_chunk), 1);
+
+    var fourth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const fourth_chunk_top = fourth_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*16).setDepth(1);
+    const fourth_chunk_middle = fourth_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*16).setDepth(-1);
+    const fourth_chunk_bottom = fourth_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*16).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(fourth_chunk), 1);
+
+    var fifth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const fifth_chunk_top = fifth_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*16).setDepth(1);
+    const fifth_chunk_middle = fifth_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*16).setDepth(-1);
+    const fifth_chunk_bottom = fifth_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*16).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(fifth_chunk), 1);
+
+    var sixth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const sixth_chunk_top = sixth_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*16).setDepth(1);
+    const sixth_chunk_middle = sixth_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*16).setDepth(-1);
+    const sixth_chunk_bottom = sixth_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*16).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(sixth_chunk), 1);
+
+    var seventh_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const seventh_chunk_top = seventh_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*32).setDepth(1);
+    const seventh_chunk_middle = seventh_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*32).setDepth(-1);
+    const seventh_chunk_bottom = seventh_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*0, 80 + 30*32).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(seventh_chunk), 1);
+
+    var eighth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const eighth_chunk_top = eighth_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*32).setDepth(1);
+    const eighth_chunk_middle = eighth_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*32).setDepth(-1);
+    const eighth_chunk_bottom = eighth_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*16, 80 + 30*32).setDepth(-2);
+    chunk_array.splice(chunk_array.indexOf(eighth_chunk), 1);
+
+    var ninth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    const ninth_chunk_top = ninth_chunk.createStaticLayer("top", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*32).setDepth(1);
+    const ninth_chunk_middle = ninth_chunk.createStaticLayer("middle", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*32).setDepth(-1);
+    const ninth_chunk_bottom = ninth_chunk.createStaticLayer("base", [chunk1_objects, chunk1_overworld], 80 + 30*32, 80 + 30*32).setDepth(-2);
 
 
     // map collisions
