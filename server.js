@@ -67,7 +67,7 @@ app.get('/', function (req, res) {
 
 //Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
 app.get('/protected.html', isLoggedIn, (req, res)=>{
-  res.sendFile(__dirname + "/protected.html")
+  res.send(`You have been verified by google oauth ${req.session}`)
 });
 
 // socket.io handle for browser connect
@@ -109,6 +109,6 @@ io.on('connection', function (socket) {
   });
 
 // server to listen on port 3000
-server.listen(3000, function () {
+server.listen(8080, function () {
   console.log('Server listening');
 });

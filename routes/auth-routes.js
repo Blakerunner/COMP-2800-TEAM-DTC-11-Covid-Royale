@@ -13,10 +13,11 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/redirected', passport.authenticate('google', {failureRedirect: '/failed'}), (req, res) => {
     // console.log(req.user);
     console.log(req.query);
+    console.log("MARKER");
     console.log(req.user);
-    res.redirect('/protected.html');
+    //res.send(`You have been logged in ${req.user}`);
     // req.session.currentUser = req.user;
-    //res.send(`You have succesfully been logged in via oauth ${req.user.displayName} with id=${req.user.id}`)
+    res.send(`You have succesfully been logged in via oauth ${req.user.displayName} with id=${req.user.id}`)
 
 });
 
