@@ -1,7 +1,7 @@
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1600,
+    height: 1600,
     physics: {
       default: 'arcade',
       arcade: {
@@ -20,18 +20,28 @@ const game = new Phaser.Game(config);
 function preload() {
     
 
-    this.load.image("overworld", "./assets/img/overworld.png")
-    this.load.image("objects", "./assets/img/objects.png")
-    this.load.tilemapTiledJSON("map", "./assets/maps/map.json")
-    this.load.atlas("character", "./assets/img/characterSprites.png", "./assets/img/characterSprites.json")
+    this.load.image("overworld", "./assets/img/overworld.png");
+    this.load.image("objects", "./assets/img/objects.png");
+    // this.load.tilemapTiledJSON("map", "./assets/maps/map.json");
+    this.load.tilemapTiledJSON("bottom_left_skirt", "./assets/maps/map_skirts/bottom_left_skirt.json");
+    this.load.tilemapTiledJSON("bottom_right_skirt", "./assets/maps/map_skirts/bottom_right_skirt.json");
+    this.load.tilemapTiledJSON("bottom_skirt", "./assets/maps/map_skirts/bottom_skirt.json");
+    this.load.tilemapTiledJSON("left_skirt", "./assets/maps/map_skirts/left_skirt.json");
+    this.load.tilemapTiledJSON("right_skirt", "./assets/maps/map_skirts/right_skirt.json");
+    this.load.tilemapTiledJSON("top_left_skirt", "./assets/maps/map_skirts/top_left_skirt.json");
+    this.load.tilemapTiledJSON("top_right_skirt", "./assets/maps/map_skirts/top_right_skirt.json");
+    this.load.tilemapTiledJSON("top_skirt", "./assets/maps/map_skirts/top_skirt.json");
+    this.load.tilemapTiledJSON("chunk1", "./assets/maps/map_chunks/chunk1.json");
+    this.load.tilemapTiledJSON("chunk2", "./assets/maps/map_chunks/chunk2.json");
+    this.load.atlas("character", "./assets/img/characterSprites.png", "./assets/img/characterSprites.json");
 }
 
 function create() {
   
   // CAMERA SETUP
     // 1600x1600 for current tilemap size
-    this.cameras.main.setBounds(0, 0, 800, 800);
-    this.cameras.main.setZoom(2.5);
+    this.cameras.main.setBounds(0, 0, 1600, 1600);
+    this.cameras.main.setZoom(1);
     this.cameras.main.centerOn(400, 300);
     this.cameras.roundPixels = true;
 
@@ -40,21 +50,60 @@ function create() {
     // game.world.setBounds(0, 0, 800, 800);
 
     // generated tiled map
-    const map = this.add.tilemap("map");
-    const overworld = map.addTilesetImage("overworld")
+    const top_left_skirt = this.add.tilemap("top_left_skirt");
+    const top_right_skirt = this.add.tilemap("top_right_skirt");
+    const top_skirt = this.add.tilemap("top_skirt");
+    const left_skirt = this.add.tilemap("left_skirt");
+    const right_skirt = this.add.tilemap("right_skirt");
+    const bottom_left_skirt = this.add.tilemap("bottom_left_skirt");
+    const bottom_right_skirt = this.add.tilemap("bottom_right_skirt");
+    const bottom_skirt = this.add.tilemap("bottom_skirt");
+    const chunk1 = this.add.tilemap("chunk1");
+    const chunk2 = this.add.tilemap("chunk2");
+    const top_left_skirt_overworld = top_left_skirt.addTilesetImage("overworld");
+    const top_right_skirt_overworld = top_right_skirt.addTilesetImage("overworld");
+    const top_skirt_overworld = top_skirt.addTilesetImage("overworld");
+    const left_skirt_overworld = left_skirt.addTilesetImage("overworld");
+    const right_skirt_overworld = right_skirt.addTilesetImage("overworld");
+    const bottom_left_skirt_overworld = bottom_left_skirt.addTilesetImage("overworld");
+    const bottom_right_skirt_overworld = bottom_right_skirt.addTilesetImage("overworld");
+    const bottom_skirt_overworld = bottom_skirt.addTilesetImage("overworld");
+    const chunk1_overworld = chunk1.addTilesetImage("overworld");
+    const chunk1_objects = chunk1.addTilesetImage("objects");
+    const chunk2_overworld = chunk2.addTilesetImage("overworld");
+    const chunk2_objects = chunk2.addTilesetImage("objects");
     // not required atm but will in future
     // let objects = map.addTilesetImage("objects")
     // let character = map.addTilesetImage("character")
     // let npc_test = map.addTilesetImage("npc_test")
 
-    // layers
-    const topLayer = map.createStaticLayer("top", [overworld], 0, 0).setDepth(1);
-    const middleLayer = map.createStaticLayer("middle", [overworld], 0, 0).setDepth(-1);
-    const baseLayer = map.createStaticLayer("base", [overworld], 0, 0).setDepth(-2);
+    // LAYERS
+    //top left corner skirt layer
+    const top_left_skirt_baseLayer = top_left_skirt.createStaticLayer("base", [top_left_skirt_overworld], 0, 0).setDepth(-2);
+    //top middle corner skirt layer
+    const top_skirt_baseLayer = top_skirt.createStaticLayer("base", [top_skirt_overworld], 560, 0).setDepth(-2);
+    //top right corner skirt layer
+    const top_right_skirt_baseLayer = top_right_skirt.createStaticLayer("base", [top_right_skirt_overworld], 1040, 0).setDepth(-2);
+    //left skirt layer
+    const left_skirt_baseLayer = left_skirt.createStaticLayer("base", [left_skirt_overworld], 0, 560).setDepth(-2);
+    //right skirt layer
+    const right_skirt_baseLayer = right_skirt.createStaticLayer("base", [right_skirt_overworld], 1120, 560).setDepth(-2);
+    //bottom left corner skirt layer
+    const bottom_left_skirt_baseLayer = bottom_left_skirt.createStaticLayer("base", [bottom_left_skirt_overworld], 0, 1040).setDepth(-2);
+    //bottom middle corner skirt layer
+    const bottom_skirt_baseLayer = bottom_skirt.createStaticLayer("base", [bottom_skirt_overworld], 560, 1120).setDepth(-2);
+    //bottom right corner skirt layer
+    const bottom_right_skirt_baseLayer = bottom_right_skirt.createStaticLayer("base", [bottom_right_skirt_overworld], 1040, 1040).setDepth(-2);
+
+    const chunk_array = new Array(chunk1, chunk2)
+
+    //randomly generated layers
+    // var first_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+
 
     // map collisions
     // by tile property in top layer
-    topLayer.setCollisionByProperty({collides: true});
+    // topLayer.setCollisionByProperty({collides: true});
 
     // UI SETUP
 
