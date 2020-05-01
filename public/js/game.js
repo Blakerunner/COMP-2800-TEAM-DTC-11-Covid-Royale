@@ -4,6 +4,8 @@ const config = {
     height: 1600,
     physics: {
       default: 'arcade',
+      roundPixels: true,
+      pixelArt: true,
       arcade: {
         gravity: { y: 0 }
       }
@@ -50,15 +52,14 @@ function create() {
     //unzoomed camera, used to see the whole map
     this.cameras.main.setBounds(0, 0, 1600, 1600);
     this.cameras.main.setZoom(1);
+
     //zoomed camera, used for gameplay
-    // this.cameras.main.setBounds(0, 0, 800, 400);
-    // this.cameras.main.setZoom(2.5);
-    this.cameras.main.centerOn(400, 300);
-    this.cameras.roundPixels = true;
+    // this.cameras.main.setBounds(0, 0, 1600, 1600);
+    // this.cameras.main.setZoom(2);
 
     // MAP SETUP
     // set game world boundary
-    // game.world.setBounds(0, 0, 800, 800);
+    this.physics.world.setBounds(0, 0, 1600, 1600);
 
     // generated tiled map
     const top_left_skirt = this.add.tilemap("top_left_skirt");
@@ -166,7 +167,8 @@ function create() {
 
     // map collisions
     // by tile property in top layer
-    // topLayer.setCollisionByProperty({collides: true});
+    // first_chunk_top.setCollisionByProperty({collides: true});
+ 
 
     // UI SETUP
 
@@ -220,6 +222,7 @@ function create() {
       // generate 
       self.player = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       self.player.setCollideWorldBounds(true);
+      self.player.set
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player);
@@ -311,36 +314,37 @@ function update() {
 
   // PLAYER MOVEMENT
 
-  // Lock camer to player
-  // this.cameras.startFollow(this.player)
-
   let playerMovementSpeed = 100;
   if (this.player) {
       // left button down walk left
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-playerMovementSpeed);
+        this.player.setVelocityY(0);
         this.player.anims.play('walkLeft', true);
       }
       // right button down walk right
       else if (this.cursors.right.isDown) {
         this.player.setVelocityX(playerMovementSpeed);
+        this.player.setVelocityY(0);
         this.player.anims.play('walkRight', true);
       }
       // down button down walk down
       else if (this.cursors.down.isDown){
         this.player.setVelocityY(playerMovementSpeed);
+        this.player.setVelocityX(0);
         this.player.anims.play('walkDown', true);
       }
       // up button down walk up
       else if (this.cursors.up.isDown) {
         this.player.setVelocityY(-playerMovementSpeed);
+        this.player.setVelocityX(0);
         this.player.anims.play('walkUp', true);
       }
-      // no button down stand
+      // no button down stop animation and stop player velocity
       else {
         this.player.setVelocityX(0);
         this.player.setVelocityY(0);
-        // this.player.anims.play('stand');
+        this.player.anims.stop();
       }
 
       // emit player movement
