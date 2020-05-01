@@ -4,7 +4,7 @@
   <export target="../covid_royale/public/assets/maps/map.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="overworld" tilewidth="16" tileheight="16" tilecount="1440" columns="40">
-  <image source="../covid_royale/public/assets/img/overworld.png" width="640" height="576"/>
+  <image source="../../../../covid_royale/public/assets/img/overworld.png" width="640" height="576"/>
   <terraintypes>
    <terrain name="Water/Grass" tile="242"/>
    <terrain name="Brick Raised" tile="539"/>
@@ -7213,13 +7213,13 @@
   </tile>
  </tileset>
  <tileset firstgid="1441" name="objects" tilewidth="16" tileheight="16" tilecount="660" columns="33">
-  <image source="../covid_royale/public/assets/img/objects.png" width="528" height="320"/>
+  <image source="../../../../covid_royale/public/assets/img/objects.png" width="528" height="320"/>
  </tileset>
  <tileset firstgid="2101" name="character" tilewidth="16" tileheight="16" tilecount="272" columns="17">
-  <image source="../covid_royale/public/assets/img/character.png" width="272" height="256"/>
+  <image source="../../../../covid_royale/public/assets/img/character.png" width="272" height="256"/>
  </tileset>
  <tileset firstgid="2373" name="npc_test" tilewidth="16" tileheight="16" tilecount="32" columns="4">
-  <image source="../covid_royale/public/assets/img/npc_test.png" width="64" height="128"/>
+  <image source="../../../../covid_royale/public/assets/img/npc_test.png" width="64" height="128"/>
  </tileset>
  <layer id="1" name="base" width="50" height="50">
   <data encoding="csv">
