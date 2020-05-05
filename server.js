@@ -37,11 +37,7 @@ app.use(express.static(__dirname + '/public'));
 
 //middleware to put infront of protected endpoints
 const isLoggedIn = (req, res, next) => {
-
-  console.log("Cocks n dix");
-  // console.log(req.user);
-  // console.log(req.session.passport);
-  
+    console.log(req.session);
   if (req.session.passport) {
       next();
   } else {
@@ -58,6 +54,9 @@ const isLoggedIn = (req, res, next) => {
 
 //When someone clicks "loging with google" this is the route that begins oauth flow
 app.use('/login', authroutes);
+//Log out route 
+//When user logs out, destroy the session and then redirect to home
+app.get('/login', authroutes);
 
 // base url will serve public/index.html
 app.get('/', function (req, res) {
@@ -108,7 +107,7 @@ io.on('connection', function (socket) {
     });
   });
 
-// server to listen on port 3000
+// server to listen on port 8080
 server.listen(8080, function () {
   console.log('Server listening');
 });

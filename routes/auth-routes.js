@@ -8,8 +8,18 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 
-//Callback route for google auth to redirect back too
+//auth logout 
+//First detroy passport sesssion thant redirect home
+router.get('/logout', async (req, res) => {
+    await req.logout();
+    req.session = null;
 
+    //req.session.destroy();
+    res.redirect('/');
+
+}); 
+
+//Callback route for google auth to redirect back too
 router.get('/google/redirected', passport.authenticate('google', {failureRedirect: '/failed'}), (req, res) => {
     // console.log(req.user);
     console.log(req.query);
