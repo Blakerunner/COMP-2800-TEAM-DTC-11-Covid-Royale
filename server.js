@@ -9,14 +9,13 @@ const cookieSession = require('cookie-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+// server static public folder
+app.use(express.static(__dirname + '/public'));
 
-
-
+// parsing
 app.use(cors());
-
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-
 
 //initialize passport
 app.use(passport.initialize());
@@ -27,18 +26,10 @@ app.use(cookieSession({
   keys: ["MySecretCookieKey"]
 }));
 
-// array of players
-let players = {};
-let playersSpawnLocations = [(800, 800)]
-
-// server static public folder
-app.use(express.static(__dirname + '/public'));
-
-
 //middleware to put infront of protected endpoints
 const isLoggedIn = (req, res, next) => {
 
-  console.log("Cocks n dix");
+  console.log("User logged in");
   // console.log(req.user);
   // console.log(req.session.passport);
   
@@ -51,19 +42,24 @@ const isLoggedIn = (req, res, next) => {
 }
 
 
-
-
 //Put ^ middleware infront of authenticated endpoint
 
-
-//When someone clicks "loging with google" this is the route that begins oauth flow
-app.use('/login', authroutes);
+// array of players
+let players = {};
+let playersSpawnLocations = [(800, 800)]
 
 // base url will serve public/index.html
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
+// url to get to game.html for game start
+app.get('/covid_royal', function (req, res) {
+  res.sendFile(__dirname + '/public/game.html');
+});
+
+//When someone clicks "loging with google" this is the route that begins oauth flow
+app.use('/login', authroutes);
 
 //Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
 app.get('/protected.html', isLoggedIn, (req, res)=>{
