@@ -8,7 +8,8 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 
 
@@ -18,13 +19,17 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 
+mongoose.connect(process.env.mongoURI, function(){
+  console.log("Connected to mongoDB");
+});
+
 //initialize passport
 app.use(passport.initialize());
 
 //Cookies for session storage
 app.use(cookieSession({
-  maxAge:24*60*60*1000,
-  keys: ["MySecretCookieKey"]
+  maxAge:24*60*60*1000, //Cookies last 24 hours (t is in milliseconds 10^-6)
+  keys: [process.env.cookieKey] //Key to encrypt cookie pull from dotenv
 }));
 
 // array of players
@@ -37,7 +42,7 @@ app.use(express.static(__dirname + '/public'));
 
 //middleware to put infront of protected endpoints
 const isLoggedIn = (req, res, next) => {
-    console.log(req.session);
+    //  console.log(req.session);
   if (req.session.passport) {
       next();
   } else {
@@ -47,8 +52,6 @@ const isLoggedIn = (req, res, next) => {
 }
 
 
-
-
 //Put ^ middleware infront of authenticated endpoint
 
 
@@ -56,17 +59,19 @@ const isLoggedIn = (req, res, next) => {
 app.use('/login', authroutes);
 //Log out route 
 //When user logs out, destroy the session and then redirect to home
-app.get('/login', authroutes);
 
 // base url will serve public/index.html
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
-
+//Basic endpoint to verify we have access to the user with any request
+app.get('/submitScore', (req, res) => {
+  res.send(`Recived a request from user with mongoDB ID: ${req.session.passport.user}`)
+})
 
 //Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
 app.get('/protected.html', isLoggedIn, (req, res)=>{
-  res.send(`You have been verified by google oauth ${req.session}`)
+  res.send(`You have been verified by google oauth ${req.session.passport.user}`)
 });
 
 // socket.io handle for browser connect
