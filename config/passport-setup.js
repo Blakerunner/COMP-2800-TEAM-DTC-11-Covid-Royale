@@ -1,5 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
+const User = require('../models/user-model');
 
 
 passport.serializeUser((profile, done) => {
@@ -23,6 +24,22 @@ passport.use(
   }, (accessToken, refreshToken, profile, done) => {
     //   console.log('callback executed');
     //   console.log("Name: ", profile.displayName);
-    //   console.log(accessToken);
+    //   console.log(accessToken)
+      //
+      ////First check if user in db before creating new one
+      User.findOne({googleId:profile.id}).then((currentUser) => {
+      if(currentUser){
+      //This user is in our db}
+      }
+          else{
+          //create the user}
+          
+    new User({
+        username: profile.displayName
+        googleId: profile.id
+    }).save().then((newUser) => {
+    console.log('new User created in mongodb: ' + newUser)
+    });
+        //Not sure if return done(null, profile) is need but too scared to take out
       return done(null, profile);
     }));
