@@ -1,61 +1,29 @@
-const config = {
-    type: Phaser.AUTO,
-    width: 1600,
-    height: 1600,
-    physics: {
-      default: 'arcade',
-      roundPixels: true,
-      pixelArt: true,
-      arcade: {
-        gravity: { y: 0 }
-      }
-    },
-    scene: {
-      preload: preload,
-      create: create,
-      update: update
-    } 
-  };
+export class GameScene extends Phaser.Scene {
+  constructor(){
+    super({
+      key: "GameScene",
+      active: false
+      })
+  }
 
-const game = new Phaser.Game(config);
-
-function preload() {
-    
-
-    this.load.image("overworld", "./assets/img/overworld.png");
-    this.load.image("objects", "./assets/img/objects.png");
-    // this.load.tilemapTiledJSON("map", "./assets/maps/map.json");
-    this.load.tilemapTiledJSON("bottom_left_skirt", "./assets/maps/map_skirts/bottom_left_skirt.json");
-    this.load.tilemapTiledJSON("bottom_right_skirt", "./assets/maps/map_skirts/bottom_right_skirt.json");
-    this.load.tilemapTiledJSON("bottom_skirt", "./assets/maps/map_skirts/bottom_skirt.json");
-    this.load.tilemapTiledJSON("left_skirt", "./assets/maps/map_skirts/left_skirt.json");
-    this.load.tilemapTiledJSON("right_skirt", "./assets/maps/map_skirts/right_skirt.json");
-    this.load.tilemapTiledJSON("top_left_skirt", "./assets/maps/map_skirts/top_left_skirt.json");
-    this.load.tilemapTiledJSON("top_right_skirt", "./assets/maps/map_skirts/top_right_skirt.json");
-    this.load.tilemapTiledJSON("top_skirt", "./assets/maps/map_skirts/top_skirt.json");
-    this.load.tilemapTiledJSON("chunk1", "./assets/maps/map_chunks/chunk1.json");
-    this.load.tilemapTiledJSON("chunk2", "./assets/maps/map_chunks/chunk2.json");
-    this.load.tilemapTiledJSON("chunk3", "./assets/maps/map_chunks/chunk3.json");
-    this.load.tilemapTiledJSON("chunk4", "./assets/maps/map_chunks/chunk4.json");
-    this.load.tilemapTiledJSON("chunk5", "./assets/maps/map_chunks/chunk5.json");
-    this.load.tilemapTiledJSON("chunk6", "./assets/maps/map_chunks/chunk6.json");
-    this.load.tilemapTiledJSON("chunk7", "./assets/maps/map_chunks/chunk7.json");
-    this.load.tilemapTiledJSON("chunk8", "./assets/maps/map_chunks/chunk8.json");
-    this.load.tilemapTiledJSON("chunk9", "./assets/maps/map_chunks/chunk9.json");
-    this.load.atlas("character", "./assets/img/characterSprites.png", "./assets/img/characterSprites.json");
-}
-
-function create() {
+  init(){
+    console.log("GameScene start")
+  }
   
-  // CAMERA SETUP
+  preload(){
+
+  }
+  
+  create(){
+     // CAMERA SETUP
     // 1600x1600 for current tilemap size
     //unzoomed camera, used to see the whole map
-    this.cameras.main.setBounds(0, 0, 1600, 1600);
-    this.cameras.main.setZoom(1);
+    // this.cameras.main.setBounds(0, 0, 1600, 1600);
+    // this.cameras.main.setZoom(1);
 
     //zoomed camera, used for gameplay
-    // this.cameras.main.setBounds(0, 0, 1600, 1600);
-    // this.cameras.main.setZoom(2);
+    this.cameras.main.setBounds(0, 0, 1600, 1600);
+    this.cameras.main.setZoom(1.8);
 
     // MAP SETUP
     // set game world boundary
@@ -293,7 +261,6 @@ function create() {
           zeroPad: 2
         })
       });
-
     }
 
     function addOtherPlayers(self, playerInfo) {
@@ -305,60 +272,56 @@ function create() {
     // CONTROLS SETUP
     // keyboard inputs
     self.cursors = this.input.keyboard.createCursorKeys();
+  }
 
-    // TESTING
+  update(){
     
+    // PLAYER MOVEMENT
+    let playerMovementSpeed = 100;
+    if (this.player) {
+        // left button down walk left
+        if (this.cursors.left.isDown) {
+          this.player.setVelocityX(-playerMovementSpeed);
+          this.player.setVelocityY(0);
+          this.player.anims.play('walkLeft', true);
+        }
+        // right button down walk right
+        else if (this.cursors.right.isDown) {
+          this.player.setVelocityX(playerMovementSpeed);
+          this.player.setVelocityY(0);
+          this.player.anims.play('walkRight', true);
+        }
+        // down button down walk down
+        else if (this.cursors.down.isDown){
+          this.player.setVelocityY(playerMovementSpeed);
+          this.player.setVelocityX(0);
+          this.player.anims.play('walkDown', true);
+        }
+        // up button down walk up
+        else if (this.cursors.up.isDown) {
+          this.player.setVelocityY(-playerMovementSpeed);
+          this.player.setVelocityX(0);
+          this.player.anims.play('walkUp', true);
+        }
+        // no button down stop animation and stop player velocity
+        else {
+          this.player.setVelocityX(0);
+          this.player.setVelocityY(0);
+          this.player.anims.stop();
+        }
+
+        // emit player movement
+        let x = this.player.x;
+        let y = this.player.y;
+        if (this.player.oldLocation && (x !== this.player.oldLocation.x || y !== this.player.oldLocation.y)) {
+          this.socket.emit('playerMovement', {x: this.player.x, y: this.player.y});
+        }
+        
+        // save old position data
+        this.player.oldLocation = {
+          x: this.player.x,
+          y: this.player.y,
+        };
+    }
   }
-
-function update() {
-
-  // PLAYER MOVEMENT
-
-  let playerMovementSpeed = 100;
-  if (this.player) {
-      // left button down walk left
-      if (this.cursors.left.isDown) {
-        this.player.setVelocityX(-playerMovementSpeed);
-        this.player.setVelocityY(0);
-        this.player.anims.play('walkLeft', true);
-      }
-      // right button down walk right
-      else if (this.cursors.right.isDown) {
-        this.player.setVelocityX(playerMovementSpeed);
-        this.player.setVelocityY(0);
-        this.player.anims.play('walkRight', true);
-      }
-      // down button down walk down
-      else if (this.cursors.down.isDown){
-        this.player.setVelocityY(playerMovementSpeed);
-        this.player.setVelocityX(0);
-        this.player.anims.play('walkDown', true);
-      }
-      // up button down walk up
-      else if (this.cursors.up.isDown) {
-        this.player.setVelocityY(-playerMovementSpeed);
-        this.player.setVelocityX(0);
-        this.player.anims.play('walkUp', true);
-      }
-      // no button down stop animation and stop player velocity
-      else {
-        this.player.setVelocityX(0);
-        this.player.setVelocityY(0);
-        this.player.anims.stop();
-      }
-
-      // emit player movement
-      let x = this.player.x;
-      let y = this.player.y;
-      if (this.player.oldLocation && (x !== this.player.oldLocation.x || y !== this.player.oldLocation.y)) {
-        this.socket.emit('playerMovement', {x: this.player.x, y: this.player.y});
-      }
-      
-      // save old position data
-      this.player.oldLocation = {
-        x: this.player.x,
-        y: this.player.y,
-      };
-  }
-
 }
