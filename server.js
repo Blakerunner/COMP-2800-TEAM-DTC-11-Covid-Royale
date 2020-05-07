@@ -1,69 +1,88 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const server = require('http').Server(app);
+const server = require("http").Server(app);
 const io = require("socket.io").listen(server);
-const authroutes = require('./routes/auth-routes');
-const passportSetup = require('./config/passport-setup');
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const authroutes = require("./routes/auth-routes");
+const passportSetup = require("./config/passport-setup");
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 // server static public folder
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 
 // parsing
 app.use(cors());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //initialize passport
 app.use(passport.initialize());
 
 //Cookies for session storage
-app.use(cookieSession({
-  maxAge:24*60*60*1000,
-  keys: ["MySecretCookieKey"]
-}));
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, //Cookies last 24 hours (t is in milliseconds 10^-6)
+    keys: [process.env.cookieKey], //Key to encrypt cookie pull from dotenv
+  })
+);
+
+//Connect to mognodb
+mongoose.connect(process.env.mongoURI, function () {
+  console.log("Connected to mongoDB");
+});
 
 //middleware to put infront of protected endpoints
 const isLoggedIn = (req, res, next) => {
-
-  console.log("User logged in");
-  // console.log(req.user);
-  // console.log(req.session.passport);
-  
   if (req.session.passport) {
-      next();
+    next();
   } else {
     console.log("No authenticated passport user found");
-      res.sendStatus(401);
+    res.sendStatus(401);
   }
-}
-
-
-//Put ^ middleware infront of authenticated endpoint
-
-// array of players
-let players = {};
-let playersSpawnLocations = [(800, 800)]
+};
 
 // base url will serve public/index.html
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
 });
 
+
 // url to get to game.html for game start
-app.get('/covid_royal', function (req, res) {
-  res.sendFile(__dirname + '/public/game.html');
+app.get("/covid_royal", function (req, res) {
+  res.sendFile(__dirname + "/public/game.html");
 });
 
 //When someone clicks "loging with google" this is the route that begins oauth flow
-app.use('/login', authroutes);
+app.use("/login", authroutes);
 
 //Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
-app.get('/protected.html', isLoggedIn, (req, res)=>{
-  res.send(`You have been verified by google oauth ${req.session}`)
+app.get("/protected.html", isLoggedIn, (req, res) => {
+  res.send(
+    `You have been verified by google oauth ${req.session.passport.user}`
+  );
+});
+
+//Basic endpoint to verify we have access to the user with any request
+app.get("/submitScore", (req, res) => {
+  res.send(
+    `Recived a request from user with mongoDB ID: ${req.session.passport.user}`
+  );
+});
+
+
+// array of players
+let players = {};
+let playersSpawnLocations = [(800, 800)];
+
+
+
+// url to get to game.html for game start
+app.get("/covid_royal", function (req, res) {
+  res.sendFile(__dirname + "/public/game.html");
 });
 
 // socket.io handle for browser connect
@@ -105,9 +124,8 @@ io.on('connection', function (socket) {
       // emit a message to all players to remove this player
       io.emit('disconnect', socket.id);
     });
-  });
 
-// server to listen on port 3000
+// server to listen on port 8080
 server.listen(8080, function () {
-  console.log('Server listening');
+  console.log("Server listening");
 });
