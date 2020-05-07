@@ -11,14 +11,13 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-app.use(cors());
+// server static public folder
+app.use(express.static(__dirname + "/public"));
 
+// parsing
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-mongoose.connect(process.env.mongoURI, function () {
-  console.log("Connected to mongoDB");
-});
 
 //initialize passport
 app.use(passport.initialize());
@@ -31,16 +30,13 @@ app.use(
   })
 );
 
-// array of players
-let players = {};
-let playersSpawnLocations = [(800, 800)];
-
-// server static public folder
-app.use(express.static(__dirname + "/public"));
+//Connect to mognodb
+mongoose.connect(process.env.mongoURI, function () {
+  console.log("Connected to mongoDB");
+});
 
 //middleware to put infront of protected endpoints
 const isLoggedIn = (req, res, next) => {
-  //  console.log(req.session);
   if (req.session.passport) {
     next();
   } else {
@@ -49,15 +45,27 @@ const isLoggedIn = (req, res, next) => {
   }
 };
 
-//When someone clicks "loging with google" this is the route that begins oauth flow
-app.use("/login", authroutes);
-//Log out route
-//When user logs out, destroy the session and then redirect to home
-
 // base url will serve public/index.html
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
+
+
+// url to get to game.html for game start
+app.get("/covid_royal", function (req, res) {
+  res.sendFile(__dirname + "/public/game.html");
+});
+
+//When someone clicks "loging with google" this is the route that begins oauth flow
+app.use("/login", authroutes);
+
+//Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
+app.get("/protected.html", isLoggedIn, (req, res) => {
+  res.send(
+    `You have been verified by google oauth ${req.session.passport.user}`
+  );
+});
+
 //Basic endpoint to verify we have access to the user with any request
 app.get("/submitScore", (req, res) => {
   res.send(
@@ -65,11 +73,16 @@ app.get("/submitScore", (req, res) => {
   );
 });
 
-//Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
-app.get("/protected.html", isLoggedIn, (req, res) => {
-  res.send(
-    `You have been verified by google oauth ${req.session.passport.user}`
-  );
+
+// array of players
+let players = {};
+let playersSpawnLocations = [(800, 800)];
+
+
+
+// url to get to game.html for game start
+app.get("/covid_royal", function (req, res) {
+  res.sendFile(__dirname + "/public/game.html");
 });
 
 // socket.io handle for browser connect
