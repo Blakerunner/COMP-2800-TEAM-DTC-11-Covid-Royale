@@ -31,7 +31,7 @@ app.use(
 );
 
 //Connect to mognodb
-mongoose.connect(process.env.mongoURI, function () {
+mongoose.connect(process.env.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true}, function () {
   console.log("Connected to mongoDB");
 });
 
