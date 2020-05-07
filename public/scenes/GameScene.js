@@ -1,3 +1,5 @@
+import {GameUI} from "../scenes/GameUI.js"
+import {GameVirtualController} from "../scenes/GameVirtualController.js"
 export class GameScene extends Phaser.Scene {
   constructor(){
     super({
@@ -8,13 +10,19 @@ export class GameScene extends Phaser.Scene {
 
   init(){
     console.log("GameScene start")
+    
   }
   
   preload(){
-
+    
   }
   
   create(){
+
+    // ADD SCENES
+    this.scene.add('GameVirtualController', GameVirtualController, true, { x: 0, y: 0 });
+    // this.scene.add('GameUI', GameUI, true, { x: 0, y: 0 });
+
      // CAMERA SETUP
     // 1600x1600 for current tilemap size
     //unzoomed camera, used to see the whole map
@@ -160,6 +168,12 @@ export class GameScene extends Phaser.Scene {
       self.otherPlayers.getChildren().forEach(function (otherPlayer) {
         if (playerInfo.playerId === otherPlayer.playerId) {
           otherPlayer.setPosition(playerInfo.x, playerInfo.y);
+          if (playerInfo.playerDir === "stand") {
+            otherPlayer.anims.stop();
+          } else {
+            console.log(playerInfo.playerId, "is moving", playerInfo.playerDir)
+            otherPlayer.anims.play(playerInfo.playerDir, true);
+          }
         }
       });
     });
@@ -190,7 +204,7 @@ export class GameScene extends Phaser.Scene {
       // generate 
       self.player = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       self.player.setCollideWorldBounds(true);
-      self.player.set
+      self.player.playerDir = "stand"
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player);
@@ -267,16 +281,27 @@ export class GameScene extends Phaser.Scene {
       const otherPlayer = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       otherPlayer.playerId = playerInfo.playerId;
       self.otherPlayers.add(otherPlayer);
+
     }
     
     // CONTROLS SETUP
     // keyboard inputs
     self.cursors = this.input.keyboard.createCursorKeys();
+
+    // EVENTS
+    // Virtual controller state event change
+    this.scene.get('GameVirtualController').events.on('buttonUpdate', buttonUpdate, this);
+
+    var virtualControllerStates = {}
+    function buttonUpdate(states) {
+      virtualControllerStates = states
+      console.log(virtualControllerStates)
+    }
+
   }
 
   update(){
-    
-    // PLAYER MOVEMENT
+      // PLAYER MOVEMENT
     let playerMovementSpeed = 100;
     if (this.player) {
         // left button down walk left
@@ -284,37 +309,42 @@ export class GameScene extends Phaser.Scene {
           this.player.setVelocityX(-playerMovementSpeed);
           this.player.setVelocityY(0);
           this.player.anims.play('walkLeft', true);
-        }
+          this.player.playerDir = "walkLeft"
+        } 
         // right button down walk right
         else if (this.cursors.right.isDown) {
           this.player.setVelocityX(playerMovementSpeed);
           this.player.setVelocityY(0);
           this.player.anims.play('walkRight', true);
+          this.player.playerDir = "walkRight"
         }
         // down button down walk down
         else if (this.cursors.down.isDown){
           this.player.setVelocityY(playerMovementSpeed);
           this.player.setVelocityX(0);
           this.player.anims.play('walkDown', true);
+          this.player.playerDir = "walkDown"
         }
         // up button down walk up
         else if (this.cursors.up.isDown) {
           this.player.setVelocityY(-playerMovementSpeed);
           this.player.setVelocityX(0);
           this.player.anims.play('walkUp', true);
+          this.player.playerDir = "walkUp"
         }
         // no button down stop animation and stop player velocity
         else {
           this.player.setVelocityX(0);
           this.player.setVelocityY(0);
           this.player.anims.stop();
+          this.player.playerDir = "stand"
         }
 
         // emit player movement
         let x = this.player.x;
         let y = this.player.y;
         if (this.player.oldLocation && (x !== this.player.oldLocation.x || y !== this.player.oldLocation.y)) {
-          this.socket.emit('playerMovement', {x: this.player.x, y: this.player.y});
+          this.socket.emit('playerMovement', {x: this.player.x, y: this.player.y, playerDir: this.player.playerDir});
         }
         
         // save old position data
@@ -323,5 +353,6 @@ export class GameScene extends Phaser.Scene {
           y: this.player.y,
         };
     }
+
   }
 }
