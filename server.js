@@ -74,6 +74,8 @@ io.on('connection', function (socket) {
     players[socket.id] = {
       playerId: socket.id,
       playerRisk: 0,
+      playerDir: "walkRight",
+      playerName: "Blake",
       // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
       x: 400,
       y: 400,
@@ -89,6 +91,7 @@ io.on('connection', function (socket) {
     socket.on('playerMovement', function (movementData) {
       players[socket.id].x = movementData.x;
       players[socket.id].y = movementData.y;
+      players[socket.id].playerDir = movementData.playerDir;
       // emit a message to all players about the player that moved
       socket.broadcast.emit('playerMoved', players[socket.id]);
     });

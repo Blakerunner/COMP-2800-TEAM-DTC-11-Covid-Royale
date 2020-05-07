@@ -2,7 +2,7 @@ import {LoadScene} from "../scenes/LoadScene.js"
 import {MenuScene} from "../scenes/MenuScene.js"
 import {LobbyScene} from "../scenes/LobbyScene.js"
 import {GameScene} from "../scenes/GameScene.js"
-
+import {GameUI} from "../scenes/GameUI.js"
 // Config game
 const config = {
     type: Phaser.AUTO,
@@ -25,10 +25,14 @@ const config = {
     },
     scene: [
         LoadScene, 
-        GameScene,
         MenuScene,
-        LobbyScene]
+        LobbyScene,
+        GameScene,
+        GameUI]
   };
+
+// Force landscape on mobile
+screen.orientation.lock('landscape');
 
 // Create game
 const game = new Phaser.Game(config);
