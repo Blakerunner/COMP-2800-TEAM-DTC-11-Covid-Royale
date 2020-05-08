@@ -8,11 +8,13 @@ export class GameScene extends Phaser.Scene {
       })
 
       this.virtualControllerStates = {}
+      this.mapBlueprint = []
   }
 
   init(){
     console.log("GameScene start")
-    
+    // initilise socket
+    this.socket = io();
   }
   
   preload(){
@@ -38,6 +40,13 @@ export class GameScene extends Phaser.Scene {
     // MAP SETUP
     // set game world boundary
     this.physics.world.setBounds(0, 0, 1600, 1600);
+
+    // update map blueprint from server allocation
+    // this.socket.on('mapBlueprint', (mapData) => {
+    //   console.log(this.mapBlueprint)
+    //   this.mapBlueprint = mapData
+    //   console.log(this.mapBlueprint)
+    // });
 
     // generated tiled map
     const top_left_skirt = this.add.tilemap("top_left_skirt");
@@ -88,60 +97,56 @@ export class GameScene extends Phaser.Scene {
 
     // randomly generated layers
     // this var is a randomly generated chunk in an array between 0 and the length of the chunk array - 1
-    var first_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    this.socket.emit('mapBlueprintReady');
+    this.socket.on('mapBlueprint', generateMap, this);
+
+    function generateMap(mapData) {
+    console.log("Map Blueprint:", mapData)
+    var first_chunk = chunk_array[mapData[0]]
     const first_chunk_top = first_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(1);
     const first_chunk_middle = first_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(-1);
     const first_chunk_bottom = first_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(-2);
-    // this removes the randomly chosen chunk from the array, reducing the size of the array by 1
-    chunk_array.splice(chunk_array.indexOf(first_chunk), 1);
 
-    var second_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var second_chunk = chunk_array[mapData[1]]
     const second_chunk_top = second_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(1);
     const second_chunk_middle = second_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(-1);
     const second_chunk_bottom = second_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(second_chunk), 1);
 
-    var third_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var third_chunk = chunk_array[mapData[2]]
     const third_chunk_top = third_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(1);
     const third_chunk_middle = third_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(-1);
     const third_chunk_bottom = third_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(third_chunk), 1);
 
-    var fourth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var fourth_chunk = chunk_array[mapData[3]]
     const fourth_chunk_top = fourth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(1);
     const fourth_chunk_middle = fourth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(-1);
     const fourth_chunk_bottom = fourth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(fourth_chunk), 1);
 
-    var fifth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var fifth_chunk = chunk_array[mapData[4]]
     const fifth_chunk_top = fifth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(1);
     const fifth_chunk_middle = fifth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(-1);
     const fifth_chunk_bottom = fifth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(fifth_chunk), 1);
 
-    var sixth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var sixth_chunk = chunk_array[mapData[5]]
     const sixth_chunk_top = sixth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(1);
     const sixth_chunk_middle = sixth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(-1);
     const sixth_chunk_bottom = sixth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(sixth_chunk), 1);
 
-    var seventh_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var seventh_chunk = chunk_array[mapData[6]]
     const seventh_chunk_top = seventh_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(1);
     const seventh_chunk_middle = seventh_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(-1);
     const seventh_chunk_bottom = seventh_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(seventh_chunk), 1);
 
-    var eighth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var eighth_chunk = chunk_array[mapData[7]]
     const eighth_chunk_top = eighth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(1);
     const eighth_chunk_middle = eighth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(-1);
     const eighth_chunk_bottom = eighth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(eighth_chunk), 1);
 
-    var ninth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var ninth_chunk = chunk_array[mapData[8]]
     const ninth_chunk_top = ninth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(1);
     const ninth_chunk_middle = ninth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-1);
     const ninth_chunk_bottom = ninth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-2);
-
+    }
 
     // map collisions
     // by tile property in top layer
@@ -150,7 +155,6 @@ export class GameScene extends Phaser.Scene {
     // PLAYER SETUP
 
     let self = this;
-    this.socket = io();
     this.otherPlayers = this.physics.add.group();
 
     this.socket.on('playerMoved', function (playerInfo) {
