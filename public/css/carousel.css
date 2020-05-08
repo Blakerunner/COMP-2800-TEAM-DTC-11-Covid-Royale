@@ -87,3 +87,8 @@ body {
     margin-top: 7rem;
   }
 }
+
+/* nav bar */
+.nav-item:hover {
+  background-color: grey
+}

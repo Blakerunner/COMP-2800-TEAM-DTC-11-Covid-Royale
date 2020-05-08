@@ -125,6 +125,7 @@ io.on('connection', function (socket) {
       io.emit('disconnect', socket.id);
     });
   });
+  
 // server to listen on port 8080
 server.listen(8080, function () {
   console.log("Server listening");
