@@ -6,6 +6,8 @@ export class GameScene extends Phaser.Scene {
       key: "GameScene",
       active: false
       })
+
+      this.virtualControllerStates = {}
   }
 
   init(){
@@ -291,11 +293,11 @@ export class GameScene extends Phaser.Scene {
     // EVENTS
     // Virtual controller state event change
     this.scene.get('GameVirtualController').events.on('buttonUpdate', buttonUpdate, this);
-
-    var virtualControllerStates = {}
+    
+    // Updates virutal button events
     function buttonUpdate(states) {
-      virtualControllerStates = states
-      console.log(virtualControllerStates)
+      this.virtualControllerStates = states
+      console.log(this.virtualControllerStates)
     }
 
   }
@@ -305,28 +307,28 @@ export class GameScene extends Phaser.Scene {
     let playerMovementSpeed = 100;
     if (this.player) {
         // left button down walk left
-        if (this.cursors.left.isDown) {
+        if (this.cursors.left.isDown || this.virtualControllerStates.left) {
           this.player.setVelocityX(-playerMovementSpeed);
           this.player.setVelocityY(0);
           this.player.anims.play('walkLeft', true);
           this.player.playerDir = "walkLeft"
         } 
         // right button down walk right
-        else if (this.cursors.right.isDown) {
+        else if (this.cursors.right.isDown || this.virtualControllerStates.right) {
           this.player.setVelocityX(playerMovementSpeed);
           this.player.setVelocityY(0);
           this.player.anims.play('walkRight', true);
           this.player.playerDir = "walkRight"
         }
         // down button down walk down
-        else if (this.cursors.down.isDown){
+        else if (this.cursors.down.isDown || this.virtualControllerStates.down){
           this.player.setVelocityY(playerMovementSpeed);
           this.player.setVelocityX(0);
           this.player.anims.play('walkDown', true);
           this.player.playerDir = "walkDown"
         }
         // up button down walk up
-        else if (this.cursors.up.isDown) {
+        else if (this.cursors.up.isDown || this.virtualControllerStates.up) {
           this.player.setVelocityY(-playerMovementSpeed);
           this.player.setVelocityX(0);
           this.player.anims.play('walkUp', true);
