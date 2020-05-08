@@ -56,19 +56,13 @@
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="./login/logout">Logout (sorryBlake)</a>
+        <ul class="navbar-nav">
+          <li class="nav-item active px-3 mx-3 rounded">
+            <a class="nav-link" href="./login/google">Login</a>
           </li>
-        </ul>
-      </div>
-
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="./login/google">Google Login</a>
+          <li class="nav-item active px-3 mx-3 rounded">
+            <a class="nav-link" href="./login/logout">Logout</a>
           </li>
         </ul>
       </div>
@@ -151,6 +145,7 @@
           provide some awareness and enjoyment.</p>
       </div>
       <!-- Four About Us cards -->
+      <hr class="featurette-divider">
       <div class="row">
         <div class="col-lg-3 text-center">
           <img src="./assets/img/profile_pic_keegan.jpg" class="rounded-circle" alt="Profile picture">
@@ -174,7 +169,7 @@
         </div>
       </div>
 
-
+      
       <!-- START THE FEATURETTES -->
 
       <!-- <hr class="featurette-divider">
@@ -192,23 +187,16 @@
         <hr class="featurette-divider"> -->
 
       <!-- /END THE FEATURETTES -->
-
+      <hr class="featurette-divider">
     </div>
 
     <!-- FOOTER -->
     <footer class="container text-center">
-      <p>2017-2019 Goose Logic, Inc.</p>
+      <p>2020 Goose Logic, Inc.</p>
     </footer>
   </main>
   <script src="/socket.io/socket.io.js"></script>
   <script src="//cdn.jsdelivr.net/npm/phaser@3.23.0/dist/phaser.min.js"></script>
-  <script src="js/game.js"></script>
-
-
-  <footer>
-    <div><button onclick="location.href= 'https://covid-royale.westus.cloudapp.azure.com/logout'">Click me to log
-        out!</button></div>
-  </footer>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
