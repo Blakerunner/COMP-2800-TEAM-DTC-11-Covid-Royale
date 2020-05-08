@@ -293,11 +293,10 @@ export class GameScene extends Phaser.Scene {
     // EVENTS
     // Virtual controller state event change
     this.scene.get('GameVirtualController').events.on('buttonUpdate', buttonUpdate, this);
-    
+
     // Updates virutal button events
     function buttonUpdate(states) {
       this.virtualControllerStates = states
-      console.log(this.virtualControllerStates)
     }
 
   }
