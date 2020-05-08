@@ -23,7 +23,7 @@ export class GameScene extends Phaser.Scene {
 
     // ADD SCENES
     this.scene.add('GameVirtualController', GameVirtualController, true, { x: 0, y: 0 });
-    // this.scene.add('GameUI', GameUI, true, { x: 0, y: 0 });
+    this.scene.add('GameUI', GameUI, true, { x: 0, y: 0 });
 
      // CAMERA SETUP
     // 1600x1600 for current tilemap size
@@ -146,19 +146,6 @@ export class GameScene extends Phaser.Scene {
     // map collisions
     // by tile property in top layer
     // first_chunk_top.setCollisionByProperty({collides: true});
- 
-
-    // UI SETUP
-
-    // playerRisk UI
-    let playerRisk = this.add.text(16, 16, 'Infection risk', {
-        fontSize: '16px',
-        padding: { x: 10, y: 5 },
-        backgroundColor: 'red',
-        fill: 'black'
-    });
-    // makes playerRisk so it will stay in same place on screen
-    playerRisk.setScrollFactor(0);
 
     // PLAYER SETUP
 
@@ -337,6 +324,7 @@ export class GameScene extends Phaser.Scene {
         else {
           this.player.setVelocityX(0);
           this.player.setVelocityY(0);
+          // this.player.anims.stop();
           this.player.anims.stop();
           this.player.playerDir = "stand"
         }
