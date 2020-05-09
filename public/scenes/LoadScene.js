@@ -12,6 +12,7 @@ export class LoadScene extends Phaser.Scene {
     }
     
     preload(){
+        this.load.image("game_instruct_bg", "./assets/img/game_instruct_scene_bg.png")
         this.load.image("overworld", "./assets/img/overworld.png");
         this.load.image("objects", "./assets/img/objects.png");
         this.load.tilemapTiledJSON("bottom_left_skirt", "./assets/maps/map_skirts/bottom_left_skirt.json");
@@ -37,7 +38,9 @@ export class LoadScene extends Phaser.Scene {
     create(){
         console.log("LoadScene complete")
 		var progressBox = this.add.graphics();
-    	var progressBar = this.add.graphics();
+        var progressBar = this.add.graphics();
+
+        
 
     let value = 0.0;
 	let centerx = 20;
@@ -48,7 +51,13 @@ export class LoadScene extends Phaser.Scene {
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(centerx, centery, width, height);
     progressBar.fillStyle(0xffffff, 1);
-    progressBar.fillRect(centerx + 5, centery + 5, width * value, height); 
+    progressBar.fillRect(centerx + 5, centery + 5, width * value, height);
+
+    var loadingText = this.add.text(centerx + width / 2, centery + height / 2, "Loading...", {
+        padding: { x: 0, y: 0 },
+        fill: '0xffffff',
+        font: 'bold 28px Arial',
+      }).setOrigin(0.5, 0.5);
 
     function fillbar(nameOfBar, increment, scene) {
       let timer = setInterval(function() {
