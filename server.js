@@ -78,7 +78,11 @@ app.get("/submitScore", (req, res) => {
 let players = {};
 let playersSpawnLocations = [(800, 800)];
 
-
+// generate map blueprint
+let mapData = []
+for (let a = [0, 1, 2, 3, 4, 5, 6, 7, 8], i = a.length; i--; ) {
+  mapData.push(a.splice(Math.floor(Math.random() * (i + 1)), 1)[0]);
+}
 
 // url to get to game.html for game start
 app.get("/covid_royal", function (req, res) {
@@ -94,12 +98,15 @@ io.on('connection', function (socket) {
       playerId: socket.id,
       playerRisk: 0,
       playerDir: "walkRight",
-      playerName: "Blake",
+      playerName: "Human",
       // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
       x: 400,
       y: 400,
     };
 
+    // emit map blueprint
+    socket.on("mapBlueprintReady", () => {socket.emit('mapBlueprint', mapData);})
+    
     // send the players object to the new player
     socket.emit('currentPlayers', players);
 
@@ -125,7 +132,7 @@ io.on('connection', function (socket) {
       io.emit('disconnect', socket.id);
     });
   });
-  
+
 // server to listen on port 8080
 server.listen(8080, function () {
   console.log("Server listening");
