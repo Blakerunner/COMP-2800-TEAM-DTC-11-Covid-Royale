@@ -98,7 +98,7 @@ io.on('connection', function (socket) {
       playerId: socket.id,
       playerRisk: 0,
       playerDir: "walkRight",
-      playerName: "Human",
+      playerName: "Homunculus",
       // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
       x: 400,
       y: 400,
