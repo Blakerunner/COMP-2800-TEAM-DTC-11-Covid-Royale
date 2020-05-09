@@ -36,7 +36,34 @@ export class LoadScene extends Phaser.Scene {
     
     create(){
         console.log("LoadScene complete")
-        this.scene.start("MenuScene")
+		var progressBox = this.add.graphics();
+    	var progressBar = this.add.graphics();
+
+    let value = 0.0;
+	let centerx = 20;
+	let centery = 150;
+	let width = 600;
+	let height = 50;
+
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(centerx, centery, width, height);
+    progressBar.fillStyle(0xffffff, 1);
+    progressBar.fillRect(centerx + 5, centery + 5, width * value, height); 
+
+    function fillbar(nameOfBar, increment, scene) {
+      let timer = setInterval(function() {
+        value += increment;
+        if (value > 1 || value < 0) {
+            clearInterval(timer);
+			scene.start("MenuScene")
+			console.log("Hit this");
+        }
+        nameOfBar.fillRect(centerx, centery, width * value, height);
+    },10);
+}
+fillbar(progressBar, 0.01, this.scene);
+
+        //this.scene.start("MenuScene")
     }
 
     update(){
