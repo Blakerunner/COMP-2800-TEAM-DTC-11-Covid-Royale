@@ -1,25 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covid Royale</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Covid Royale</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="./assets/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  </head>
+
+
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+<!-- Custom styles for this template -->
+<link href="./css/carousel.css" rel="stylesheet">
 </head>
 
-<div><body style="display:flex;justify-content:center;align-items:center;"></div>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Goose Logic</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav">
+          <li class="nav-item active px-3 mx-3 rounded">
+            <a class="nav-link" href="./login/google">Login</a>
+          </li>
+          <li class="nav-item active px-3 mx-3 rounded">
+            <a class="nav-link" href="./login/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-    <div id="game"></div>
+  <main role="main">
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <picture>
+            <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/goose_logic_desk.jpg">
+            <img src="./assets/img/goose_logic_mob.jpg" class="d-block img-fluid" />
+          </picture>
+          <div class="container">
+            <div class="carousel-caption">
+              <!-- <h1>Another example headline.</h1>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p> -->
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <picture>
+            <source media="(min-width: 800px)" class="d-block img-fluid"
+              srcset="./assets/img/covid_royal_banner_desk.png">
+            <img src="./assets/img/covid_royal_banner_mob.png" class="d-block img-fluid" />
+          </picture>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>COVID ROYALE</h1>
+              <p>Come play in an online multiplayer battle-royale style game. Game mechanics are based on COVID-19
+                health practices.</p>
+              <p><a class="btn btn-lg btn-primary" href="./covid_royal" role="button">Play</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <picture>
+            <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/who_banner_desk.jpeg">
+            <img src="./assets/img/who_banner_mob.jpeg" class="d-block img-fluid" />
+          </picture>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1></h1>
+              <p>We support WHO reccomended best health practices for COVID-19.</p>
+              <p><a class="btn btn-lg btn-primary"
+                  href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" role="button">Information on
+                  COVID-19</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+
+    <!-- Marketing messaging and featurettes
+      ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+      <div class="container col-lg-6">
+        <h1 class="text-center">About Us</h1>
+        <p class="text-center">Hello! Goose Logic here. A group of students building what we love. Games. We're
+          inspired by the impact games can have on a person though process and meaning. Like everyone else, we've been effected by the COVID-19 pandemic. Our latest project is Covid-Royale. This is our effort to
+          provide some awareness and togetherness though the medium of a battle royale style game.</p>
+      </div>
+      <!-- Four About Us cards -->
+      <hr class="featurette-divider">
+      <div class="row">
+        <div class="col-lg-3 text-center">
+          <img src="./assets/img/profile_pic_keegan.jpg" class="rounded-circle" alt="Profile picture">
+          <h2>Keegan</h2>
+          <p>Nineteen</p>
+        </div>
+        <div class="col-lg-3 text-center">
+          <img src="./assets/img/profile_pic_lawrance.jpg" class="rounded-circle" alt="Profile picture">
+          <h2>Lawrance</h2>
+          <p>Litteral prodigy</p>
+        </div>
+        <div class="col-lg-3 text-center">
+          <img src="./assets/img/profile_pic_zenen.jpg" class="rounded-circle" alt="Profile picture">
+          <h2>Zenen</h2>
+          <p>Very aware of time</p>
+        </div>
+        <div class="col-lg-3 text-center">
+          <img src="./assets/img/profile_pic_blake.jpg" class="rounded-circle" alt="Profile picture">
+          <h2>Blake</h2>
+          <p>Wholesome Dictator</p>
+        </div>
+      </div>
+
+      
+      <!-- START THE FEATURETTES -->
+
+      <!-- <hr class="featurette-divider">
     
-<button onclick="location.href= 'https://covid-royale.westus.cloudapp.azure.com/login/google'">Click ME!</button>
-</body>
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+          <div class="col-md-5">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+          </div>
+        </div>
+    
+        <hr class="featurette-divider"> -->
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="//cdn.jsdelivr.net/npm/phaser@3.23.0/dist/phaser.min.js"></script>
-<script src="js/game.js"></script>
+      <!-- /END THE FEATURETTES -->
+      <hr class="featurette-divider">
+    </div>
 
+    <!-- FOOTER -->
+    <footer class="container text-center">
+      <p>2020 Goose Logic, Inc.</p>
+    </footer>
+  </main>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.23.0/dist/phaser.min.js"></script>
 
-<footer>
-	<div><button onclick="location.href= 'https://covid-royale.westus.cloudapp.azure.com/login/google'">Click ME!</button></div>
-</footer>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 </html>

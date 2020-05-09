@@ -1,73 +1,92 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const server = require('http').Server(app);
+const server = require("http").Server(app);
 const io = require("socket.io").listen(server);
-const authroutes = require('./routes/auth-routes');
-const passportSetup = require('./config/passport-setup');
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const authroutes = require("./routes/auth-routes");
+const passportSetup = require("./config/passport-setup");
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
+// server static public folder
+app.use(express.static(__dirname + "/public"));
 
-
-
+// parsing
 app.use(cors());
-
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 
 //initialize passport
 app.use(passport.initialize());
 
 //Cookies for session storage
-app.use(cookieSession({
-  maxAge:24*60*60*1000,
-  keys: ["MySecretCookieKey"]
-}));
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, //Cookies last 24 hours (t is in milliseconds 10^-6)
+    keys: [process.env.cookieKey], //Key to encrypt cookie pull from dotenv
+  })
+);
 
-// array of players
-let players = {};
-let playersSpawnLocations = [(800, 800)]
-
-// server static public folder
-app.use(express.static(__dirname + '/public'));
-
+//Connect to mognodb
+mongoose.connect(process.env.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true}, function () {
+  console.log("Connected to mongoDB");
+});
 
 //middleware to put infront of protected endpoints
 const isLoggedIn = (req, res, next) => {
-
-  console.log("Cocks n dix");
-  // console.log(req.user);
-  // console.log(req.session.passport);
-  
   if (req.session.passport) {
-      next();
+    next();
   } else {
     console.log("No authenticated passport user found");
-      res.sendStatus(401);
+    res.sendStatus(401);
   }
-}
-
-
-
-
-//Put ^ middleware infront of authenticated endpoint
-
-
-//When someone clicks "loging with google" this is the route that begins oauth flow
-app.use('/login', authroutes);
+};
 
 // base url will serve public/index.html
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
 });
 
 
+// url to get to game.html for game start
+app.get("/covid_royal", function (req, res) {
+  res.sendFile(__dirname + "/public/game.html");
+});
+
+//When someone clicks "loging with google" this is the route that begins oauth flow
+app.use("/login", authroutes);
+
 //Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
-app.get('/protected.html', isLoggedIn, (req, res)=>{
-  res.send(`You have been verified by google oauth ${req.session}`)
+app.get("/protected.html", isLoggedIn, (req, res) => {
+  res.send(
+    `You have been verified by google oauth ${req.session.passport.user}`
+  );
+});
+
+//Basic endpoint to verify we have access to the user with any request
+app.get("/submitScore", (req, res) => {
+  res.send(
+    `Recived a request from user with mongoDB ID: ${req.session.passport.user}`
+  );
+});
+
+
+// array of players
+let players = {};
+let playersSpawnLocations = [(800, 800)];
+
+// generate map blueprint
+let mapData = []
+for (let a = [0, 1, 2, 3, 4, 5, 6, 7, 8], i = a.length; i--; ) {
+  mapData.push(a.splice(Math.floor(Math.random() * (i + 1)), 1)[0]);
+}
+
+// url to get to game.html for game start
+app.get("/covid_royal", function (req, res) {
+  res.sendFile(__dirname + "/public/game.html");
 });
 
 // socket.io handle for browser connect
@@ -78,11 +97,16 @@ io.on('connection', function (socket) {
     players[socket.id] = {
       playerId: socket.id,
       playerRisk: 0,
+      playerDir: "walkRight",
+      playerName: "Human",
       // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
       x: 400,
       y: 400,
     };
 
+    // emit map blueprint
+    socket.on("mapBlueprintReady", () => {socket.emit('mapBlueprint', mapData);})
+    
     // send the players object to the new player
     socket.emit('currentPlayers', players);
 
@@ -93,6 +117,7 @@ io.on('connection', function (socket) {
     socket.on('playerMovement', function (movementData) {
       players[socket.id].x = movementData.x;
       players[socket.id].y = movementData.y;
+      players[socket.id].playerDir = movementData.playerDir;
       // emit a message to all players about the player that moved
       socket.broadcast.emit('playerMoved', players[socket.id]);
     });
@@ -108,7 +133,7 @@ io.on('connection', function (socket) {
     });
   });
 
-// server to listen on port 3000
+// server to listen on port 8080
 server.listen(8080, function () {
-  console.log('Server listening');
+  console.log("Server listening");
 });

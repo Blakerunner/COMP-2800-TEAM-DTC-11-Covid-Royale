@@ -1,65 +1,52 @@
-const config = {
-    type: Phaser.AUTO,
-    width: 1600,
-    height: 1600,
-    physics: {
-      default: 'arcade',
-      roundPixels: true,
-      pixelArt: true,
-      arcade: {
-        gravity: { y: 0 }
-      }
-    },
-    scene: {
-      preload: preload,
-      create: create,
-      update: update
-    } 
-  };
+import {GameUI} from "../scenes/GameUI.js"
+import {GameVirtualController} from "../scenes/GameVirtualController.js"
+export class GameScene extends Phaser.Scene {
+  constructor(){
+    super({
+      key: "GameScene",
+      active: false
+      })
 
-const game = new Phaser.Game(config);
+      this.virtualControllerStates = {}
+      this.mapBlueprint = []
+  }
 
-function preload() {
-    
-
-    this.load.image("overworld", "./assets/img/overworld.png");
-    this.load.image("objects", "./assets/img/objects.png");
-    // this.load.tilemapTiledJSON("map", "./assets/maps/map.json");
-    this.load.tilemapTiledJSON("bottom_left_skirt", "./assets/maps/map_skirts/bottom_left_skirt.json");
-    this.load.tilemapTiledJSON("bottom_right_skirt", "./assets/maps/map_skirts/bottom_right_skirt.json");
-    this.load.tilemapTiledJSON("bottom_skirt", "./assets/maps/map_skirts/bottom_skirt.json");
-    this.load.tilemapTiledJSON("left_skirt", "./assets/maps/map_skirts/left_skirt.json");
-    this.load.tilemapTiledJSON("right_skirt", "./assets/maps/map_skirts/right_skirt.json");
-    this.load.tilemapTiledJSON("top_left_skirt", "./assets/maps/map_skirts/top_left_skirt.json");
-    this.load.tilemapTiledJSON("top_right_skirt", "./assets/maps/map_skirts/top_right_skirt.json");
-    this.load.tilemapTiledJSON("top_skirt", "./assets/maps/map_skirts/top_skirt.json");
-    this.load.tilemapTiledJSON("chunk1", "./assets/maps/map_chunks/chunk1.json");
-    this.load.tilemapTiledJSON("chunk2", "./assets/maps/map_chunks/chunk2.json");
-    this.load.tilemapTiledJSON("chunk3", "./assets/maps/map_chunks/chunk3.json");
-    this.load.tilemapTiledJSON("chunk4", "./assets/maps/map_chunks/chunk4.json");
-    this.load.tilemapTiledJSON("chunk5", "./assets/maps/map_chunks/chunk5.json");
-    this.load.tilemapTiledJSON("chunk6", "./assets/maps/map_chunks/chunk6.json");
-    this.load.tilemapTiledJSON("chunk7", "./assets/maps/map_chunks/chunk7.json");
-    this.load.tilemapTiledJSON("chunk8", "./assets/maps/map_chunks/chunk8.json");
-    this.load.tilemapTiledJSON("chunk9", "./assets/maps/map_chunks/chunk9.json");
-    this.load.atlas("character", "./assets/img/characterSprites.png", "./assets/img/characterSprites.json");
-}
-
-function create() {
+  init(){
+    console.log("GameScene start")
+    // initilise socket
+    this.socket = io();
+  }
   
-  // CAMERA SETUP
+  preload(){
+    
+  }
+  
+  create(){
+
+    // ADD SCENES
+    this.scene.add('GameVirtualController', GameVirtualController, true, { x: 0, y: 0 });
+    this.scene.add('GameUI', GameUI, true, { x: 0, y: 0 });
+
+     // CAMERA SETUP
     // 1600x1600 for current tilemap size
     //unzoomed camera, used to see the whole map
-    this.cameras.main.setBounds(0, 0, 1600, 1600);
-    this.cameras.main.setZoom(1);
+    // this.cameras.main.setBounds(0, 0, 1600, 1600);
+    // this.cameras.main.setZoom(1);
 
     //zoomed camera, used for gameplay
-    // this.cameras.main.setBounds(0, 0, 1600, 1600);
-    // this.cameras.main.setZoom(2);
+    this.cameras.main.setBounds(0, 0, 1600, 1600);
+    this.cameras.main.setZoom(1.8);
 
     // MAP SETUP
     // set game world boundary
     this.physics.world.setBounds(0, 0, 1600, 1600);
+
+    // update map blueprint from server allocation
+    // this.socket.on('mapBlueprint', (mapData) => {
+    //   console.log(this.mapBlueprint)
+    //   this.mapBlueprint = mapData
+    //   console.log(this.mapBlueprint)
+    // });
 
     // generated tiled map
     const top_left_skirt = this.add.tilemap("top_left_skirt");
@@ -110,88 +97,83 @@ function create() {
 
     // randomly generated layers
     // this var is a randomly generated chunk in an array between 0 and the length of the chunk array - 1
-    var first_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    this.socket.emit('mapBlueprintReady');
+    this.socket.on('mapBlueprint', generateMap, this);
+
+    function generateMap(mapData) {
+    console.log("Map Blueprint:", mapData)
+    var first_chunk = chunk_array[mapData[0]]
     const first_chunk_top = first_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(1);
     const first_chunk_middle = first_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(-1);
     const first_chunk_bottom = first_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(-2);
-    // this removes the randomly chosen chunk from the array, reducing the size of the array by 1
-    chunk_array.splice(chunk_array.indexOf(first_chunk), 1);
 
-    var second_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var second_chunk = chunk_array[mapData[1]]
     const second_chunk_top = second_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(1);
     const second_chunk_middle = second_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(-1);
     const second_chunk_bottom = second_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(second_chunk), 1);
 
-    var third_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var third_chunk = chunk_array[mapData[2]]
     const third_chunk_top = third_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(1);
     const third_chunk_middle = third_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(-1);
     const third_chunk_bottom = third_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(third_chunk), 1);
 
-    var fourth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var fourth_chunk = chunk_array[mapData[3]]
     const fourth_chunk_top = fourth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(1);
     const fourth_chunk_middle = fourth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(-1);
     const fourth_chunk_bottom = fourth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(fourth_chunk), 1);
 
-    var fifth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var fifth_chunk = chunk_array[mapData[4]]
     const fifth_chunk_top = fifth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(1);
     const fifth_chunk_middle = fifth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(-1);
     const fifth_chunk_bottom = fifth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(fifth_chunk), 1);
 
-    var sixth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var sixth_chunk = chunk_array[mapData[5]]
     const sixth_chunk_top = sixth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(1);
     const sixth_chunk_middle = sixth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(-1);
     const sixth_chunk_bottom = sixth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(sixth_chunk), 1);
 
-    var seventh_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var seventh_chunk = chunk_array[mapData[6]]
     const seventh_chunk_top = seventh_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(1);
     const seventh_chunk_middle = seventh_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(-1);
     const seventh_chunk_bottom = seventh_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(seventh_chunk), 1);
 
-    var eighth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var eighth_chunk = chunk_array[mapData[7]]
     const eighth_chunk_top = eighth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(1);
     const eighth_chunk_middle = eighth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(-1);
     const eighth_chunk_bottom = eighth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(-2);
-    chunk_array.splice(chunk_array.indexOf(eighth_chunk), 1);
 
-    var ninth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
+    var ninth_chunk = chunk_array[mapData[8]]
     const ninth_chunk_top = ninth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(1);
     const ninth_chunk_middle = ninth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-1);
     const ninth_chunk_bottom = ninth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-2);
-
+    }
 
     // map collisions
     // by tile property in top layer
     // first_chunk_top.setCollisionByProperty({collides: true});
- 
-
-    // UI SETUP
-
-    // playerRisk UI
-    let playerRisk = this.add.text(16, 16, 'Infection risk', {
-        fontSize: '16px',
-        padding: { x: 10, y: 5 },
-        backgroundColor: 'red',
-        fill: 'black'
-    });
-    // makes playerRisk so it will stay in same place on screen
-    playerRisk.setScrollFactor(0);
 
     // PLAYER SETUP
 
     let self = this;
-    this.socket = io();
     this.otherPlayers = this.physics.add.group();
+    this.otherPlayersNames = this.physics.add.group();
 
     this.socket.on('playerMoved', function (playerInfo) {
+      self.otherPlayersNames.getChildren().forEach(function (otherPlayerName) {
+        if (playerInfo.playerId === otherPlayerName.playerId) {
+          otherPlayerName.setPosition(playerInfo.x, playerInfo.y-18);
+        }
+      });
+      
       self.otherPlayers.getChildren().forEach(function (otherPlayer) {
         if (playerInfo.playerId === otherPlayer.playerId) {
           otherPlayer.setPosition(playerInfo.x, playerInfo.y);
+          if (playerInfo.playerDir === "stand") {
+            otherPlayer.anims.stop();
+          } else {
+            console.log(playerInfo.playerId, "is moving", playerInfo.playerDir)
+            otherPlayer.anims.play(playerInfo.playerDir, true);
+          }
         }
       });
     });
@@ -215,6 +197,11 @@ function create() {
         if (playerId === otherPlayer.playerId) {
           otherPlayer.destroy();
         }
+      self.otherPlayersNames.getChildren().forEach(function (otherPlayerName) {
+        if (playerId === otherPlayerName.playerId) {
+          otherPlayerName.destroy();
+        }
+      });
       });
     });
 
@@ -222,7 +209,7 @@ function create() {
       // generate 
       self.player = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       self.player.setCollideWorldBounds(true);
-      self.player.set
+      self.player.playerDir = "stand"
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player);
@@ -293,72 +280,93 @@ function create() {
           zeroPad: 2
         })
       });
-
     }
 
     function addOtherPlayers(self, playerInfo) {
       const otherPlayer = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       otherPlayer.playerId = playerInfo.playerId;
       self.otherPlayers.add(otherPlayer);
+
+      const otherPlayerName = self.add.text(playerInfo.x, playerInfo.y-18, playerInfo.playerName, {
+        fontSize: '12px',
+        padding: { x: 0, y: 0 },
+        backgroundColor: 'white',
+        fill: 'black',
+        align: 'center'
+      }).setOrigin(0.5, 0.5)
+      otherPlayerName.playerId = playerInfo.playerId;
+      self.otherPlayersNames.add(otherPlayerName);
     }
     
     // CONTROLS SETUP
     // keyboard inputs
     self.cursors = this.input.keyboard.createCursorKeys();
 
-    // TESTING
-    
+    // EVENTS
+    // Virtual controller state event change
+    this.scene.get('GameVirtualController').events.on('buttonUpdate', buttonUpdate, this);
+
+    // Updates virutal button events
+    function buttonUpdate(states) {
+      this.virtualControllerStates = states
+    }
+
   }
 
-function update() {
+  update(){
+      // PLAYER MOVEMENT
+    let playerMovementSpeed = 100;
+    if (this.player) {
+        // left button down walk left
+        if (this.cursors.left.isDown || this.virtualControllerStates.left) {
+          this.player.setVelocityX(-playerMovementSpeed);
+          this.player.setVelocityY(0);
+          this.player.anims.play('walkLeft', true);
+          this.player.playerDir = "walkLeft"
+        } 
+        // right button down walk right
+        else if (this.cursors.right.isDown || this.virtualControllerStates.right) {
+          this.player.setVelocityX(playerMovementSpeed);
+          this.player.setVelocityY(0);
+          this.player.anims.play('walkRight', true);
+          this.player.playerDir = "walkRight"
+        }
+        // down button down walk down
+        else if (this.cursors.down.isDown || this.virtualControllerStates.down){
+          this.player.setVelocityY(playerMovementSpeed);
+          this.player.setVelocityX(0);
+          this.player.anims.play('walkDown', true);
+          this.player.playerDir = "walkDown"
+        }
+        // up button down walk up
+        else if (this.cursors.up.isDown || this.virtualControllerStates.up) {
+          this.player.setVelocityY(-playerMovementSpeed);
+          this.player.setVelocityX(0);
+          this.player.anims.play('walkUp', true);
+          this.player.playerDir = "walkUp"
+        }
+        // no button down stop animation and stop player velocity
+        else {
+          this.player.setVelocityX(0);
+          this.player.setVelocityY(0);
+          // this.player.anims.stop();
+          this.player.anims.stop();
+          this.player.playerDir = "stand"
+        }
 
-  // PLAYER MOVEMENT
+        // emit player movement
+        let x = this.player.x;
+        let y = this.player.y;
+        if (this.player.oldLocation && (x !== this.player.oldLocation.x || y !== this.player.oldLocation.y)) {
+          this.socket.emit('playerMovement', {x: this.player.x, y: this.player.y, playerDir: this.player.playerDir});
+        }
+        
+        // save old position data
+        this.player.oldLocation = {
+          x: this.player.x,
+          y: this.player.y,
+        };
+    }
 
-  let playerMovementSpeed = 100;
-  if (this.player) {
-      // left button down walk left
-      if (this.cursors.left.isDown) {
-        this.player.setVelocityX(-playerMovementSpeed);
-        this.player.setVelocityY(0);
-        this.player.anims.play('walkLeft', true);
-      }
-      // right button down walk right
-      else if (this.cursors.right.isDown) {
-        this.player.setVelocityX(playerMovementSpeed);
-        this.player.setVelocityY(0);
-        this.player.anims.play('walkRight', true);
-      }
-      // down button down walk down
-      else if (this.cursors.down.isDown){
-        this.player.setVelocityY(playerMovementSpeed);
-        this.player.setVelocityX(0);
-        this.player.anims.play('walkDown', true);
-      }
-      // up button down walk up
-      else if (this.cursors.up.isDown) {
-        this.player.setVelocityY(-playerMovementSpeed);
-        this.player.setVelocityX(0);
-        this.player.anims.play('walkUp', true);
-      }
-      // no button down stop animation and stop player velocity
-      else {
-        this.player.setVelocityX(0);
-        this.player.setVelocityY(0);
-        this.player.anims.stop();
-      }
-
-      // emit player movement
-      let x = this.player.x;
-      let y = this.player.y;
-      if (this.player.oldLocation && (x !== this.player.oldLocation.x || y !== this.player.oldLocation.y)) {
-        this.socket.emit('playerMovement', {x: this.player.x, y: this.player.y});
-      }
-      
-      // save old position data
-      this.player.oldLocation = {
-        x: this.player.x,
-        y: this.player.y,
-      };
   }
-
 }
