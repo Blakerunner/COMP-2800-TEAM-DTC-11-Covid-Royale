@@ -24,9 +24,8 @@ router.get(
   "/google/redirected",
   passport.authenticate("google", { failureRedirect: "/failed" }),
   (req, res) => {
-    res.send(
-      `You have succesfully been logged in via oauth with id=${req.user.id}`
-    );
+    res.cookie('username', req.user.username, { maxAge: 9000});
+    res.redirect('/covid_royal');
   }
 );
 
