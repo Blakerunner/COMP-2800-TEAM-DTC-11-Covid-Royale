@@ -61,10 +61,9 @@ app.use("/login", authroutes);
 
 //Succesful oauth authentication redirects here, with middleware 'isloggedin' sending a 401 if the user does not have a currently active session.
 app.get("/protected.html", isLoggedIn, (req, res) => {
-  res.send(
-    `You have been verified by google oauth ${req.session.passport.user}`
-  );
-});
+    console.log(req.user)
+        res.cookie('username', req.session.passport.user.username, { maxAge: 9000});
+        res.redirect('/covid_royal')});
 
 //Basic endpoint to verify we have access to the user with any request
 app.get("/submitScore", (req, res) => {
@@ -89,16 +88,32 @@ app.get("/covid_royal", function (req, res) {
   res.sendFile(__dirname + "/public/game.html");
 });
 
+
+function helper(socket){
+    let cookies = socket.request.headers.cookie.split(' ');
+    let key_val = cookies[cookies.length - 1];
+    username = key_val.split('=');
+    if (username[0].includes('username')){
+         username = username[1].replace("%20", " ");
+        return username;
+    }
+    else{
+        return false;
+    }
+    username = username[1].replace("%20", " ");
+}
+
 // socket.io handle for browser connect
 io.on('connection', function (socket) {
-    console.log('user connected', socket.id);
-
-    // create player
+    let COOKIE;
+    if(helper(socket)){
+        COOKIE = true;
+    }
     players[socket.id] = {
       playerId: socket.id,
       playerRisk: 0,
       playerDir: "walkRight",
-      playerName: "Homunculus",
+      playerName: (COOKIE ? username: "Homonucleus"),
       // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
       x: 400,
       y: 400,
