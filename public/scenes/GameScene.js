@@ -366,6 +366,32 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
         };
+
+          // move camera function
+          if (this.input.activePointer.isDown) {
+            if (this.cameraResetCounter === 0) {
+              this.cameras.main.stopFollow()
+              this.cameras.main.zoomTo(1, 500)
+            }
+            if (this.origDragPoint) {     
+              this.cameras.main.scrollX += (this.input.activePointer.position.x - this.cameras.main.centerX) / 15;
+              this.cameras.main.scrollY += (this.input.activePointer.position.y - this.cameras.main.centerY) / 15;
+              this.cameraResetCounter = 0
+            }
+            this.origDragPoint = this.input.activePointer.position.clone();
+          } else {
+            this.cameraResetCounter++
+            this.origDragPoint = null
+            if (this.cameraResetCounter > 1000) this.cameraResetCounter = 100;
+            if (this.cameraResetCounter === 20) {
+              this.cameras.main.pan(this.player.x, this.player.y, 700, 'Linear')
+            }
+            if (this.cameraResetCounter === 65) {
+              this.cameras.main.startFollow(this.player, false);
+              this.cameras.main.zoomTo(1.8, 500)
+            }
+          } 
+
     }
 
   }
