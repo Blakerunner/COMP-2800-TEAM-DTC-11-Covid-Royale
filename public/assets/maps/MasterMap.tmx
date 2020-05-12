@@ -201,7 +201,7 @@
   </tile>
   <tile id="33">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="34">
@@ -824,7 +824,7 @@
   </tile>
   <tile id="113">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="flower pot" type="collision" x="5" y="7.4375" width="6" height="5.4375"/>

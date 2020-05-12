@@ -88,63 +88,62 @@ export class GameScene extends Phaser.Scene {
 
     // randomly generated layers
     // this var is a randomly generated chunk in an array between 0 and the length of the chunk array - 1
-    // chunk_array[Math.floor(Math.random() * chunk_array.length)]
-    var first_chunk = chunk1
+    var first_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const first_chunk_top = first_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(1);
     const first_chunk_middle = first_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(-1);
     const first_chunk_bottom = first_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*0).setDepth(-2);
     // this removes the randomly chosen chunk from the array, reducing the size of the array by 1
     chunk_array.splice(chunk_array.indexOf(first_chunk), 1);
 
-    var second_chunk = chunk2
+    var second_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const second_chunk_top = second_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(1);
     const second_chunk_middle = second_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(-1);
     const second_chunk_bottom = second_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*0).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(second_chunk), 1);
 
-    var third_chunk = chunk3
+    var third_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const third_chunk_top = third_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(1);
     const third_chunk_middle = third_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(-1);
     const third_chunk_bottom = third_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*0).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(third_chunk), 1);
 
-    var fourth_chunk = chunk4
+    var fourth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const fourth_chunk_top = fourth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(1);
     const fourth_chunk_middle = fourth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(-1);
     const fourth_chunk_bottom = fourth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*16).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(fourth_chunk), 1);
 
-    var fifth_chunk = chunk5
+    var fifth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const fifth_chunk_top = fifth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(1);
     const fifth_chunk_middle = fifth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(-1);
     const fifth_chunk_bottom = fifth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*16).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(fifth_chunk), 1);
 
-    var sixth_chunk = chunk6
+    var sixth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const sixth_chunk_top = sixth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(1);
     const sixth_chunk_middle = sixth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(-1);
     const sixth_chunk_bottom = sixth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*16).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(sixth_chunk), 1);
 
-    var seventh_chunk = chunk7
+    var seventh_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const seventh_chunk_top = seventh_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(1);
     const seventh_chunk_middle = seventh_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(-1);
     const seventh_chunk_bottom = seventh_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*0, 80 + 30*32).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(seventh_chunk), 1);
 
-    var eighth_chunk = chunk8
+    var eighth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const eighth_chunk_top = eighth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(1);
     const eighth_chunk_middle = eighth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(-1);
     const eighth_chunk_bottom = eighth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*16, 80 + 30*32).setDepth(-2);
     chunk_array.splice(chunk_array.indexOf(eighth_chunk), 1);
 
-    var ninth_chunk = chunk9
+    var ninth_chunk = chunk_array[Math.floor(Math.random() * chunk_array.length)]
     const ninth_chunk_top = ninth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(1);
     const ninth_chunk_middle = ninth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-1);
     const ninth_chunk_bottom = ninth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-2);
 
     // map collisions
-    // by tile property in top layer
+    // skirt collision
     top_left_skirt_baseLayer.setCollisionByProperty({collides: true});
     top_right_skirt_baseLayer.setCollisionByProperty({collides: true});
     top_skirt_baseLayer.setCollisionByProperty({collides: true});
@@ -153,6 +152,8 @@ export class GameScene extends Phaser.Scene {
     bottom_right_skirt_baseLayer.setCollisionByProperty({collides: true});
     bottom_left_skirt_baseLayer.setCollisionByProperty({collides: true});
     bottom_skirt_baseLayer.setCollisionByProperty({collides: true});
+
+    //individual chunk collision per layer
     first_chunk_bottom.setCollisionByProperty({collides: true});
     first_chunk_middle.setCollisionByProperty({collides: true});
     first_chunk_top.setCollisionByProperty({collides: true});
@@ -227,7 +228,9 @@ export class GameScene extends Phaser.Scene {
       // generate 
       self.player = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       self.player.setCollideWorldBounds(true);
-      self.player.body.setSize(8,4,true).setOffset(3, 15);
+      //sets the collision bosy size and placement
+      self.player.body.setSize(4,4,true).setOffset(5, 15);
+      //makes the player collide with all collision masks per each chunks layer
       self.physics.add.collider(self.player, top_left_skirt_baseLayer);
       self.physics.add.collider(self.player, top_right_skirt_baseLayer);
       self.physics.add.collider(self.player, top_skirt_baseLayer);
