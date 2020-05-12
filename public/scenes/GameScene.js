@@ -413,6 +413,7 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
         };
+        
     }
   }
 }

@@ -183,7 +183,7 @@
   </tile>
   <tile id="30">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="crate" type="collision" x="0" y="6.96875" width="15.9688" height="9.03125"/>
@@ -305,7 +305,7 @@
   </tile>
   <tile id="44">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="rock" type="collision" x="16" y="16">
@@ -315,7 +315,7 @@
   </tile>
   <tile id="45">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="rock" type="collision" x="0" y="16">
@@ -325,7 +325,7 @@
   </tile>
   <tile id="46">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="16" y="0">
@@ -335,7 +335,7 @@
   </tile>
   <tile id="47">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0" width="16" height="16"/>
@@ -343,7 +343,7 @@
   </tile>
   <tile id="48">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0" width="16" height="16"/>
@@ -351,7 +351,7 @@
   </tile>
   <tile id="49">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0" width="16" height="16"/>
@@ -359,7 +359,7 @@
   </tile>
   <tile id="50">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0">
@@ -369,7 +369,7 @@
   </tile>
   <tile id="51">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="16" y="16">
@@ -379,7 +379,7 @@
   </tile>
   <tile id="52">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0" width="16" height="16"/>
@@ -387,7 +387,7 @@
   </tile>
   <tile id="53">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0" width="16" height="16"/>
@@ -395,7 +395,7 @@
   </tile>
   <tile id="54">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0" width="16" height="16"/>
@@ -403,7 +403,7 @@
   </tile>
   <tile id="55">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="house" type="collision" x="0" y="0">
@@ -484,7 +484,7 @@
   </tile>
   <tile id="67">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="68">
@@ -549,12 +549,12 @@
   </tile>
   <tile id="77">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="78">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="79">
@@ -791,17 +791,17 @@
   </tile>
   <tile id="107">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="108">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="109">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="110">
@@ -824,7 +824,7 @@
   </tile>
   <tile id="113">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="flower pot" type="collision" x="5" y="7.4375" width="6" height="5.4375"/>
@@ -1049,17 +1049,17 @@
   </tile>
   <tile id="147">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="148">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="149">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="150">
@@ -1304,17 +1304,17 @@
   </tile>
   <tile id="186">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="187">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="188">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bench" type="collision" x="3.03125" y="12.0625" width="12.9688" height="3.9375"/>
@@ -1322,7 +1322,7 @@
   </tile>
   <tile id="189">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bench" type="collision" x="0" y="11.9688" width="16.0313" height="4.03125"/>
@@ -1330,7 +1330,7 @@
   </tile>
   <tile id="190">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bench" type="collision" x="0" y="12" width="12.9688" height="4"/>
@@ -1473,12 +1473,12 @@
   </tile>
   <tile id="213">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="214">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="215">
@@ -1599,27 +1599,27 @@
   </tile>
   <tile id="235">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="236">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="237">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="238">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="239">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="240">
@@ -1654,7 +1654,7 @@
   </tile>
   <tile id="244" terrain=",,0,">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="water" type="collision" x="0" y="16">
@@ -1729,7 +1729,7 @@
   </tile>
   <tile id="253">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="3">
     <object id="3" name="small house" type="collsion" x="16" y="0">
@@ -1739,7 +1739,7 @@
   </tile>
   <tile id="254">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="small house" type="collsion" x="11.0938" y="-0.03125">
@@ -1825,7 +1825,7 @@
   </tile>
   <tile id="268">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bench" type="collision" x="3.03125" y="15.0313" width="12.9688" height="0.96875"/>
@@ -1833,7 +1833,7 @@
   </tile>
   <tile id="269">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bench" type="collision" x="0" y="15" width="16.0313" height="1"/>
@@ -1841,7 +1841,7 @@
   </tile>
   <tile id="270">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bench" type="collision" x="0" y="15" width="12.9688" height="1"/>
@@ -2087,12 +2087,12 @@
   </tile>
   <tile id="306">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="307">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="308">
@@ -2377,7 +2377,7 @@
   </tile>
   <tile id="355">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="2" name="box" type="collision" x="4.03125" y="10.875" width="11.9688" height="5.125"/>
@@ -2385,7 +2385,7 @@
   </tile>
   <tile id="356">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="box" type="collision" x="0" y="10.9688" width="11.9688" height="5.03125"/>
@@ -2393,7 +2393,7 @@
   </tile>
   <tile id="357">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="358">
@@ -2426,7 +2426,7 @@
   </tile>
   <tile id="362" terrain="0,0,0,">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="water" type="collision" x="16" y="0">
@@ -2436,7 +2436,7 @@
   </tile>
   <tile id="363" terrain="0,0,,0">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="water" type="collision" x="0" y="16.0313" rotation="-180">
@@ -2446,7 +2446,7 @@
   </tile>
   <tile id="364">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="0" y="4.03125" width="4.96875" height="11.9688"/>
@@ -2459,7 +2459,7 @@
   </tile>
   <tile id="366">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="11.0313" y="4.03125" width="4.96875" height="11.9688"/>
@@ -2696,7 +2696,7 @@
   </tile>
   <tile id="402" terrain="0,,0,0">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="water" type="collision" x="16" y="0">
@@ -2706,7 +2706,7 @@
   </tile>
   <tile id="403" terrain=",0,0,0">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="water" type="collision" x="0" y="16.0313" rotation="-180">
@@ -2716,7 +2716,7 @@
   </tile>
   <tile id="404">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="0" y="0" width="4.96875" height="15.9688"/>
@@ -2729,7 +2729,7 @@
   </tile>
   <tile id="406">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="11.0313" y="0" width="4.96875" height="15.9688"/>
@@ -2952,7 +2952,7 @@
   </tile>
   <tile id="444">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="0" y="0" width="5.0625" height="16.0938"/>
@@ -2961,7 +2961,7 @@
   </tile>
   <tile id="445">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="0" y="10.9063" width="15.9688" height="5.09375"/>
@@ -2969,7 +2969,7 @@
   </tile>
   <tile id="446">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="cliff" type="collision" x="0" y="11" width="16.0313" height="5"/>
@@ -2988,7 +2988,7 @@
   </tile>
   <tile id="449" terrain=",,,7">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="rock" type="collision" x="3" y="5.9375" width="13" height="10.0625"/>
@@ -2996,7 +2996,7 @@
   </tile>
   <tile id="450" terrain=",,7,">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="rock" type="collision" x="0" y="5.96875" width="13.0313" height="10.0313"/>
@@ -3462,7 +3462,7 @@
   </tile>
   <tile id="527">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="528">
@@ -3694,7 +3694,7 @@
   </tile>
   <tile id="567">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="568">
@@ -3900,22 +3900,22 @@
   </tile>
   <tile id="604">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="605">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="606">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="607">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="608">
@@ -4090,7 +4090,7 @@
   </tile>
   <tile id="642" terrain="6,6,6,6">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bush" type="collision" x="0" y="0" width="16" height="16"/>
@@ -4098,7 +4098,7 @@
   </tile>
   <tile id="643" terrain=",6,6,6">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bush" type="collision" x="0" y="0" width="16" height="16"/>
@@ -4106,7 +4106,7 @@
   </tile>
   <tile id="644" terrain="6,,6,6">
    <properties>
-    <property name="collides" type="bool" value="false"/>
+    <property name="collides" type="bool" value="true"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="bush" type="collision" x="0" y="0" width="16" height="16"/>
@@ -5093,12 +5093,12 @@
   </tile>
   <tile id="821">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="822">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="823">
@@ -5517,27 +5517,27 @@
   </tile>
   <tile id="898">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="899">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="900">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="901">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="902">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="903">
@@ -5717,27 +5717,27 @@
   </tile>
   <tile id="938">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="939">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="940">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="941">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="942">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="943">
@@ -5917,22 +5917,22 @@
   </tile>
   <tile id="978">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="979">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="980">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="981">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="982">
@@ -6109,7 +6109,7 @@
   </tile>
   <tile id="1014" terrain="5,5,5,">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="pit" type="collision" x="0" y="0" width="7" height="15.9688"/>
@@ -6118,7 +6118,7 @@
   </tile>
   <tile id="1015" terrain="5,5,,5">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="pit" type="collision" x="9.03125" y="0" width="6.96875" height="15.9688"/>
@@ -6137,22 +6137,22 @@
   </tile>
   <tile id="1018">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1019">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1020">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1021">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1022">
@@ -6924,13 +6924,27 @@
   </tile>
   <tile id="1163">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
+   <animation>
+    <frame tileid="1163" duration="150"/>
+    <frame tileid="1165" duration="150"/>
+    <frame tileid="1167" duration="150"/>
+    <frame tileid="1169" duration="150"/>
+    <frame tileid="1171" duration="150"/>
+   </animation>
   </tile>
   <tile id="1164">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
+   <animation>
+    <frame tileid="1164" duration="150"/>
+    <frame tileid="1166" duration="150"/>
+    <frame tileid="1168" duration="150"/>
+    <frame tileid="1170" duration="150"/>
+    <frame tileid="1172" duration="150"/>
+   </animation>
   </tile>
   <tile id="1165">
    <properties>
@@ -7124,13 +7138,27 @@
   </tile>
   <tile id="1203">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
+   <animation>
+    <frame tileid="1203" duration="150"/>
+    <frame tileid="1205" duration="150"/>
+    <frame tileid="1207" duration="150"/>
+    <frame tileid="1209" duration="150"/>
+    <frame tileid="1211" duration="150"/>
+   </animation>
   </tile>
   <tile id="1204">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
+   <animation>
+    <frame tileid="1204" duration="150"/>
+    <frame tileid="1206" duration="150"/>
+    <frame tileid="1208" duration="150"/>
+    <frame tileid="1210" duration="150"/>
+    <frame tileid="1212" duration="150"/>
+   </animation>
   </tile>
   <tile id="1205">
    <properties>
@@ -7349,12 +7377,12 @@
   </tile>
   <tile id="1248">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1249">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1250">
