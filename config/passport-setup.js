@@ -9,7 +9,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   //Decode client side cookie and find associated user
-  console.log("mongodb userid:" + id);
+  console.log("(FROM PASSPORT-SETUP Deserialize user) mongodb userid:" + id);
   User.findById(id).then((user) => {
     done(null, user);
   });
@@ -28,7 +28,7 @@ passport.use(
       console.log("callback executed");
       User.findOne({ googleId: profile.id }).then((currentUser) => {
         if (currentUser) {
-          console.log(`The user ${currentUser} is already in our DB`);
+         // console.log(`The user ${currentUser} is already in our DB`);
           done(null, currentUser);
           //This user is in our db
         } else {
@@ -40,7 +40,7 @@ passport.use(
             //Then add it to our mongoDB
             .save()
             .then((newUser) => {
-              console.log("new User created in mongodb: " + newUser);
+              console.log("(FROM PASSPORT-SETUP google stragey user)" + newUser);
               done(null, newUser);
             });
         }
