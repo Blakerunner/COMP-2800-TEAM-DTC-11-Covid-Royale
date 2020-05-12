@@ -68,35 +68,7 @@ function onAuthorizeFail(data, message, error, accept){
   // see: http://socket.io/docs/client-api/#socket > error-object
 }
 
-// var session = require("express-session")({
-//   secret: "my-secret",
-//   resave: true,
-//   saveUninitialized: true
-// });
-// var sharedsession = require("express-socket.io-session");
 
-// Use express-session middleware for express
-//app.use(session);
-
-// Use shared session middleware for socket.io
-// setting autoSave:true
-
-// io.use(sharedsession(session, {
-//   autoSave:true
-// }));
-
-/////WACK SHIT
-
-// var sessionMiddleware = session({
-//   store: new RedisStore({}), // XXX redis server config
-//   secret: "keyboard cat",
-// });
-
-// sio.use(function(socket, next) {
-//   sessionMiddleware(socket.request, socket.request.res || {}, next);
-// });
-
-// server static public folder
 app.use(express.static(__dirname + "/public"));
 
 // parsing
@@ -132,6 +104,10 @@ mongoose.connect(
     // base url will serve public/index.html
     app.get("/", function (req, res) {
       res.sendFile(__dirname + "/index.html");
+    });
+
+    app.get("/whoami", function (req, res) {
+      res.json(req.session);
     });
 
     // url to get to game.html for game start
