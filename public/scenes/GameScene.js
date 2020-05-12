@@ -142,8 +142,44 @@ export class GameScene extends Phaser.Scene {
     }
 
     // map collisions
-    // by tile property in top layer
-    // first_chunk_top.setCollisionByProperty({collides: true});
+    // skirt collision
+    top_left_skirt_baseLayer.setCollisionByProperty({collides: true});
+    top_right_skirt_baseLayer.setCollisionByProperty({collides: true});
+    top_skirt_baseLayer.setCollisionByProperty({collides: true});
+    right_skirt_baseLayer.setCollisionByProperty({collides: true});
+    left_skirt_baseLayer.setCollisionByProperty({collides: true});
+    bottom_right_skirt_baseLayer.setCollisionByProperty({collides: true});
+    bottom_left_skirt_baseLayer.setCollisionByProperty({collides: true});
+    bottom_skirt_baseLayer.setCollisionByProperty({collides: true});
+
+    //individual chunk collision per layer
+    first_chunk_bottom.setCollisionByProperty({collides: true});
+    first_chunk_middle.setCollisionByProperty({collides: true});
+    first_chunk_top.setCollisionByProperty({collides: true});
+    second_chunk_bottom.setCollisionByProperty({collides: true});
+    second_chunk_middle.setCollisionByProperty({collides: true});
+    second_chunk_top.setCollisionByProperty({collides: true});
+    third_chunk_bottom.setCollisionByProperty({collides: true});
+    third_chunk_middle.setCollisionByProperty({collides: true});
+    third_chunk_top.setCollisionByProperty({collides: true});
+    fourth_chunk_bottom.setCollisionByProperty({collides: true});
+    fourth_chunk_middle.setCollisionByProperty({collides: true});
+    fourth_chunk_top.setCollisionByProperty({collides: true});
+    fifth_chunk_bottom.setCollisionByProperty({collides: true});
+    fifth_chunk_middle.setCollisionByProperty({collides: true});
+    fifth_chunk_top.setCollisionByProperty({collides: true});
+    sixth_chunk_bottom.setCollisionByProperty({collides: true});
+    sixth_chunk_middle.setCollisionByProperty({collides: true});
+    sixth_chunk_top.setCollisionByProperty({collides: true});
+    seventh_chunk_bottom.setCollisionByProperty({collides: true});
+    seventh_chunk_middle.setCollisionByProperty({collides: true});
+    seventh_chunk_top.setCollisionByProperty({collides: true});
+    eighth_chunk_bottom.setCollisionByProperty({collides: true});
+    eighth_chunk_middle.setCollisionByProperty({collides: true});
+    eighth_chunk_top.setCollisionByProperty({collides: true});
+    ninth_chunk_bottom.setCollisionByProperty({collides: true});
+    ninth_chunk_middle.setCollisionByProperty({collides: true});
+    ninth_chunk_top.setCollisionByProperty({collides: true});
 
     // PLAYER SETUP
 
@@ -202,6 +238,45 @@ export class GameScene extends Phaser.Scene {
       // generate 
       self.player = self.physics.add.sprite(playerInfo.x, playerInfo.y, 'character', 0).setOrigin(0.5, 0.5);
       self.player.setCollideWorldBounds(true);
+      //sets the collision bosy size and placement
+      self.player.body.setSize(4,4,true).setOffset(5, 15);
+      //makes the player collide with all collision masks per each chunks layer
+      self.physics.add.collider(self.player, top_left_skirt_baseLayer);
+      self.physics.add.collider(self.player, top_right_skirt_baseLayer);
+      self.physics.add.collider(self.player, top_skirt_baseLayer);
+      self.physics.add.collider(self.player, left_skirt_baseLayer);
+      self.physics.add.collider(self.player, right_skirt_baseLayer);
+      self.physics.add.collider(self.player, bottom_left_skirt_baseLayer);
+      self.physics.add.collider(self.player, bottom_right_skirt_baseLayer);
+      self.physics.add.collider(self.player, bottom_skirt_baseLayer);
+      self.physics.add.collider(self.player, first_chunk_bottom);
+      self.physics.add.collider(self.player, first_chunk_middle);
+      self.physics.add.collider(self.player, first_chunk_top);
+      self.physics.add.collider(self.player, second_chunk_bottom);
+      self.physics.add.collider(self.player, second_chunk_middle);
+      self.physics.add.collider(self.player, second_chunk_top);
+      self.physics.add.collider(self.player, third_chunk_bottom);
+      self.physics.add.collider(self.player, third_chunk_middle);
+      self.physics.add.collider(self.player, third_chunk_top);
+      self.physics.add.collider(self.player, fourth_chunk_bottom);
+      self.physics.add.collider(self.player, fourth_chunk_middle);
+      self.physics.add.collider(self.player, fourth_chunk_top);
+      self.physics.add.collider(self.player, fifth_chunk_bottom);
+      self.physics.add.collider(self.player, fifth_chunk_middle);
+      self.physics.add.collider(self.player, fifth_chunk_top);
+      self.physics.add.collider(self.player, sixth_chunk_bottom);
+      self.physics.add.collider(self.player, sixth_chunk_middle);
+      self.physics.add.collider(self.player, sixth_chunk_top);
+      self.physics.add.collider(self.player, seventh_chunk_bottom);
+      self.physics.add.collider(self.player, seventh_chunk_middle);
+      self.physics.add.collider(self.player, seventh_chunk_top);
+      self.physics.add.collider(self.player, eighth_chunk_bottom);
+      self.physics.add.collider(self.player, eighth_chunk_middle);
+      self.physics.add.collider(self.player, eighth_chunk_top);
+      self.physics.add.collider(self.player, ninth_chunk_bottom);
+      self.physics.add.collider(self.player, ninth_chunk_middle);
+      self.physics.add.collider(self.player, ninth_chunk_top);
+
       self.player.playerDir = "stand"
 
       // set camera to follow player
@@ -388,8 +463,6 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
         };
-
     }
-
   }
 }
