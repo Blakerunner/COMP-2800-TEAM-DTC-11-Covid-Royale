@@ -41,13 +41,6 @@ export class GameScene extends Phaser.Scene {
     // set game world boundary
     this.physics.world.setBounds(0, 0, 1600, 1600);
 
-    // update map blueprint from server allocation
-    // this.socket.on('mapBlueprint', (mapData) => {
-    //   console.log(this.mapBlueprint)
-    //   this.mapBlueprint = mapData
-    //   console.log(this.mapBlueprint)
-    // });
-
     // generated tiled map
     const top_left_skirt = this.add.tilemap("top_left_skirt");
     const top_right_skirt = this.add.tilemap("top_right_skirt");
@@ -213,7 +206,7 @@ export class GameScene extends Phaser.Scene {
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player);
-
+      
       // Player Animations
 
       self.anims.create({
@@ -314,6 +307,35 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(){
+     // CAMERA STICK
+      if ((this.input.activePointer.isDown && this.cameraStickUnlocked) || this.input.activePointer.isDown &&
+        (250 < this.input.activePointer.x && this.input.activePointer.x < 384) &&
+        (96 < this.input.activePointer.y && this.input.activePointer.y < 224)) {
+        if (this.cameraResetCounter === 0) {
+          this.cameras.main.stopFollow()
+          this.cameras.main.zoomTo(1, 500)
+        }
+        if (this.origDragPoint) {     
+          this.cameras.main.scrollX += (this.input.activePointer.position.x - this.cameras.main.centerX) / 15;
+          this.cameras.main.scrollY += (this.input.activePointer.position.y - this.cameras.main.centerY) / 15;
+          this.cameraResetCounter = 0
+          this.cameraStickUnlocked = true
+        }
+        this.origDragPoint = this.input.activePointer.position.clone();
+      } else {
+        this.cameraStickUnlocked = false
+        this.cameraResetCounter++
+        this.origDragPoint = null
+        if (this.cameraResetCounter > 1000) this.cameraResetCounter = 100;
+        if (this.cameraResetCounter === 20) {
+          this.cameras.main.pan(this.player.x, this.player.y, 700, 'Linear')
+        }
+        if (this.cameraResetCounter === 65) {
+          this.cameras.main.startFollow(this.player, false);
+          this.cameras.main.zoomTo(1.8, 500)
+        }
+      } 
+
       // PLAYER MOVEMENT
     let playerMovementSpeed = 100;
     if (this.player) {
@@ -366,31 +388,6 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
         };
-
-          // move camera function
-          if (this.input.activePointer.isDown) {
-            if (this.cameraResetCounter === 0) {
-              this.cameras.main.stopFollow()
-              this.cameras.main.zoomTo(1, 500)
-            }
-            if (this.origDragPoint) {     
-              this.cameras.main.scrollX += (this.input.activePointer.position.x - this.cameras.main.centerX) / 15;
-              this.cameras.main.scrollY += (this.input.activePointer.position.y - this.cameras.main.centerY) / 15;
-              this.cameraResetCounter = 0
-            }
-            this.origDragPoint = this.input.activePointer.position.clone();
-          } else {
-            this.cameraResetCounter++
-            this.origDragPoint = null
-            if (this.cameraResetCounter > 1000) this.cameraResetCounter = 100;
-            if (this.cameraResetCounter === 20) {
-              this.cameras.main.pan(this.player.x, this.player.y, 700, 'Linear')
-            }
-            if (this.cameraResetCounter === 65) {
-              this.cameras.main.startFollow(this.player, false);
-              this.cameras.main.zoomTo(1.8, 500)
-            }
-          } 
 
     }
 
