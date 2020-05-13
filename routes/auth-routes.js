@@ -13,9 +13,18 @@ router.get(
 //auth logout
 //First detroy passport sesssion thant redirect home
 router.get("/logout", async (req, res) => {
+  //There was no session to destroy
+  if(! req.session.user){
+    res.send({ result:'404' , message: 'No active session' });
+    return
+  }
+
+  //DETROY SESSION AND REDIRECT TO HOME
   await req.logout();
   req.session.destroy();
-  res.send({ result: 'OK', message: 'Session destroyed' });
+  res.redirect('/')
+  // res.send({ result: 'OK', message: 'Session destroyed' });
+  // res.redirect('/')
 });
 
 //Callback route for google auth to redirect back too

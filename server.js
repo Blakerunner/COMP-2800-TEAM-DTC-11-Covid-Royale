@@ -25,10 +25,12 @@ const expressSession = session({
   saveUninitialized: false,
 
 });
-
+app.use(cors());
 app.use(passport.initialize());
-
 app.use(expressSession)
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 var io               = require("socket.io")(server),
@@ -106,7 +108,8 @@ mongoose.connect(
       res.sendFile(__dirname + "/index.html");
     });
 
-    app.get("/whoami", function (req, res) {
+    app.get("/whoami", cors(), function (req, res) {
+      res.header("Access-Control-Allow-Origin", "*");
       res.json(req.session);
     });
 
