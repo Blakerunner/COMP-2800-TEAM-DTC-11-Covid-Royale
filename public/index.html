@@ -34,35 +34,6 @@
 
 
 //
-async function logOut(){
-	  let response = await fetch(`http://localhost:8080/login/logout`, {mode:"no-cors"});
-	  let data = await response.json();
-	  return data;
-}
-
-logOut()
-  .then(response => {
-    if(response.result == "404"){ 
-      $('#logoutAlert').text(`You are not currently Logged in`)
-      $('#logoutAlert').show()
-    }
-    else{
-    console.log("Here is where to do the query stuff", response)}
-  })
-  .catch(err => console.log(err))
-
-
-$(document).ready(function(){
-
-  //Send request To amIloggedin? endpoint
-  // if sucess show #loginAlert success
-  // else show #notLoggedIn
-  // $('#loginAlert').show()
-  // $('#logoutAlert').show()
-});
-
-
-///POP UPS for login status
 async function getUserAsync() 
 {
     let response = await fetch(`http://localhost:8080/whoami`, {mode:"no-cors"})
@@ -70,10 +41,14 @@ async function getUserAsync()
     return data;
 	
 }
-getUserAsync()
+
+
+$(document).ready(function(){
+
+  getUserAsync()
   .then(response => {
     if(!response.user){ 
-      $('#logoutAlert').text(`You havent logged in yet! Please click login`)
+      $('#loggedOut').text(`You havent logged in yet! Please click login`)
       $('#logoutAlert').show()
   }
     else{console.log('You are logged in, display popup here', response);
@@ -81,6 +56,9 @@ getUserAsync()
     $('#loginSuccess').show()}
   })
   .catch(err => console.log(err))
+});
+
+
 
  </script>
 </head>
@@ -100,7 +78,7 @@ getUserAsync()
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div classf="collapse navbar-collapse" id="navbarCollapse">
+      <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav">
           <li class="nav-item active px-3 mx-3 rounded">
             <a class="nav-link" href="./login/google">Login</a>
@@ -115,11 +93,11 @@ getUserAsync()
 <div>
   <br>
 <div id="loginSuccess" style="display:none;"class="alert alert-success" role="alert">
-		You have been logged in!
+	<p id='loggedInText'> You have been logged in!</p>
   <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
 </div>
 <div id="logoutAlert"  style="display:none;"  class="alert alert-primary" role="alert">
-	You havent logged in yet! Please click login
+  You havent logged in yet! Please click login
   <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
 </div>
 </div>
