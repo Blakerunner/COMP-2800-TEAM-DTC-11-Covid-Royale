@@ -72,7 +72,6 @@ export class LoadScene extends Phaser.Scene {
 }
 fillbar(progressBar, 0.01, this.scene);
 
-        //this.scene.start("MenuScene")
     }
 
     update(){

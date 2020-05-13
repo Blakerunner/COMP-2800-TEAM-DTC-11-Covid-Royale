@@ -24,8 +24,8 @@ export class GameScene extends Phaser.Scene {
   create(){
 
     // ADD SCENES
-    this.scene.add('GameVirtualController', GameVirtualController, true, { x: 0, y: 0 });
-    this.scene.add('GameUI', GameUI, true, { x: 0, y: 0 });
+    this.scene.launch('GameVirtualController', GameVirtualController, true, { x: 0, y: 0 });
+    this.scene.launch('GameUI', GameUI, true, { x: 0, y: 0 });
 
      // CAMERA SETUP
     // 1600x1600 for current tilemap size
@@ -34,6 +34,7 @@ export class GameScene extends Phaser.Scene {
     // this.cameras.main.setZoom(1);
 
     //zoomed camera, used for gameplay
+    this.cameras.main.fadeIn(2000, 0, 0, 0);
     this.cameras.main.setBounds(0, 0, 1600, 1600);
     this.cameras.main.setZoom(1.8);
 
@@ -456,6 +457,21 @@ export class GameScene extends Phaser.Scene {
     // Virtual controller state event change
     this.scene.get('GameVirtualController').events.on('buttonUpdate', buttonUpdate, this);
 
+    // Game round events
+
+    // Server ends game
+    this.socket.on('serverGameEnd', () => {
+      console.log("Server has instructed to end round")
+      this.cameras.main.fadeOut(2000, 0, 0, 0);
+    }, this);
+
+    // Server starts new game
+    this.socket.on('serverGameStart', (players) => {
+      console.log("Server has instructed to start new round")
+      this.cameras.main.fadeIn(2000, 0, 0, 0);
+      // this.socket.emit('mapBlueprintReady');
+    });
+
     // Updates virutal button events
     function buttonUpdate(states) {
       this.virtualControllerStates = states
@@ -528,7 +544,6 @@ export class GameScene extends Phaser.Scene {
         else {
           this.player.setVelocityX(0);
           this.player.setVelocityY(0);
-          // this.player.anims.stop();
           this.player.anims.stop();
           this.player.playerDir = "stand"
         }

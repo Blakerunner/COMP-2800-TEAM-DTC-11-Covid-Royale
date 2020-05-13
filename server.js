@@ -124,14 +124,21 @@ mongoose.connect(
       res.redirect("/covid_royal");
     });
 
-    // array of players
+   // array of players
     let players = {};
-    let playersSpawnLocations = [(800, 800)];
+    let playersSpawnLocations = [[400, 400]];
 
-    // generate map blueprint
-    let mapData = [];
-    for (let a = [0, 1, 2, 3, 4, 5, 6, 7, 8], i = a.length; i--; ) {
-      mapData.push(a.splice(Math.floor(Math.random() * (i + 1)), 1)[0]);
+    // number of server restarts
+    let serverRestartNumber = 0
+
+    // generate map blueprint, random array of ints
+    let mapData = generateMapBluprint()
+    function generateMapBluprint() {
+      let randomNumbers = []
+      for (let n = [...Array(9).keys()], i = n.length; i--; ) {
+        randomNumbers.push(n.splice(Math.floor(Math.random() * (i + 1)), 1)[0]);
+      }
+      return randomNumbers
     }
 
     function helper(socket) {
@@ -163,8 +170,8 @@ mongoose.connect(
 
     // socket.io handle for browser connect
     io.on("connection", function (socket) {
-//HOLY FUCK THIS IS FUCKING IT
-//EVERYTHING STORED IN MONGO (WHICH IS EVERYTHING THAT GETS SERIALIZED BY PASSPORT)
+    //HOLY FUCK THIS IS FUCKING IT
+    //EVERYTHING STORED IN MONGO (WHICH IS EVERYTHING THAT GETS SERIALIZED BY PASSPORT)
       //IS ACCESIBLE UNDER SOCKET.REQUEST.USER
       console.log("MARKER EASILY SEARCHABLE STRING", socket.request.user)
    
@@ -172,14 +179,20 @@ mongoose.connect(
         playerMongoID: socket.request.user.id,
         playerId: socket.id,
         playerRisk: 0,
-        playerDir: "walkRight",
+        playerScore: 0,
+        playerCovidPos: false,
+        playerDir: "stand",
         playerName: socket.request.user.username,
-        mapBlueprint : mapData,
         // playerName: COOKIE ? username : "Homonucleus",
         // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
-        x: 400,
-        y: 400,
+        x: playersSpawnLocations[0][0],
+        y: playersSpawnLocations[0][1],
       };
+      
+        // emit map blueprint
+        socket.on("mapBlueprintReady", () => {
+          socket.emit("mapBlueprint", mapData);
+        });
 
         // send the players object to the new player
         socket.emit("currentPlayers", players);
@@ -206,7 +219,41 @@ mongoose.connect(
           io.emit("disconnect", socket.id);
         });
       })
-    
+      
+    // Game Round Reset
+    function gameReset(io, players) {
+      // reset number tracking
+      serverRestartNumber++
+      console.log("Server restart now | Number: ", serverRestartNumber)
+      
+      // update server with player infomation
+
+      // let clients know that game has ended
+      io.emit('serverGameEnd');
+
+      // generate new map seed
+      mapData = generateMapBluprint()
+
+      // reset player data on server to new game round standards 
+      console.log('pre-player-reset:', players)
+      Object.keys(players).forEach(function(player){
+        players[player].playerRisk = 0
+        players[player].playerScore = 0
+        players[player].playerCovidPos = false
+        players[player].x = playersSpawnLocations[0][0]
+        players[player].y = playersSpawnLocations[0][1]
+        console.log(players[player].playerName, ' reset')
+        io.emit("playerMoved", players[player]);
+      })
+
+      // let clients know new game has started
+      io.emit('serverGameStart', players);
+
+      console.log('server broadcast | serverGameStart')
+    }
+
+    // Interval for calling gameReset
+    setInterval( () => {gameReset(io, players)}, 20000);
    
 
     // server to listen on port 8080
