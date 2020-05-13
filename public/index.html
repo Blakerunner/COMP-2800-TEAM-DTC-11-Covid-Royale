@@ -33,10 +33,9 @@
  <script>
 
 
-//
 async function getUserAsync() 
 {
-    let response = await fetch(`http://localhost:8080/whoami`, {mode:"no-cors"})
+    let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, {mode:"no-cors"})
     let data = await response.json();
     return data;
 	
