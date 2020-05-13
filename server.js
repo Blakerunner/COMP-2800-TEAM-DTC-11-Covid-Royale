@@ -173,17 +173,13 @@ mongoose.connect(
         playerId: socket.id,
         playerRisk: 0,
         playerDir: "walkRight",
-         playerName: socket.request.user.username,
+        playerName: socket.request.user.username,
+        mapBlueprint : mapData,
         // playerName: COOKIE ? username : "Homonucleus",
         // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
         x: 400,
         y: 400,
       };
-
-        // emit map blueprint
-        socket.on("mapBlueprintReady", () => {
-          socket.emit("mapBlueprint", mapData);
-        });
 
         // send the players object to the new player
         socket.emit("currentPlayers", players);
