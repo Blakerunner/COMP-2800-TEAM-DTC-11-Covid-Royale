@@ -27,29 +27,32 @@ const expressSession = session({
   },
   saveUninitialized: false,
 });
-
+app.use(cors());
 app.use(passport.initialize());
 
-app.use(expressSession);
 
-var io = require("socket.io")(server),
-  passportSocketIo = require("passport.socketio");
 
-io.use(
-  passportSocketIo.authorize({
-    cookieParser: cookieParser, // the same middleware you registrer in express
-    key: "GOBBLE", // the name of the cookie where express/connect stores its session_id
-    secret: process.env.cookieKey, // the session_secret to parse the cookie
-    store: sessionStore, // we NEED to use a sessionstore. no memorystore please
-    success: onAuthorizeSuccess, // *optional* callback on success - read more below
-    fail: onAuthorizeFail, // *optional* callback on fail/error - read more below
-  })
-);
+app.use(expressSession)
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-function onAuthorizeSuccess(data, accept) {
-  console.log(
-    " (FROM onAuthorizeSucess of server.js) successful connection to socket.io"
-  );
+
+var io               = require("socket.io")(server),
+    passportSocketIo = require("passport.socketio");
+
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,       // the same middleware you registrer in express
+  key:          'GOBBLE',       // the name of the cookie where express/connect stores its session_id
+  secret:       process.env.cookieKey,    // the session_secret to parse the cookie
+  store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+  success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
+  fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
+}));
+ 
+function onAuthorizeSuccess(data, accept){
+  console.log(' (FROM onAuthorizeSucess of server.js) successful connection to socket.io');
+
   // The accept-callback still allows us to decide whether to
   // accept the connection or not.
   accept(null, true);
@@ -74,12 +77,6 @@ function onAuthorizeFail(data, message, error, accept) {
   // see: http://socket.io/docs/client-api/#socket > error-object
 }
 
-app.use(express.static(__dirname + "/public"));
-
-// parsing
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 //initialize passport
 
@@ -110,7 +107,8 @@ mongoose.connect(
       res.sendFile(__dirname + "/index.html");
     });
 
-    app.get("/whoami", function (req, res) {
+    app.get("/whoami", cors(), function (req, res) {
+      res.header("Access-Control-Allow-Origin", "*");
       res.json(req.session);
     });
 
