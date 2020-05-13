@@ -15,7 +15,8 @@ router.get(
 router.get("/logout", async (req, res) => {
   //There was no session to destroy
   if(! req.session.user){
-    res.send({ result:'404' , message: 'No active session' });
+    res.redirect('/')
+    // res.send({ result:'404' , message: 'No active session' });
     return
   }
 
