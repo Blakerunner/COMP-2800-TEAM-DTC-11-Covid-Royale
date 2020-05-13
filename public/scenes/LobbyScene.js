@@ -9,6 +9,12 @@ export class LobbyScene extends Phaser.Scene {
 
     init(){
         console.log("LobbyScene start")
+
+        // check if GameScene exists, destroy if exists
+      
+        // console.log("Removed GameScene")
+        // let gameSceneExists = this.scene.getScene('GameScene');
+        // gameSceneExists.scene.remove('GameScene');
     }
     
     preload(){
@@ -16,6 +22,7 @@ export class LobbyScene extends Phaser.Scene {
     }
     
     create(){
+       
         // add game instruction image
         this.add.image(0, 0, 'game_instruct_bg').setOrigin(0, 0);
 
