@@ -62,6 +62,19 @@ body {
   letter-spacing: -.05rem;
 }
 
+/*Easter Egg
+---------------------*/
+
+.hidden_goose {
+  height: 50px;
+  width: 40px;
+  opacity: 0.0;
+}
+
+.hidden_goose:hover {
+  opacity: 0.75;
+}
+
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */

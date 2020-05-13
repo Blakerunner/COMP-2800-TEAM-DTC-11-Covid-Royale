@@ -134,7 +134,7 @@ getUserAsync()
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <picture>
+          <picture onclick="document.getElementById('goose_honk').play()">
             <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/goose_logic_desk.jpg">
             <img src="./assets/img/goose_logic_mob.jpg" class="d-block img-fluid" />
           </picture>
@@ -288,6 +288,11 @@ getUserAsync()
       <hr class="featurette-divider">
     </div>
 
+    <audio id="goose_honk">
+      <source src="./assets/audio/honk-sound.mp3">
+      <source src="./assets/audio/honk-sound.ogg"> 
+    </audio>
+
     <!-- FOOTER -->
 	<!--ALERTS-->
 	
@@ -300,6 +305,7 @@ getUserAsync()
 	
     <footer class="container text-center">
       <p>2020 Goose Logic, Inc.</p>
+      <img src="./assets/img/hidden_goose.png" class="hidden_goose" onclick="document.getElementById('goose_honk').play()">
     </footer>
   </main>
   <script src="/socket.io/socket.io.js"></script>
