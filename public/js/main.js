@@ -32,7 +32,9 @@ const config = {
         LoadScene, 
         MenuScene,
         LobbyScene,
-        GameScene
+        GameScene,
+        GameVirtualController,
+        GameUI
       ]
   };
 

@@ -16,6 +16,7 @@ export class GameUI extends Phaser.Scene {
     
     create(){
         // UI SETUP
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         // playerRisk UI
         let playerRisk = this.add.text(8, 8, 'Infection risk', {

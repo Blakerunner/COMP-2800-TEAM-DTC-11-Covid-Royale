@@ -11,22 +11,27 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const User = require("./models/user-model.js");
-const MongoStore = require('connect-mongo')(session);
-const sessionStore = new MongoStore({url:"mongodb+srv://root:covid_royale69@covidroyale-jk2bl.mongodb.net/test?retryWrites=true&w=majority"})
-const cookieParser = require('cookie-parser')
+const MongoStore = require("connect-mongo")(session);
+const sessionStore = new MongoStore({
+  url:
+    "mongodb+srv://root:covid_royale69@covidroyale-jk2bl.mongodb.net/test?retryWrites=true&w=majority",
+});
+const cookieParser = require("cookie-parser");
 
 const expressSession = session({
   store: sessionStore,
-  key: 'GOBBLE',
+  key: "GOBBLE",
   secret: process.env.cookieKey,
   cookie: {
     maxAge: 1000 * 60 * 60,
   },
   saveUninitialized: false,
-
 });
 app.use(cors());
 app.use(passport.initialize());
+
+
+
 app.use(expressSession)
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,39 +52,33 @@ io.use(passportSocketIo.authorize({
  
 function onAuthorizeSuccess(data, accept){
   console.log(' (FROM onAuthorizeSucess of server.js) successful connection to socket.io');
+
   // The accept-callback still allows us to decide whether to
   // accept the connection or not.
   accept(null, true);
 }
- 
-function onAuthorizeFail(data, message, error, accept){
-  if(error)
-    throw new Error(message);
-  console.log('(FROM onAuthorizeFail of server.js failed connection to socket.io:', message);
- 
+
+function onAuthorizeFail(data, message, error, accept) {
+  if (error) throw new Error(message);
+  console.log(
+    "(FROM onAuthorizeFail of server.js failed connection to socket.io:",
+    message
+  );
+
   // We use this callback to log all of our failed connections.
   accept(null, false);
- 
+
   // OR
- 
+
   // If you use socket.io@1.X the callback looks different
   // If you don't want to accept the connection
-  if(error)
-    accept(new Error(message));
+  if (error) accept(new Error(message));
   // this error will be sent to the user as a special error-package
   // see: http://socket.io/docs/client-api/#socket > error-object
 }
 
 
-app.use(express.static(__dirname + "/public"));
-
-// parsing
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 //initialize passport
-
 
 //Connect to mognodb
 mongoose.connect(
@@ -129,12 +128,20 @@ mongoose.connect(
 
     // array of players
     let players = {};
-    let playersSpawnLocations = [(800, 800)];
+    let playersSpawnLocations = [[400, 400]];
 
-    // generate map blueprint
-    let mapData = [];
-    for (let a = [0, 1, 2, 3, 4, 5, 6, 7, 8], i = a.length; i--; ) {
-      mapData.push(a.splice(Math.floor(Math.random() * (i + 1)), 1)[0]);
+    // number of server restarts
+    let serverRestartNumber = 0;
+
+    // generate map blueprint, random array of ints
+    let mapData = generateMapBluprint();
+    function generateMapBluprint() {
+      let numberOfChunks = 9;
+      let randomNumbers = [];
+      for (let n = [...Array(numberOfChunks).keys()], i = n.length; i--; ) {
+        randomNumbers.push(n.splice(Math.floor(Math.random() * (i + 1)), 1)[0]);
+      }
+      return randomNumbers;
     }
 
     function helper(socket) {
@@ -166,60 +173,95 @@ mongoose.connect(
 
     // socket.io handle for browser connect
     io.on("connection", function (socket) {
-//HOLY FUCK THIS IS FUCKING IT
-//EVERYTHING STORED IN MONGO (WHICH IS EVERYTHING THAT GETS SERIALIZED BY PASSPORT)
+      //HOLY FUCK THIS IS FUCKING IT
+      //EVERYTHING STORED IN MONGO (WHICH IS EVERYTHING THAT GETS SERIALIZED BY PASSPORT)
       //IS ACCESIBLE UNDER SOCKET.REQUEST.USER
-      console.log("MARKER EASILY SEARCHABLE STRING", socket.request.user)
-   
+      console.log("MARKER EASILY SEARCHABLE STRING", socket.request.user);
+
       players[socket.id] = {
         playerMongoID: socket.request.user.id,
         playerId: socket.id,
         playerRisk: 0,
-        playerDir: "walkRight",
-         playerName: socket.request.user.username,
+        playerScore: 0,
+        playerCovidPos: false,
+        playerDir: "stand",
+        playerName: socket.request.user.username,
+        mapBlueprint: mapData,
         // playerName: COOKIE ? username : "Homonucleus",
         // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
-        x: 400,
-        y: 400,
+        x: playersSpawnLocations[0][0],
+        y: playersSpawnLocations[0][1],
       };
 
-        // emit map blueprint
-        socket.on("mapBlueprintReady", () => {
-          socket.emit("mapBlueprint", mapData);
-        });
+      // emit map blueprint
+      socket.on("mapBlueprintReady", () => {
+        socket.emit("mapBlueprint", mapData);
+      });
 
-        // send the players object to the new player
-        socket.emit("currentPlayers", players);
+      // send the players object to the new player
+      socket.emit("currentPlayers", players);
 
-        // update all other players of the new player
-        socket.broadcast.emit("newPlayer", players[socket.id]);
+      // update all other players of the new player
+      socket.broadcast.emit("newPlayer", players[socket.id]);
 
-        // update player movement
-        socket.on("playerMovement", function (movementData) {
-          players[socket.id].x = movementData.x;
-          players[socket.id].y = movementData.y;
-          players[socket.id].playerDir = movementData.playerDir;
-          // emit a message to all players about the player that moved
-          socket.broadcast.emit("playerMoved", players[socket.id]);
-        });
+      // update player movement
+      socket.on("playerMovement", function (movementData) {
+        players[socket.id].x = movementData.x;
+        players[socket.id].y = movementData.y;
+        players[socket.id].playerDir = movementData.playerDir;
+        // emit a message to all players about the player that moved
+        socket.broadcast.emit("playerMoved", players[socket.id]);
+      });
 
-        // socket event on disconnect
-        socket.on("disconnect", function () {
-          console.log("user disconnected", socket.id);
+      // socket event on disconnect
+      socket.on("disconnect", function () {
+        console.log("user disconnected", socket.id);
+        // remove this player from our players object
+        delete players[socket.id];
+        // emit a message to all players to remove this player
+        io.emit("disconnect", socket.id);
+      });
+    });
 
-          // remove this player from our players object
-          delete players[socket.id];
-          // emit a message to all players to remove this player
-          io.emit("disconnect", socket.id);
-        });
-      })
-    
-   
+    // Game Round Reset
+    function gameReset(io, players) {
+      // reset number tracking
+      serverRestartNumber++;
+      console.log("Server restart now | Number: ", serverRestartNumber);
+
+      // update server with player infomation
+
+      // let clients know that game has ended
+      io.emit("serverGameEnd");
+
+      // generate new map seed
+      mapData = generateMapBluprint();
+
+      // reset player data on server to new game round standards
+      console.log("pre-player-reset:", players);
+      Object.keys(players).forEach(function (player) {
+        players[player].playerRisk = 0;
+        players[player].playerScore = 0;
+        players[player].playerCovidPos = false;
+        players[player].x = playersSpawnLocations[0][0];
+        players[player].y = playersSpawnLocations[0][1];
+        players[player].mapBlueprint = mapData;
+        console.log(players[player].playerName, " reset");
+      });
+
+      console.log("server broadcast | serverGameStart");
+    }
+
+    // Time for each game round in ms
+    let gameRoundInterval = 30000
+    // Interval for calling gameReset
+    setInterval(() => {
+      gameReset(io, players);
+    }, gameRoundInterval);
 
     // server to listen on port 8080
     server.listen(8080, function () {
       console.log("Server listening");
     });
- 
-
-  });
+  }
+);
