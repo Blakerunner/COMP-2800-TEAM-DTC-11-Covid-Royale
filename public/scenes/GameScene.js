@@ -139,7 +139,7 @@ export class GameScene extends Phaser.Scene {
     const ninth_chunk_top = ninth_chunk.createStaticLayer("top", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(1);
     const ninth_chunk_middle = ninth_chunk.createStaticLayer("middle", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-1);
     const ninth_chunk_bottom = ninth_chunk.createStaticLayer("base", [objects, overworld], 80 + 30*32, 80 + 30*32).setDepth(-2);
-    }
+    
 
     // map collisions
     // skirt collision
@@ -180,7 +180,7 @@ export class GameScene extends Phaser.Scene {
     ninth_chunk_bottom.setCollisionByProperty({collides: true});
     ninth_chunk_middle.setCollisionByProperty({collides: true});
     ninth_chunk_top.setCollisionByProperty({collides: true});
-
+    }
     // PLAYER SETUP
 
     let self = this;
