@@ -8,16 +8,6 @@ body {
   color: #000000;
 }
 
-
-/* ORITENTATION CHECKER*/
-@media (orientation: portrait) {
-  .ortientationAlert { display: block; }
-  }
-
-@media (orientation: landscape) {
-  .ortientationAlert { display: none; }
-  }
-
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
