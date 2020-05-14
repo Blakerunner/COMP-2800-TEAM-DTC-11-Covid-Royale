@@ -9,6 +9,15 @@ body {
 }
 
 
+/* ORITENTATION CHECKER*/
+@media (orientation: portrait) {
+  .ortientationAlert { display: block; }
+  }
+
+@media (orientation: landscape) {
+  .ortientationAlert { display: none; }
+  }
+
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
