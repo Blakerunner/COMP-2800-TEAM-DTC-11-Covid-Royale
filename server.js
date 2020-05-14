@@ -112,6 +112,17 @@ mongoose.connect(
       res.json(req.session);
     });
 
+    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 10 USER OBJECTS
+    //SORTED BY HIghSCORE 
+    app.get('/highscore', function (req, res){
+      User.find({highScore: {$exists: true}})
+      .sort('-highScore')
+      .limit(10)
+      .exec(function(err, userArray) {
+        res.json(userArray);
+      });
+    });
+
     // url to get to game.html for game start
     app.get("/covid_royal", isLoggedIn, function (req, res) {
       res.sendFile(__dirname + "/public/game.html");
@@ -247,22 +258,31 @@ mongoose.connect(
 
      //Before we reset player data, update anything in the db that needs to be updated
       console.log("pre-player-reset:", players);
+      //Loop through current players
       Object.keys(players).forEach(function (player) {
-        //Get the users current highscore
-
+        
         console.log(players[player].playerMongoID, "HERE")
+        //Get the users current highscore
         User.findById(players[player].playerMongoID)
           .then(user => {
-            console.log("User Highscore is", user.highScore)
-            console.log("Socket player hgighscore is", players[player].playerScore)
+            console.log("Database Highscore is", user.highScore)
+            console.log("player hgighscore is", players[player].playerScore)
             if(players[player].playerScore > user.highScore){
-              //Change HighScore here
+              //Change HighScore here if its greater than database highscore
                User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
                   .then(user => console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`))
             }
           })
-        console.log(players[player], "GOBBLED");
+        // console.log(players[player], "GOBBLED");
       })
+
+// QUERY FOR BLAKE GRAB 10 USERS WITH HIGHEST SCORE
+      User.find({highScore: {$exists: true}})
+      .sort('-highScore')
+      .limit(10)
+      .exec(function(err, messages) {
+        console.log(messages)
+      });
 
 
  // reset player data on server to new game round standards
