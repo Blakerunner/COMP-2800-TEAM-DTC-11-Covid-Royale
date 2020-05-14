@@ -32,18 +32,16 @@
 
  <script>
 
-
-async function getUserAsync() 
-{
-    let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, {mode:"no-cors"})
-    let data = await response.json();
-    return data;
-	
-}
+  async function getUserAsync() 
+  {
+      let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, {mode:"no-cors"})
+      let data = await response.json();
+      return data;
+    
+  }
 
 
 $(document).ready(function(){
-
   getUserAsync()
   .then(response => {
     if(!response.user){ 
@@ -90,18 +88,21 @@ $(document).ready(function(){
     </nav>
   </header>
 <div>
-  <br>
-<div id="loginSuccess" style="display:none;"class="alert alert-success" role="alert">
-	<p id='loggedInText'> You have been logged in!</p>
-  <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
-</div>
-<div id="logoutAlert"  style="display:none;"  class="alert alert-primary" role="alert">
-  You havent logged in yet! Please click login
-  <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
-</div>
-</div>
 
   <main role="main">
+    <div id="loginSuccess" style="display:none;"class="alert alert-success mt-3" role="alert">
+      <p id='loggedInText'> You have been logged in!</p>
+      <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
+    </div>
+    <div id="logoutAlert"  style="display:none;"  class="alert alert-primary mt-3" role="alert">
+      You havent logged in yet! Please click login
+      <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
+    </div>
+    <div id="ortientationAlert"  style="display:none;"  class="ortientationAlert alert alert-danger mt-3" role="alert">
+       Reminder! Game is best played in landscape mode.
+      <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
+    </div>
+    </div>
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
