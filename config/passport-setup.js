@@ -36,6 +36,7 @@ passport.use(
           new User({
             username: profile.displayName,
             googleId: profile.id,
+            highScore: 0,
           })
             //Then add it to our mongoDB
             .save()
