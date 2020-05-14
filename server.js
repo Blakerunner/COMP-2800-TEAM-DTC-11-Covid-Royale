@@ -261,8 +261,10 @@ mongoose.connect(
       //Loop through current players
       Object.keys(players).forEach(function (player) {
         
-        console.log(players[player].playerMongoID, "HERE")
         //Get the users current highscore
+        //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS 
+
+        
         User.findById(players[player].playerMongoID)
           .then(user => {
             console.log("Database Highscore is", user.highScore)
@@ -275,15 +277,6 @@ mongoose.connect(
           })
         // console.log(players[player], "GOBBLED");
       })
-
-// QUERY FOR BLAKE GRAB 10 USERS WITH HIGHEST SCORE
-      User.find({highScore: {$exists: true}})
-      .sort('-highScore')
-      .limit(10)
-      .exec(function(err, messages) {
-        console.log(messages)
-      });
-
 
  // reset player data on server to new game round standards
 
