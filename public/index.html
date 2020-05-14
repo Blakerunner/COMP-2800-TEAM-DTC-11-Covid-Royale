@@ -40,17 +40,43 @@
     
   }
 
-
 $(document).ready(function(){
+
+  // orientaion checker #1
+  screen.orientation.onchange = function (){
+    // logs 'portrait' or 'landscape'
+    let orientation = screen.orientation.type.match(/\w+/)[0]
+    console.log("Good Browsers check | Screen Orientation: ", orientation);
+    if (orientation === "portrait") {
+      $('#orientationAlert').show()
+    } else {
+      $('#orientationAlert').hide()
+    }
+  };
+
+  // orientaion checker #2
+  function getOrientation(){
+    var orientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+    console.log("Safari check | Screen Orientation: ", orientation)
+    if (orientation === "portrait") {
+      $('#orientationAlert').show()
+    } else {
+      $('#orientationAlert').hide()
+    }
+  }
+  window.onresize = function(){ getOrientation(); }
+
+  // login checker
   getUserAsync()
   .then(response => {
     if(!response.user){ 
       $('#loggedOut').text(`You havent logged in yet! Please click login`)
       $('#logoutAlert').show()
-  }
-    else{console.log('You are logged in, display popup here', response);
+  } else {
+    console.log('You are logged in, display popup here', response);
     $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
-    $('#loginSuccess').show()}
+    $('#loginSuccess').show()
+  }
   })
   .catch(err => console.log(err))
 });
@@ -91,16 +117,16 @@ $(document).ready(function(){
 
   <main role="main">
     <div id="loginSuccess" style="display:none;"class="alert alert-success mt-3" role="alert">
-      <p id='loggedInText'> You have been logged in!</p>
+      <p id='loggedInText' class=""> You have been logged in!</p>
       <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
     <div id="logoutAlert"  style="display:none;"  class="alert alert-primary mt-3" role="alert">
       You havent logged in yet! Please click login
       <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
-    <div id="ortientationAlert"  style="display:none;"  class="ortientationAlert alert alert-danger mt-3" role="alert">
-       Reminder! Game is best played in landscape mode.
-      <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
+    <div id="orientationAlert"  style="display:none;"  class="alert alert-danger mt-3 d-flex row-flex" role="alert">
+      <p class="mr-auto">Game is best played in landscape mode.</p>
+      <button type="button" class="close ml-auto" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
     </div>
 
