@@ -8,7 +8,7 @@ export class GameScene extends Phaser.Scene {
     });
 
     this.virtualControllerStates = {};
-    this.mapBlueprint = [];
+    this.playerScore = 0
   }
 
   init() {
@@ -192,11 +192,20 @@ export class GameScene extends Phaser.Scene {
       self.player = self.physics.add
         .sprite(playerInfo.x, playerInfo.y, "character", 0)
         .setOrigin(0.5, 0.5);
-      self.player.setCollideWorldBounds(true);
-      //sets the collision bosy size and placement
-      self.player.body.setSize(4, 4, true).setOffset(5, 15);
-      //makes the player collide with all collision masks per each chunks layer
 
+      // set up player score value
+      self.player.score = 0
+
+      // set camera to follow player
+      self.cameras.main.startFollow(self.player);
+
+      // collision with world bounds
+      self.player.setCollideWorldBounds(true);
+
+      //sets the collision size and placement
+      self.player.body.setSize(4, 4, true).setOffset(5, 15);
+
+      //makes the player collide with all collision masks per each chunks layer
       var first_chunk = chunk_array[playerInfo.mapBlueprint[0]];
       const first_chunk_top = first_chunk.createStaticLayer(
           "top",
@@ -508,9 +517,6 @@ export class GameScene extends Phaser.Scene {
 
       self.player.playerDir = "stand";
 
-      // set camera to follow player
-      self.cameras.main.startFollow(self.player);
-
       // Player Animations
 
       self.anims.create({
@@ -608,11 +614,20 @@ export class GameScene extends Phaser.Scene {
     this.scene
       .get("GameVirtualController")
       .events.on("buttonUpdate", buttonUpdate, this);
+    
+    // event to add a score to play every second, emits to GameUI to update UI 
+    this.time.addEvent({ delay: 1000, callback: () => {
+      if(this.player){
+        this.player.score += 1
+        this.events.emit('playerScoreUpdate', 1)
+      }
+    }, callbackScope: this, loop: true });
 
     // Updates virutal button events
     function buttonUpdate(states) {
       this.virtualControllerStates = states;
     }
+
 
   }
 
@@ -718,6 +733,7 @@ export class GameScene extends Phaser.Scene {
         y: this.player.y,
       };
       
+         
     }
   }
 }
