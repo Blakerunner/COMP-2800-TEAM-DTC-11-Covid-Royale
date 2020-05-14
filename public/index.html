@@ -28,69 +28,13 @@
   <meta name="theme-color" content="#ffffff">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- SOME JQUERY FOR ALERTS -->
-
-
- <script>
-
-  async function getUserAsync() 
-  {
-      let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, {mode:"no-cors"})
-      let data = await response.json();
-      return data;
-    
-  }
-
-$(document).ready(function(){
-  $('#orientationAlert').hide();
-  // orientaion checker #1
-  screen.orientation.onchange = function (){
-    // logs 'portrait' or 'landscape'
-    let orientation = screen.orientation.type.match(/\w+/)[0]
-    console.log("Good Browsers check | Screen Orientation: ", orientation);
-    if (orientation === "portrait") {
-      $('#orientationAlert').show();
-    } else if (orientation === "landscape") {
-      $('#orientationAlert').hide();
-    }
-  };
-
-  // orientaion checker #2
-  function getOrientation(){
-    var orientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
-    console.log("Safari check | Screen Orientation: ", orientation)
-    if (orientation === "portrait") {
-      $('#orientationAlert').show();
-    } else if (orientation === "landscape") {
-      $('#orientationAlert').hide();
-    }
-  }
-  window.onresize = function(){ getOrientation(); }
-
-  // login checker
-  getUserAsync()
-  .then(response => {
-    if(!response.user){ 
-      $('#loggedOut').text(`You havent logged in yet! Please click login`)
-      $('#logoutAlert').show()
-  } else {
-    console.log('You are logged in, display popup here', response);
-    $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
-    $('#loginSuccess').show()
-  }
-  })
-  .catch(err => console.log(err))
-});
-
-
-
- </script>
 </head>
 
 
-<style>
-</style>
+<style></style>
 <!-- Custom styles for this template -->
 <link href="./css/carousel.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -116,15 +60,15 @@ $(document).ready(function(){
 <div>
 
   <main role="main">
-    <div id="loginSuccess" style="display:none;" class="alert alert-success mt-3" role="alert">
+    <div id="loginSuccess" style="display:none" class="alert alert-success mt-3" role="alert">
       <p id='loggedInText' class=""> You have been logged in!</p>
       <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
-    <div id="logoutAlert"  style="display:none;"  class="alert alert-primary mt-3" role="alert">
+    <div id="logoutAlert"  style="display:none"  class="alert alert-primary mt-3" role="alert">
       You havent logged in yet! Please click login
       <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
-    <div id="orientationAlert" class="alert alert-danger mt-3 d-flex row-flex" role="alert">
+    <div id="orientationAlert" style="display:none" class="alert alert-danger mt-3 d-flex row-flex" role="alert">
       <p class="mr-auto">Game is best played in landscape mode.</p>
       <button type="button" class="close ml-auto" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
@@ -312,6 +256,59 @@ $(document).ready(function(){
       <img src="./assets/img/hidden_goose.png" class="hidden_goose" onclick="document.getElementById('goose_honk').play()">
     </footer>
   </main>
+
+  <script>
+
+    async function getUserAsync() 
+    {
+        let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, {mode:"no-cors"})
+        let data = await response.json();
+        return data;
+      
+    }
+  
+  $(document).ready(function(){
+    // orientaion checker #1
+    screen.orientation.onchange = function (){
+      // logs 'portrait' or 'landscape'
+      let orientation = screen.orientation.type.match(/\w+/)[0]
+      console.log("Good Browsers check | Screen Orientation: ", orientation);
+      if (orientation === "portrait") {
+        $("#orientationAlert").css("display", "block");
+      } else {
+        $("#orientationAlert").css("display", "none");
+      }
+    };
+  
+    // orientaion checker #2
+    function getOrientation(){
+      var orientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+      console.log("Safari check | Screen Orientation: ", orientation)
+      if (orientation === "portrait") {
+        $("#orientationAlert").css("display", "block");
+      } else {
+        $("#orientationAlert").css("display", "none");
+      }
+    }
+    window.onresize = function(){ getOrientation(); }
+  
+    // login checker
+    getUserAsync()
+    .then(response => {
+      if(!response.user){ 
+        $('#loggedOut').text(`You havent logged in yet! Please click login`)
+        $('#logoutAlert').show()
+    } else {
+      console.log('You are logged in, display popup here', response);
+      $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
+      $('#loginSuccess').show()
+    }
+    })
+    .catch(err => console.log(err))
+  });
+  
+   </script>
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="//cdn.jsdelivr.net/npm/phaser@3.23.0/dist/phaser.min.js"></script>
 
