@@ -253,7 +253,7 @@ mongoose.connect(
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 30000
+    let gameRoundInterval = 60000
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);

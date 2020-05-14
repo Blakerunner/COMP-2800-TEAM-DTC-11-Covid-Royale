@@ -1,5 +1,6 @@
 import { GameUI } from "../scenes/GameUI.js";
 import { GameVirtualController } from "../scenes/GameVirtualController.js";
+import {PostRoundScene} from "../scenes/PostRoundScene.js"
 export class GameScene extends Phaser.Scene {
   constructor() {
     super({
@@ -22,11 +23,12 @@ export class GameScene extends Phaser.Scene {
       () => {
         console.log("Server has instructed to end of round");
         // fade out for end of round
-        let gameUIScene = this.scene.get('GameUI');
-        gameUIScene.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.scene.get('GameUI').cameras.main.fadeOut(1000, 0, 0, 0);;
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         // reload game back to start
-        setTimeout(function(){ location.reload(); }, 2000);
+        setTimeout( () => {
+          this.scene.start('PostRoundScene', this.player)
+        }, 2000);
       },
       this
     );
@@ -193,8 +195,12 @@ export class GameScene extends Phaser.Scene {
         .sprite(playerInfo.x, playerInfo.y, "character", 0)
         .setOrigin(0.5, 0.5);
 
+      // PLAYER DATA SETUP 
       // set up player score value
       self.player.score = 0
+      self.player.risk = 0
+      self.player.protection = 0
+      self.player.covid = false
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player);

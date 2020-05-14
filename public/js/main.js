@@ -4,6 +4,7 @@ import {LobbyScene} from "../scenes/LobbyScene.js"
 import {GameScene} from "../scenes/GameScene.js"
 import {GameUI} from "../scenes/GameUI.js"
 import {GameVirtualController} from "../scenes/GameVirtualController.js"
+import {PostRoundScene} from "../scenes/PostRoundScene.js"
 // Config game
 const config = {
     type: Phaser.AUTO,
@@ -34,7 +35,8 @@ const config = {
         LobbyScene,
         GameScene,
         GameVirtualController,
-        GameUI
+        GameUI,
+        PostRoundScene
       ]
   };
 
