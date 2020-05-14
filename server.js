@@ -137,6 +137,23 @@ mongoose.connect(
       res.redirect("/covid_royal");
     });
 
+
+    //Endpoint To delete My account
+    app.get('/deleteAccount', (req, res) => {
+      if(!req.session.passport){
+        res.send("Cannot delete account because you are not logged in")
+        return;
+      }
+      let mongoID = req.session.passport.user;
+      User.findOneAndDelete(req.session.user.id)
+        .then(result => {
+          res.redirect('login/logout')
+          // res.send(`Sucesfully deleted user ${req.session.user.username}`);
+        })
+        .catch(err => res.send('An error occured deleting your account: ', err))
+      
+    })
+
     // array of players
     let players = {};
     let playersSpawnLocations = [[400, 400]];
