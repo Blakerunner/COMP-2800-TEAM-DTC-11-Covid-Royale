@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="12">
  <editorsettings>
   <export target="chunk9.json" format="json"/>
  </editorsettings>
@@ -8345,6 +8345,24 @@
  <tileset firstgid="2373" name="npc_test" tilewidth="16" tileheight="16" tilecount="32" columns="4">
   <image source="../../img/npc_test.png" width="64" height="128"/>
  </tileset>
+ <tileset firstgid="2405" name="hazmat suit" tilewidth="16" tileheight="16" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="16" height="16" source="../../../../../../Desktop/hazmat suit.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="2406" name="facemasks" tilewidth="16" tileheight="16" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="16" height="16" source="../../../../../../Desktop/facemasks.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="2407" name="handsanitizer" tilewidth="16" tileheight="16" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="16" height="16" source="../../../../../../Desktop/handsanitizer.png"/>
+  </tile>
+ </tileset>
  <layer id="1" name="base" width="30" height="30">
   <data encoding="csv">
 409,409,409,408,408,369,409,368,409,369,369,409,369,369,369,409,409,369,408,409,368,369,368,408,369,369,369,408,368,368,
@@ -8413,6 +8431,19 @@
 0,0,0,0,0,579,580,580,580,580,580,580,580,580,580,580,580,580,580,580,580,580,580,580,580,581,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="Object Layer 1">
+  <object id="1" gid="2406" x="400" y="208" width="16" height="16"/>
+  <object id="2" gid="2406" x="128" y="272" width="16" height="16"/>
+  <object id="3" gid="2406" x="64" y="416" width="16" height="16"/>
+  <object id="4" gid="2407" x="432" y="448" width="16" height="16"/>
+  <object id="5" gid="2407" x="64" y="224" width="16" height="16"/>
+  <object id="6" gid="2407" x="64" y="48" width="16" height="16"/>
+  <object id="7" gid="2407" x="448" y="80" width="16" height="16"/>
+  <object id="8" gid="2407" x="192" y="208" width="16" height="16"/>
+  <object id="9" gid="2407" x="32" y="464" width="16" height="16"/>
+  <object id="10" gid="2405" x="288" y="256" width="16" height="16"/>
+  <object id="11" gid="2405" x="288" y="400" width="16" height="16"/>
+ </objectgroup>
  <layer id="2" name="top" width="30" height="30">
   <data encoding="csv">
 0,214,215,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
