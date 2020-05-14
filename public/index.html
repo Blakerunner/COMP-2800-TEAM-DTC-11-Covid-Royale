@@ -60,18 +60,17 @@
 <div>
 
   <main role="main">
-    <div id="loginSuccess" style="display:none" class="alert alert-success mt-3" role="alert">
+    <div id="loginSuccess" style="display:none;" class="alert alert-success mt-3" role="alert">
       <p id='loggedInText' class=""> You have been logged in!</p>
       <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
-    <div id="logoutAlert"  style="display:none"  class="alert alert-primary mt-3" role="alert">
+    <div id="logoutAlert"  style="display:none;"  class="alert alert-primary mt-3" role="alert">
       You havent logged in yet! Please click login
       <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
     </div>
-    <div id="orientationAlert" style="display:none" class="alert alert-danger mt-3 d-flex row-flex" role="alert">
-      <p class="mr-auto">Game is best played in landscape mode.</p>
+    <div id="orientationAlert" style="display:none;" class="alert alert-danger mt-3" role="alert">
+      Game is best played in landscape mode.
       <button type="button" class="close ml-auto" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
-    </div>
     </div>
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -274,9 +273,9 @@
       let orientation = screen.orientation.type.match(/\w+/)[0]
       console.log("Good Browsers check | Screen Orientation: ", orientation);
       if (orientation === "portrait") {
-        $("#orientationAlert").css("display", "block");
+        $("#orientationAlert").show();
       } else {
-        $("#orientationAlert").css("display", "none");
+        $("#orientationAlert").hide();
       }
     };
   
@@ -285,9 +284,9 @@
       var orientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
       console.log("Safari check | Screen Orientation: ", orientation)
       if (orientation === "portrait") {
-        $("#orientationAlert").css("display", "block");
+        $("#orientationAlert").show();
       } else {
-        $("#orientationAlert").css("display", "none");
+        $("#orientationAlert").hide();
       }
     }
     window.onresize = function(){ getOrientation(); }
