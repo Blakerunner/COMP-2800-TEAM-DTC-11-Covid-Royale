@@ -193,6 +193,9 @@ mongoose.connect(
         y: playersSpawnLocations[0][1],
       };
 
+      // console.log(players, "PLAYER VARIABLE");
+      
+
       // emit map blueprint
       socket.on("mapBlueprintReady", () => {
         socket.emit("mapBlueprint", mapData);
@@ -214,7 +217,12 @@ mongoose.connect(
       });
 
       // socket event on disconnect
-      socket.on("disconnect", function () {
+      socket.on("disconnect", function (players) {
+        let mongoID = socket.request.user.id;
+        
+        // User.findByIdAndUpdate(mongoID, {username: "gobble"})
+        //   .then(user => console.log)
+
         console.log("user disconnected", socket.id);
         // remove this player from our players object
         delete players[socket.id];
@@ -237,8 +245,28 @@ mongoose.connect(
       // generate new map seed
       mapData = generateMapBluprint();
 
-      // reset player data on server to new game round standards
+     //Before we reset player data, update anything in the db that needs to be updated
       console.log("pre-player-reset:", players);
+      Object.keys(players).forEach(function (player) {
+        //Get the users current highscore
+
+        console.log(players[player].playerMongoID, "HERE")
+        User.findById(players[player].playerMongoID)
+          .then(user => {
+            console.log("User Highscore is", user.highScore)
+            console.log("Socket player hgighscore is", players[player].playerScore)
+            if(players[player].playerScore > user.highScore){
+              //Change HighScore here
+               User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
+                  .then(user => console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`))
+            }
+          })
+        console.log(players[player], "GOBBLED");
+      })
+
+
+ // reset player data on server to new game round standards
+
       Object.keys(players).forEach(function (player) {
         players[player].playerRisk = 0;
         players[player].playerScore = 0;
