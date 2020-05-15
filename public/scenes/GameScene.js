@@ -662,13 +662,13 @@ export class GameScene extends Phaser.Scene {
       });
 
       // fade out for end of round
-      this.scene.get('GameUI').cameras.main.fadeOut(1000, 0, 0, 0);;
-      this.cameras.main.fadeOut(1000, 0, 0, 0);
+      this.scene.get('GameUI').cameras.main.fadeOut(2000, 0, 0, 0);;
+      this.cameras.main.fadeOut(2000, 0, 0, 0);
       // move to post game
 
       setTimeout( () => {
         this.scene.start('PostRoundScene', {player: this.player})
-      }, 2000);
+      }, 3000);
       });
 
     

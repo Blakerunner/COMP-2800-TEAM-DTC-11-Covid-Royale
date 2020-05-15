@@ -195,19 +195,18 @@ mongoose.connect(
 
       // console.log(players, "PLAYER VARIABLE");
 
+      // update server with player final data
+      socket.on("playerStatsUpdate", function(player) {
+        console.log("Updating player End Game Scores | ", players[socket.id].playerName)
+        players[socket.id].playerScore = player.score
+        players[socket.id].playerCovidPos = player.covid
+      });
 
       // send the players object to the new player
       socket.emit("currentPlayers", players);
 
       // update all other players of the new player
       socket.broadcast.emit("newPlayer", players[socket.id]);
-
-      // update player stats
-      socket.on("playerStatsUpdate", function (player) {
-        console.log(players[socket.id].playerName + 'Stats Updated end of round')
-        players[socket.id].playerScore = player.score;
-        players[socket.id].playerCovidPos = player.covid;
-      });
 
       // update player movement
       socket.on("playerMovement", function (movementData) {
@@ -250,7 +249,10 @@ mongoose.connect(
      //Before we reset player data, update anything in the db that needs to be updated
       console.log("pre-player-reset:", players);
 
-      //Loop through current players
+      // Wait time buffer for all browsers to update player info
+      setTimeout( () => {
+
+        //Loop through current players
       Object.keys(players).forEach(function (player) {
         
         //Get the users current highscore
@@ -275,10 +277,16 @@ mongoose.connect(
       console.log("Server | players pre reset", players)
       players = {}
       console.log("Server | players post reset", players)
+        
+      }, 2000);
+      
+      
+
+      
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 25000
+    let gameRoundInterval = 60000
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);
