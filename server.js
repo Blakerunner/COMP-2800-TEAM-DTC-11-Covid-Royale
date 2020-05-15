@@ -256,28 +256,28 @@ mongoose.connect(
       console.log("pre-player-reset:", players);
 
       // Wait time buffer for all browsers to update player info
-      setTimeout( () => {
+      // setTimeout( () => {
 
-        //Loop through current players
-      Object.keys(players).forEach(function (player) {
+      //   //Loop through current players
+      // Object.keys(players).forEach(function (player) {
         
-        //Get the users current highscore
-        //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
+      //   //Get the users current highscore
+      //   //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
         
-        User.findById(players[player].playerMongoID)
-          .then(user => {
-            console.log("Database Highscore is", user.highScore)
-            console.log("player highScore is", players[player].playerScore)
-            if(players[player].playerScore > user.highScore){
-              //Change HighScore here if its greater than database highscore
-               User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
-                  .then(user => {
-                      console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`)
-                  })
-            }
-          })
-        // console.log(players[player], "GOBBLED");
-      })
+      //   User.findById(players[player].playerMongoID)
+      //     .then(user => {
+      //       console.log("Database Highscore is", user.highScore)
+      //       console.log("player highScore is", players[player].playerScore)
+      //       if(players[player].playerScore > user.highScore){
+      //         //Change HighScore here if its greater than database highscore
+      //          User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
+      //             .then(user => {
+      //                 console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`)
+      //             })
+      //       }
+      //     })
+      //   // console.log(players[player], "GOBBLED");
+      // })
 
       // reset server player list
       console.log("Server | players pre reset", players)
