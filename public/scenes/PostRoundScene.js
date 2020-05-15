@@ -9,7 +9,7 @@ export class PostRoundScene extends Phaser.Scene {
 
     init(data){
         this.player = data.player
-        this.socket = data.socket
+        // this.socket = data.socket
     }
     
     preload(){
@@ -27,10 +27,10 @@ export class PostRoundScene extends Phaser.Scene {
 
         // LISTENERS
         // listen for server passing post round data
-        this.socket.on("serverPostRound", () => {
-            console.log("serverPostRound")
+        // this.socket.on("serverPostRound", () => {
+        //     console.log("serverPostRound")
           
-          }, this);
+        //   }, this);
 
         // SPEAKERS
 
@@ -115,7 +115,8 @@ export class PostRoundScene extends Phaser.Scene {
         playerCovidText.setText("COVID-19 : " + this.player.covid)
 
         // wait for game reset
-        setTimeout(function(){ location.reload(); }, 5000);
+        setTimeout(function(){ 
+            location.reload(); }, 5000);
         
         console.log("PostRoundScene complete")
     }
