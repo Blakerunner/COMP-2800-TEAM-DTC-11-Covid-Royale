@@ -98,7 +98,7 @@ export class PostRoundScene extends Phaser.Scene {
 
             Object.keys(data).forEach(function (player) {
                 this.add.text(highscorePlayerX, highscorePlayerY, 
-                    this.highscore[player].username + ': ' + this.highscore[player].highScore, {
+                    data[player].username + ': ' + data[player].highScore, {
                     fontSize: '12px',
                     padding: { x: 4, y: 4 },
                     backgroundColor: 'white',
