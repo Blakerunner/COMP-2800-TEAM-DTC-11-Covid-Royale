@@ -279,12 +279,12 @@ mongoose.connect(
       //   // console.log(players[player], "GOBBLED");
       // })
 
-      // reset server player list
-      console.log("Server | players pre reset", players)
-      console.log("===============================================================================")
-      console.log("Server | players post reset", players)
+      // // reset server player list
+      // console.log("Server | players pre reset", players)
+      // console.log("===============================================================================")
+      // console.log("Server | players post reset", players)
         
-      }, 2000);
+      // }, 2000);
       
     }
 
