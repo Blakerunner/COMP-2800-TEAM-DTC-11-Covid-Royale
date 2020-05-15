@@ -115,7 +115,7 @@ export class PostRoundScene extends Phaser.Scene {
         playerCovidText.setText("COVID-19 : " + this.player.covid)
 
         // wait for game reset
-        // setTimeout(function(){ location.reload(); }, 10000);
+        setTimeout(function(){ location.reload(); }, 5000);
         
         console.log("PostRoundScene complete")
     }

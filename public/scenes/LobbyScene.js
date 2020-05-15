@@ -22,15 +22,17 @@ export class LobbyScene extends Phaser.Scene {
     }
     
     create(){
-       
-        // add game instruction image
-        this.add.image(0, 0, 'game_instruct_bg').setOrigin(0, 0);
+        
+        // REMOVED LOBBY INSTRUCTIONS FOR NOW
+        // // add game instruction image
+        // this.add.image(0, 0, 'game_instruct_bg').setOrigin(0, 0);
 
-        // tap to continue to next page
-        this.input.on('pointerup', function (pointer) {
-            this.scene.start('GameScene');
-        }, this);
+        // // tap to continue to next page
+        // this.input.on('pointerup', function (pointer) {
+        //     this.scene.start('GameScene');
+        // }, this);
 
+        this.scene.start('GameScene');
         console.log("LobbyScene complete")
     }
 

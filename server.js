@@ -117,7 +117,7 @@ mongoose.connect(
     app.get('/highscore', function (req, res){
       User.find({highScore: {$exists: true}})
       .sort('-highScore')
-      .limit(10)
+      .limit(5)
       .exec(function(err, userArray) {
         res.json(userArray);
       });
@@ -136,7 +136,6 @@ mongoose.connect(
       // res.cookie('username', req.session.passport.user.username, { maxAge: 9000});
       res.redirect("/covid_royal");
     });
-
 
     //Endpoint To delete My account
     app.get('/deleteAccount', (req, res) => {
