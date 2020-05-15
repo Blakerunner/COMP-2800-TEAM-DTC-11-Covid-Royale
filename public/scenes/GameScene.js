@@ -77,9 +77,12 @@ export class GameScene extends Phaser.Scene {
     const chunk7 = this.add.tilemap("chunk7");
     const chunk8 = this.add.tilemap("chunk8");
     const chunk9 = this.add.tilemap("chunk9");
-    //I think these can be heavily condensed to only one for the overworld and one for the objects
+    //adding Tileset Images
     const overworld = chunk1.addTilesetImage("overworld");
     const objects = chunk1.addTilesetImage("objects");
+    const handSanitizer = chunk1.addTilesetImage("handsanitizer");
+    const faceMask = chunk1.addTilesetImage("facemasks");
+    const hazSuit = chunk1.addTilesetImage("hazmat suit");
     // not required atm but will in future
     // let objects = map.addTilesetImage("objects")
     // let character = map.addTilesetImage("character")
@@ -212,7 +215,8 @@ export class GameScene extends Phaser.Scene {
       self.player.body.setSize(4, 4, true).setOffset(5, 15);
 
       //makes the player collide with all collision masks per each chunks layer
-      var first_chunk = chunk_array[playerInfo.mapBlueprint[0]];
+      //chunk_array[playerInfo.mapBlueprint[0]]
+      var first_chunk = chunk1;
       const first_chunk_top = first_chunk.createStaticLayer(
           "top",
           [objects, overworld],
@@ -220,6 +224,11 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 0
         )
         .setDepth(1);
+      const first_chunk_items = first_chunk.createFromObjects(
+        "item",
+        "haz",
+        hazSuit
+      );
       const first_chunk_middle = first_chunk
         .createStaticLayer(
           "middle",
@@ -237,7 +246,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var second_chunk = chunk_array[playerInfo.mapBlueprint[1]];
+      var second_chunk = chunk2;
       const second_chunk_top = second_chunk
         .createStaticLayer(
           "top",
@@ -263,7 +272,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var third_chunk = chunk_array[playerInfo.mapBlueprint[2]];
+      var third_chunk = chunk3;
       const third_chunk_top = third_chunk
         .createStaticLayer(
           "top",
@@ -289,7 +298,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var fourth_chunk = chunk_array[playerInfo.mapBlueprint[3]];
+      var fourth_chunk = chunk4;
       const fourth_chunk_top = fourth_chunk
         .createStaticLayer(
           "top",
@@ -315,7 +324,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var fifth_chunk = chunk_array[playerInfo.mapBlueprint[4]];
+      var fifth_chunk = chunk5;
       const fifth_chunk_top = fifth_chunk
         .createStaticLayer(
           "top",
@@ -341,7 +350,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var sixth_chunk = chunk_array[playerInfo.mapBlueprint[5]];
+      var sixth_chunk = chunk6;
       const sixth_chunk_top = sixth_chunk
         .createStaticLayer(
           "top",
@@ -367,7 +376,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var seventh_chunk = chunk_array[playerInfo.mapBlueprint[6]];
+      var seventh_chunk = chunk7;
       const seventh_chunk_top = seventh_chunk
         .createStaticLayer(
           "top",
@@ -393,7 +402,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var eighth_chunk = chunk_array[playerInfo.mapBlueprint[7]];
+      var eighth_chunk = chunk8;
       const eighth_chunk_top = eighth_chunk
         .createStaticLayer(
           "top",
@@ -419,7 +428,7 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var ninth_chunk = chunk_array[playerInfo.mapBlueprint[8]];
+      var ninth_chunk = chunk9;
       const ninth_chunk_top = ninth_chunk
         .createStaticLayer(
           "top",
