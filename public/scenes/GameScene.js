@@ -80,9 +80,6 @@ export class GameScene extends Phaser.Scene {
     //adding Tileset Images
     const overworld = chunk1.addTilesetImage("overworld");
     const objects = chunk1.addTilesetImage("objects");
-    const handSanitizer = chunk1.addTilesetImage("handsanitizer");
-    const faceMask = chunk1.addTilesetImage("facemasks");
-    const hazSuit = chunk1.addTilesetImage("hazmat suit");
     // not required atm but will in future
     // let objects = map.addTilesetImage("objects")
     // let character = map.addTilesetImage("character")
@@ -214,9 +211,9 @@ export class GameScene extends Phaser.Scene {
       //sets the collision size and placement
       self.player.body.setSize(4, 4, true).setOffset(5, 15);
 
-      //makes the player collide with all collision masks per each chunks layer
-      //chunk_array[playerInfo.mapBlueprint[0]]
-      var first_chunk = chunk1;
+      //FIRST CHUNK
+      //
+      var first_chunk = chunk_array[playerInfo.mapBlueprint[0]];
       const first_chunk_top = first_chunk.createStaticLayer(
           "top",
           [objects, overworld],
@@ -224,11 +221,30 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 0
         )
         .setDepth(1);
-      const first_chunk_items = first_chunk.createFromObjects(
+        //loads all hand sanitizer items
+      const first_chunk_hand = first_chunk.createFromObjects(
+        "item",
+        "hand",
+        {key: "handSan"}
+      );
+      //loads all face mask items
+      const first_chunk_face = first_chunk.createFromObjects(
+        "item",
+        "face",
+        {key: "faceMask"}
+      );
+      //loads all hazmat suit items
+      const first_chunk_haz = first_chunk.createFromObjects(
         "item",
         "haz",
-        hazSuit
+        {key: "hazSuit"}
       );
+      //combines all 3 item arrays into one array
+      var first_chunk_items = first_chunk_face.concat(first_chunk_hand).concat(first_chunk_haz);
+      //offsets the items by the chunks position to put them in the proper place
+      first_chunk_items.forEach(item => {
+        item.x = item.x + (80 + 30 * 0)
+        item.y = item.y + (80 + 30 * 0)});
       const first_chunk_middle = first_chunk
         .createStaticLayer(
           "middle",
@@ -246,7 +262,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var second_chunk = chunk2;
+      //SECOND CHUNK
+      //
+      var second_chunk = chunk_array[playerInfo.mapBlueprint[1]];
       const second_chunk_top = second_chunk
         .createStaticLayer(
           "top",
@@ -255,6 +273,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 0
         )
         .setDepth(1);
+        const second_chunk_hand = second_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const second_chunk_face = second_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const second_chunk_haz = second_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var second_chunk_items = second_chunk_face.concat(second_chunk_hand).concat(second_chunk_haz);
+        second_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 16)
+          item.y = item.y + (80 + 30 * 0)});
       const second_chunk_middle = second_chunk
         .createStaticLayer(
           "middle",
@@ -272,7 +309,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var third_chunk = chunk3;
+      //THIRD CHUNK
+      //
+      var third_chunk = chunk_array[playerInfo.mapBlueprint[2]];
       const third_chunk_top = third_chunk
         .createStaticLayer(
           "top",
@@ -281,6 +320,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 0
         )
         .setDepth(1);
+        const third_chunk_hand = third_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const third_chunk_face = third_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const third_chunk_haz = third_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var third_chunk_items = third_chunk_face.concat(third_chunk_hand).concat(third_chunk_haz);
+        third_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 32)
+          item.y = item.y + (80 + 30 * 0)});
       const third_chunk_middle = third_chunk
         .createStaticLayer(
           "middle",
@@ -298,7 +356,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var fourth_chunk = chunk4;
+      //FOURTH CHUNK
+      //
+      var fourth_chunk = chunk_array[playerInfo.mapBlueprint[3]];
       const fourth_chunk_top = fourth_chunk
         .createStaticLayer(
           "top",
@@ -307,6 +367,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 16
         )
         .setDepth(1);
+        const fourth_chunk_hand = fourth_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const fourth_chunk_face = fourth_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const fourth_chunk_haz = fourth_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var fourth_chunk_items = fourth_chunk_face.concat(fourth_chunk_hand).concat(fourth_chunk_haz);
+        fourth_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 0)
+          item.y = item.y + (80 + 30 * 16)});
       const fourth_chunk_middle = fourth_chunk
         .createStaticLayer(
           "middle",
@@ -324,7 +403,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var fifth_chunk = chunk5;
+      //FIFTH CHUNK
+      //
+      var fifth_chunk = chunk_array[playerInfo.mapBlueprint[4]];
       const fifth_chunk_top = fifth_chunk
         .createStaticLayer(
           "top",
@@ -333,6 +414,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 16
         )
         .setDepth(1);
+        const fifth_chunk_hand = fifth_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const fifth_chunk_face = fifth_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const fifth_chunk_haz = fifth_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var fifth_chunk_items = fifth_chunk_face.concat(fifth_chunk_hand).concat(fifth_chunk_haz);
+        fifth_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 16)
+          item.y = item.y + (80 + 30 * 16)});
       const fifth_chunk_middle = fifth_chunk
         .createStaticLayer(
           "middle",
@@ -350,7 +450,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var sixth_chunk = chunk6;
+      //SIXTH CHUNK
+      //
+      var sixth_chunk = chunk_array[playerInfo.mapBlueprint[5]];
       const sixth_chunk_top = sixth_chunk
         .createStaticLayer(
           "top",
@@ -359,6 +461,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 16
         )
         .setDepth(1);
+        const sixth_chunk_hand = sixth_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const sixth_chunk_face = sixth_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const sixth_chunk_haz = sixth_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var sixth_chunk_items = sixth_chunk_face.concat(sixth_chunk_hand).concat(sixth_chunk_haz);
+        sixth_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 32)
+          item.y = item.y + (80 + 30 * 16)});
       const sixth_chunk_middle = sixth_chunk
         .createStaticLayer(
           "middle",
@@ -376,7 +497,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var seventh_chunk = chunk7;
+      //SEVENTH CHUNK
+      //
+      var seventh_chunk = chunk_array[playerInfo.mapBlueprint[6]];
       const seventh_chunk_top = seventh_chunk
         .createStaticLayer(
           "top",
@@ -385,6 +508,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 32
         )
         .setDepth(1);
+        const seventh_chunk_hand = seventh_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const seventh_chunk_face = seventh_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const seventh_chunk_haz = seventh_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var seventh_chunk_items = seventh_chunk_face.concat(seventh_chunk_hand).concat(seventh_chunk_haz);
+        seventh_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 0)
+          item.y = item.y + (80 + 30 * 32)});
       const seventh_chunk_middle = seventh_chunk
         .createStaticLayer(
           "middle",
@@ -402,7 +544,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var eighth_chunk = chunk8;
+      //EIGHTH CHUNK
+      //
+      var eighth_chunk = chunk_array[playerInfo.mapBlueprint[7]];
       const eighth_chunk_top = eighth_chunk
         .createStaticLayer(
           "top",
@@ -411,6 +555,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 32
         )
         .setDepth(1);
+        const eighth_chunk_hand = eighth_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const eighth_chunk_face = eighth_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const eighth_chunk_haz = eighth_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var eighth_chunk_items = eighth_chunk_face.concat(eighth_chunk_hand).concat(eighth_chunk_haz);
+        eighth_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 16)
+          item.y = item.y + (80 + 30 * 32)});
       const eighth_chunk_middle = eighth_chunk
         .createStaticLayer(
           "middle",
@@ -428,7 +591,9 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
-      var ninth_chunk = chunk9;
+      //NINTH CHUNK
+      //
+      var ninth_chunk = chunk_array[playerInfo.mapBlueprint[8]];
       const ninth_chunk_top = ninth_chunk
         .createStaticLayer(
           "top",
@@ -437,6 +602,25 @@ export class GameScene extends Phaser.Scene {
           80 + 30 * 32
         )
         .setDepth(1);
+        const ninth_chunk_hand = ninth_chunk.createFromObjects(
+          "item",
+          "hand",
+          {key: "handSan"}
+        );
+        const ninth_chunk_face = ninth_chunk.createFromObjects(
+          "item",
+          "face",
+          {key: "faceMask"}
+        );
+        const ninth_chunk_haz = ninth_chunk.createFromObjects(
+          "item",
+          "haz",
+          {key: "hazSuit"}
+        );
+        var ninth_chunk_items = ninth_chunk_face.concat(ninth_chunk_hand).concat(ninth_chunk_haz);
+        ninth_chunk_items.forEach(item => {
+          item.x = item.x + (80 + 30 * 32)
+          item.y = item.y + (80 + 30 * 32)});
       const ninth_chunk_middle = ninth_chunk
         .createStaticLayer(
           "middle",

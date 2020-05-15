@@ -4,7 +4,7 @@
      "export":
         {
          "format":"json",
-         "target":"chunk5.json"
+         "target":"chunk1.json"
         }
     },
  "height":30,
@@ -35,6 +35,197 @@
          "y":0
         }, 
         {
+         "draworder":"topdown",
+         "id":5,
+         "name":"item",
+         "objects":[
+                {
+                 "gid":2405,
+                 "height":16,
+                 "id":12,
+                 "name":"face",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":240,
+                 "y":128
+                }, 
+                {
+                 "gid":2406,
+                 "height":16,
+                 "id":13,
+                 "name":"hand",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":352
+                }, 
+                {
+                 "gid":2407,
+                 "height":16,
+                 "id":14,
+                 "name":"haz",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":64,
+                 "y":192
+                }, 
+                {
+                 "gid":2406,
+                 "height":16,
+                 "id":15,
+                 "name":"hand",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":368,
+                 "y":320
+                }, 
+                {
+                 "gid":2406,
+                 "height":16,
+                 "id":16,
+                 "name":"hand",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":400,
+                 "y":112
+                }, 
+                {
+                 "gid":2406,
+                 "height":16,
+                 "id":17,
+                 "name":"hand",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":464,
+                 "y":208
+                }, 
+                {
+                 "gid":2406,
+                 "height":16,
+                 "id":18,
+                 "name":"hand",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":48,
+                 "y":416
+                }, 
+                {
+                 "gid":2405,
+                 "height":16,
+                 "id":19,
+                 "name":"face",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":32
+                }, 
+                {
+                 "gid":2405,
+                 "height":16,
+                 "id":20,
+                 "name":"face",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":112,
+                 "y":256
+                }, 
+                {
+                 "gid":2407,
+                 "height":16,
+                 "id":22,
+                 "name":"haz",
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":320,
+                 "y":416
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "data":[646, 647, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 73, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 187, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 188, 227, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 228, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 187, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 188, 227, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 228, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 236, 240, 240, 240, 240, 240, 240, 240, 237, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 522, 214, 215, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 450, 451, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 562, 254, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":30,
          "id":2,
@@ -46,8 +237,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":4,
- "nextobjectid":1,
+ "nextlayerid":8,
+ "nextobjectid":46,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.3.4",
@@ -4763,7 +4954,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
@@ -4772,7 +4963,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
@@ -5680,7 +5871,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
@@ -5729,7 +5920,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {
@@ -9545,7 +9736,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }],
                  "terrain":[-1, -1, -1, 7]
                 }, 
@@ -9578,7 +9769,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }],
                  "terrain":[-1, -1, 7, -1]
                 }, 
@@ -21641,6 +21832,93 @@
          "spacing":0,
          "tilecount":32,
          "tileheight":16,
+         "tilewidth":16
+        }, 
+        {
+         "columns":0,
+         "firstgid":2405,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"facemasks",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":16,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/..\/img\/facemasks.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":2
+                        }]
+                }],
+         "tilewidth":16
+        }, 
+        {
+         "columns":0,
+         "firstgid":2406,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"handsanitizer",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":16,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/..\/img\/handsanitizer.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }]
+                }],
+         "tilewidth":16
+        }, 
+        {
+         "columns":0,
+         "firstgid":2407,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"hazmat suit",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":16,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/..\/img\/hazmatSuit.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":3
+                        }]
+                }],
          "tilewidth":16
         }],
  "tilewidth":16,

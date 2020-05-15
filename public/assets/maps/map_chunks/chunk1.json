@@ -21859,7 +21859,13 @@
                  "id":0,
                  "image":"..\/..\/img\/facemasks.png",
                  "imageheight":16,
-                 "imagewidth":16
+                 "imagewidth":16,
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":2
+                        }]
                 }],
          "tilewidth":16
         }, 
@@ -21882,7 +21888,13 @@
                  "id":0,
                  "image":"..\/..\/img\/handsanitizer.png",
                  "imageheight":16,
-                 "imagewidth":16
+                 "imagewidth":16,
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":1
+                        }]
                 }],
          "tilewidth":16
         }, 
@@ -21897,15 +21909,27 @@
             },
          "margin":0,
          "name":"hazmat suit",
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":3
+                }],
          "spacing":0,
          "tilecount":1,
          "tileheight":16,
          "tiles":[
                 {
                  "id":0,
-                 "image":"..\/..\/img\/hazmat suit.png",
+                 "image":"..\/..\/img\/hazmatSuit.png",
                  "imageheight":16,
-                 "imagewidth":16
+                 "imagewidth":16,
+                 "properties":[
+                        {
+                         "name":"ID",
+                         "type":"int",
+                         "value":3
+                        }]
                 }],
          "tilewidth":16
         }],
