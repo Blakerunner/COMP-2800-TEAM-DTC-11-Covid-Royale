@@ -111,7 +111,7 @@ export class PostRoundScene extends Phaser.Scene {
         // wait for game reset
         setTimeout(function(){ 
             window.location.reload(true);
-        }, 20000);
+        }, 5000);
         
         console.log("PostRoundScene complete")
     }
