@@ -19,6 +19,7 @@ const config = {
       activePointers: 3,
     },
     render: {
+        antialias: false,
         roundPixels: true,
         pixelArt: true
     },

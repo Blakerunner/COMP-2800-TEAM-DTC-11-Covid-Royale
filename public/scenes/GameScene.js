@@ -27,7 +27,7 @@ export class GameScene extends Phaser.Scene {
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         // reload game back to start
         setTimeout( () => {
-          this.scene.start('PostRoundScene', this.player)
+          this.scene.start('PostRoundScene', {player: this.player, socket: this.socket})
         }, 2000);
       },
       this

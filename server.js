@@ -172,33 +172,6 @@ mongoose.connect(
       return randomNumbers;
     }
 
-    function helper(socket) {
-      let cookies = socket.request.headers.cookie.split(" ");
-      let key_val = cookies[cookies.length - 1];
-      username = key_val.split("=");
-      if (username[0].includes("username")) {
-        username = username[1].replace("%20", " ");
-        return username;
-      } else {
-        return false;
-      }
-      username = username[1].replace("%20", " ");
-    }
-
-    function helper2(socket) {
-      let mongoID;
-      let cookies = socket.request.headers.cookie.split(" ");
-      for (cookie of cookies) {
-        if (cookie.includes("mongoID")) {
-          //Seperate key from val
-          let temp = cookie.split("=")[1];
-          //Remove semicolon
-          temp = temp.slice(0, -1);
-          return temp;
-        }
-      }
-    }
-
     // socket.io handle for browser connect
     io.on("connection", function (socket) {
       //HOLY FUCK THIS IS FUCKING IT
@@ -222,7 +195,6 @@ mongoose.connect(
       };
 
       // console.log(players, "PLAYER VARIABLE");
-      
 
       // emit map blueprint
       socket.on("mapBlueprintReady", () => {
@@ -279,13 +251,12 @@ mongoose.connect(
       Object.keys(players).forEach(function (player) {
         
         //Get the users current highscore
-        //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS 
-
+        //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
         
         User.findById(players[player].playerMongoID)
           .then(user => {
             console.log("Database Highscore is", user.highScore)
-            console.log("player hgighscore is", players[player].playerScore)
+            console.log("player highScore is", players[player].playerScore)
             if(players[player].playerScore > user.highScore){
               //Change HighScore here if its greater than database highscore
                User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
@@ -311,7 +282,7 @@ mongoose.connect(
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 60000
+    let gameRoundInterval = 10000
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);
