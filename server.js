@@ -195,16 +195,19 @@ mongoose.connect(
 
       // console.log(players, "PLAYER VARIABLE");
 
-      // emit map blueprint
-      socket.on("mapBlueprintReady", () => {
-        socket.emit("mapBlueprint", mapData);
-      });
 
       // send the players object to the new player
       socket.emit("currentPlayers", players);
 
       // update all other players of the new player
       socket.broadcast.emit("newPlayer", players[socket.id]);
+
+      // update player stats
+      socket.on("playerStatsUpdate", function (player) {
+        console.log(players[socket.id].playerName + 'Stats Updated end of round')
+        players[socket.id].playerScore = player.score;
+        players[socket.id].playerCovidPos = player.covid;
+      });
 
       // update player movement
       socket.on("playerMovement", function (movementData) {
@@ -246,6 +249,7 @@ mongoose.connect(
 
      //Before we reset player data, update anything in the db that needs to be updated
       console.log("pre-player-reset:", players);
+
       //Loop through current players
       Object.keys(players).forEach(function (player) {
         
@@ -259,29 +263,22 @@ mongoose.connect(
             if(players[player].playerScore > user.highScore){
               //Change HighScore here if its greater than database highscore
                User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
-                  .then(user => console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`))
+                  .then(user => {
+                      console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`)
+                  })
             }
           })
         // console.log(players[player], "GOBBLED");
       })
 
- // reset player data on server to new game round standards
-
-      Object.keys(players).forEach(function (player) {
-        players[player].playerRisk = 0;
-        players[player].playerScore = 0;
-        players[player].playerCovidPos = false;
-        players[player].x = playersSpawnLocations[0][0];
-        players[player].y = playersSpawnLocations[0][1];
-        players[player].mapBlueprint = mapData;
-        console.log(players[player].playerName, " reset");
-      });
-
-      console.log("server broadcast | serverGameStart");
+      // reset server player list
+      console.log("Server | players pre reset", players)
+      players = {}
+      console.log("Server | players post reset", players)
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 10000
+    let gameRoundInterval = 25000
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);

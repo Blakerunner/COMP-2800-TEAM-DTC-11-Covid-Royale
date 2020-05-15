@@ -4,9 +4,9 @@ export class GameUI extends Phaser.Scene {
             key: "GameUI",
             active: false
         })
-        this.playerScore = 0
-        this.playerRisk = 0
-        this.playerProtection = 0
+        this.score = 0
+        this.risk = 0
+        this.protection = 0
     }
 
     init(){
@@ -35,13 +35,13 @@ export class GameUI extends Phaser.Scene {
 
         let playerRiskUIBackbar = this.add.graphics()
         .setScrollFactor(0)
-        .fillRect(10, 10, 124, 24)
+        .fillRect(10, 10, 0, 24)
         .fillStyle(cBlack, 1);
         
         let playerRiskText = this.add.text(10, 10, 'Risk', {
             fontSize: '12px',
             padding: { x: 4, y: 4 },
-            fill: 'black',
+            fill: 'white',
             align: 'center'
         }).setScrollFactor(0);
 
@@ -53,7 +53,7 @@ export class GameUI extends Phaser.Scene {
 
         let playerProtectionUIBackbar = this.add.graphics()
         .setScrollFactor(0)
-        .fillRect(10, 42, 124, 24)
+        .fillRect(10, 42, 0, 24)
         .fillStyle(cBlack, 1);
 
         let playerProtectionUIText = this.add.text(10, 42, 'Protection', {
@@ -74,7 +74,7 @@ export class GameUI extends Phaser.Scene {
         .fillRect(144, 10, 32, 24)
         .fillStyle(cBlack, 1);
 
-        let playerScoreUIText = this.add.text(144, 10, this.playerScore, {
+        let playerScoreUIText = this.add.text(144, 10, '0', {
             fontSize: '12px',
             padding: { x: 4, y: 4 },
             fill: 'black',
@@ -82,17 +82,33 @@ export class GameUI extends Phaser.Scene {
         }).setScrollFactor(0);
 
         // EVENTS
+        // Player per second update
+        this.scene
+        .get("GameScene")
+        .events.on("playerUIUpdateTicker", playerUIUpdateTicker, this);
+
+        // Updates virutal button events
+        function playerUIUpdateTicker(data) {
+            this.score = data.score
+            this.risk = data.risk
+            this.protection = data.protection
+            // constant UI updating
+            
+            playerScoreUIText.setText(data.score)
+            playerRiskUIFillbar.fillRect(10, 10, data.risk * 1.24, 24)
+            playerProtectionUIBackbar.fillRect(10, 42, data.protection * 1.24, 24)
+        }
+
+
         // Player Score Update
         this.scene
         .get("GameScene")
         .events.on("playerScoreUpdate", playerScoreUpdate, this);
 
-        // Updates virutal button events
+        // Updates player score
         function playerScoreUpdate(score) {
             // add score to playerScore
             this.playerScore += score;
-            // update playerScoreUI
-            playerScoreUIText.setText(this.playerScore)
         }
 
         // Player Risk Update
@@ -100,12 +116,10 @@ export class GameUI extends Phaser.Scene {
         .get("GameScene")
         .events.on("playerRiskUpdate", playerRiskUpdate, this);
 
-        // Updates virutal button events
+        // Updates player risk
         function playerRiskUpdate(risk) {
             // add score to playerScore
             this.playerRisk += risk;
-            // update playerScoreUI
-            playerRiskUIText.setText(this.playerRisk)
         }
 
         // Player Protection Update
@@ -113,12 +127,10 @@ export class GameUI extends Phaser.Scene {
         .get("GameScene")
         .events.on("playerProtectionUpdate", playerProtectionUpdate, this);
 
-        // Updates virutal button events
+        // Updates player protection
         function playerProtectionUpdate(protection) {
             // add protection to playerProtection
             this.playerProtection += protection;
-            // update playerProtectionUIText
-            playerProtectionUIText.setText(this.playerProtection)
         }
 
         console.log("GameUI complete")
@@ -126,9 +138,5 @@ export class GameUI extends Phaser.Scene {
     }
 
     update(){
-
-        // Update playerRiskUIBa
-        
-
     }
 }
