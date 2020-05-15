@@ -63,212 +63,214 @@
       </div>
     </nav>
   </header>
-<div>
+  <div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="deleteModalLong" tabindex="-1" role="dialog" aria-labelledby="Delete Account" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Delete Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModalLong" tabindex="-1" role="dialog" aria-labelledby="Delete Account"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Delete Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body justify-content-center" id="deleteModalAccountTerms">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger mr-auto" href="./deleteAccount">Delete Account</button>
+            <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body justify-content-center" id="deleteModalAccountTerms">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger mr-auto"  href="./deleteAccount">Delete Account</button>
-        <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-  <main role="main">
-    <div id="loginSuccess" style="display:none;" class="alert alert-success mt-3" role="alert">
-      <p id='loggedInText' class=""> You have been logged in!</p>
-      <button type="button"  class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
-    </div>
-    <div id="logoutAlert"  style="display:none;"  class="alert alert-primary mt-3" role="alert">
-      You havent logged in yet! Please click login.
-    </div>
-    <div id="orientationAlert" style="display:none;" class="alert alert-danger mt-3" role="alert">
-      Game is best played in landscape mode.
     </div>
 
-    <div id="myCarousel" class="carousel slide mb-5" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <picture>
-            <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/goose_logic_desk.jpg">
-            <img src="./assets/img/goose_logic_mob.jpg" class="d-block img-fluid" />
-          </picture>
-          <div class="container">
-            <div class="carousel-caption">
-              <!-- <h1>Another example headline.</h1>
+    <main role="main">
+      <div id="loginSuccess" style="display:none;" class="alert alert-success mt-3" role="alert">
+        <p id='loggedInText' class=""> You have been logged in!</p>
+        <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
+      </div>
+      <div id="logoutAlert" style="display:none;" class="alert alert-primary mt-3" role="alert">
+        You havent logged in yet! Please click login.
+      </div>
+      <div id="orientationAlert" style="display:none;" class="alert alert-danger mt-3" role="alert">
+        Game is best played in landscape mode.
+      </div>
+
+      <div id="myCarousel" class="carousel slide mb-5" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <picture>
+              <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/goose_logic_desk.jpg">
+              <img src="./assets/img/goose_logic_mob.jpg" class="d-block img-fluid" />
+            </picture>
+            <div class="container">
+              <div class="carousel-caption">
+                <!-- <h1>Another example headline.</h1>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                 <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p> -->
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <picture>
+              <source media="(min-width: 800px)" class="d-block img-fluid"
+                srcset="./assets/img/covid_royal_banner_desk.png">
+              <img src="./assets/img/covid_royal_banner_mob.png" class="d-block img-fluid" />
+            </picture>
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>COVID ROYALE</h1>
+                <p>Come play in an online multiplayer battle-royale style game. Game mechanics are based on COVID-19
+                  health practices.</p>
+                <p><a class="btn btn-lg btn-primary" href="./covid_royal" role="button">Play</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <picture>
+              <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/who_banner_desk.jpeg">
+              <img src="./assets/img/who_banner_mob.jpeg" class="d-block img-fluid" />
+            </picture>
+            <div class="container">
+              <div class="carousel-caption">
+                <h1></h1>
+                <p>We support WHO reccomended best health practices for COVID-19.</p>
+                <p><a class="btn btn-lg btn-primary"
+                    href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" role="button">Information on
+                    COVID-19</a></p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="carousel-item">
-          <picture>
-            <source media="(min-width: 800px)" class="d-block img-fluid"
-              srcset="./assets/img/covid_royal_banner_desk.png">
-            <img src="./assets/img/covid_royal_banner_mob.png" class="d-block img-fluid" />
-          </picture>
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>COVID ROYALE</h1>
-              <p>Come play in an online multiplayer battle-royale style game. Game mechanics are based on COVID-19
-                health practices.</p>
-              <p><a class="btn btn-lg btn-primary" href="./covid_royal" role="button">Play</a></p>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md text-center overflow-hidden mb-5">
+            <div class="mb-3">
+              <h2 class="">Game Objectives 1</h2>
+            </div>
+            <div class="bg-light shadow-sm mx-auto mt-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
+              <!--<p>Put image here</p>-->
+              <img src="./assets/img/objective1.png" class="w-100" />
+            </div>
+          </div>
+          <div class="col-md text-center overflow-hidden mb-5">
+            <div class="mb-3">
+              <h2 class="">Game Objectives 2</h2>
+            </div>
+            <div class="bg-light shadow-sm mx-auto my-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
+              <!-- <p>Put image here</p> -->
+              <img src="./assets/img/objective2.png" class="w-100" />
             </div>
           </div>
         </div>
-        <div class="carousel-item">
-          <picture>
-            <source media="(min-width: 800px)" class="d-block img-fluid" srcset="./assets/img/who_banner_desk.jpeg">
-            <img src="./assets/img/who_banner_mob.jpeg" class="d-block img-fluid" />
-          </picture>
-          <div class="container">
-            <div class="carousel-caption">
-              <h1></h1>
-              <p>We support WHO reccomended best health practices for COVID-19.</p>
-              <p><a class="btn btn-lg btn-primary"
-                  href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" role="button">Information on
-                  COVID-19</a></p>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md text-center overflow-hidden mb-5">
+            <div class="mb-3">
+              <h2 class="">Game Objectives 3</h2>
+            </div>
+            <div class="bg-light shadow-sm mx-auto mt-3" style="width: 100%;border-radius: 21px 21px 21px 21px;">
+              <!--<p>Put image here</p>-->
+              <img src="./assets/img/objective3.png" class="w-100" />
+            </div>
+          </div>
+          <div class="col-md text-center overflow-hidden mb-5">
+            <div class="mb-3">
+              <h2 class="">Scoring</h2>
+            </div>
+            <div class="bg-light shadow-sm mx-auto my-3" style="width: 100%;border-radius: 21px 21px 21px 21px;">
+              <!-- <p>Put image here</p> -->
+              <img src="./assets/img/objective4.png" class="w-100" />
             </div>
           </div>
         </div>
       </div>
-      <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md text-center overflow-hidden mb-5">
-          <div class="mb-3">
-            <h2 class="">Game Objectives 1</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md text-center overflow-hidden mb-5">
+            <div class="mb-3">
+              <h2 class="">Game Controls 1</h2>
+            </div>
+            <div class="bg-light shadow-sm mx-auto mt-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
+              <!-- <p>Put image here</p> -->
+              <img src="./assets/img/controls1.png" class="w-100" />
+            </div>
           </div>
-          <div class="bg-light shadow-sm mx-auto mt-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
-            <!--<p>Put image here</p>-->
-            <img src="./assets/img/objective1.png" class="w-100"/>
-          </div>
-        </div>
-        <div class="col-md text-center overflow-hidden mb-5">
-          <div class="mb-3">
-            <h2 class="">Game Objectives 2</h2>
-          </div>
-          <div class="bg-light shadow-sm mx-auto my-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
-            <!-- <p>Put image here</p> -->
-            <img src="./assets/img/objective2.png" class="w-100"/>
+          <div class="col-md text-center overflow-hidden mb-5">
+            <div class="mb-3">
+              <h2 class="">Game Controls 2</h2>
+            </div>
+            <div class="bg-light shadow-sm mx-auto my-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
+              <!-- <p>Put image here</p> -->
+              <img src="./assets/img/controls2.png" class="w-100" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md text-center overflow-hidden mb-5">
-          <div class="mb-3">
-            <h2 class="">Game Objectives 3</h2>
-          </div>
-          <div class="bg-light shadow-sm mx-auto mt-3" style="width: 100%;border-radius: 21px 21px 21px 21px;">
-            <!--<p>Put image here</p>-->
-            <img src="./assets/img/objective3.png" class="w-100"/>
-          </div>
-        </div>
-        <div class="col-md text-center overflow-hidden mb-5">
-          <div class="mb-3">
-            <h2 class="">Scoring</h2>
-          </div>
-          <div class="bg-light shadow-sm mx-auto my-3" style="width: 100%;border-radius: 21px 21px 21px 21px;">
-            <!-- <p>Put image here</p> -->
-            <img src="./assets/img/objective4.png" class="w-100"/>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md text-center overflow-hidden mb-5">
-        <div class="mb-3">
-            <h2 class="">Game Controls 1</h2>
-          </div>
-          <div class="bg-light shadow-sm mx-auto mt-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
-            <!-- <p>Put image here</p> -->
-            <img src="./assets/img/controls1.png" class="w-100"/>
-        </div>
-        </div>
-        <div class="col-md text-center overflow-hidden mb-5">
-          <div class="mb-3">
-            <h2 class="">Game Controls 2</h2>
-          </div>
-          <div class="bg-light shadow-sm mx-auto my-3" style="width: 100%; border-radius: 21px 21px 21px 21px;">
-            <!-- <p>Put image here</p> -->
-            <img src="./assets/img/controls2.png" class="w-100"/>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
-    <!-- Marketing messaging and featurettes
+      <!-- Marketing messaging and featurettes
       ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing">
-      <div class="container col-lg-6">
-        <h1 class="text-center">About Us</h1>
-        <p class="text-center">Hello! Goose Logic here. A group of students building what we love. Games. We're
-          inspired by the impact games can have on a person though process and meaning. Like everyone else, we've been effected by the COVID-19 pandemic. Our latest project is Covid-Royale. This is our effort to
-          provide some awareness and togetherness though the medium of a battle royale style game.</p>
-      </div>
-      <!-- Four About Us cards -->
-      <hr class="featurette-divider">
-      <div class="row">
-        <div class="col-lg-3 text-center">
-          <img src="./assets/img/profile_pic_keegan.jpg" class="rounded-circle" alt="Profile picture">
-          <h2>Keegan</h2>
-          <p>Nineteen</p>
+      <div class="container marketing">
+        <div class="container col-lg-6">
+          <h1 class="text-center">About Us</h1>
+          <p class="text-center">Hello! Goose Logic here. A group of students building what we love. Games. We're
+            inspired by the impact games can have on a person though process and meaning. Like everyone else, we've been
+            effected by the COVID-19 pandemic. Our latest project is Covid-Royale. This is our effort to
+            provide some awareness and togetherness though the medium of a battle royale style game.</p>
         </div>
-        <div class="col-lg-3 text-center">
-          <img src="./assets/img/profile_pic_lawrance.jpg" class="rounded-circle" alt="Profile picture">
-          <h2>Lawrance</h2>
-          <p>Lit</p>
+        <!-- Four About Us cards -->
+        <hr class="featurette-divider">
+        <div class="row">
+          <div class="col-lg-3 text-center">
+            <img src="./assets/img/profile_pic_keegan.jpg" class="rounded-circle" alt="Profile picture">
+            <h2>Keegan</h2>
+            <p>Nineteen</p>
+          </div>
+          <div class="col-lg-3 text-center">
+            <img src="./assets/img/profile_pic_lawrance.jpg" class="rounded-circle" alt="Profile picture">
+            <h2>Lawrance</h2>
+            <p>Lit</p>
+          </div>
+          <div class="col-lg-3 text-center">
+            <img src="./assets/img/profile_pic_zenen.jpg" class="rounded-circle" alt="Profile picture">
+            <h2>Zenen</h2>
+            <p>Very aware of time</p>
+          </div>
+          <div class="col-lg-3 text-center">
+            <img src="./assets/img/profile_pic_blake.jpg" class="rounded-circle" alt="Profile picture">
+            <h2>Blake</h2>
+            <p>Wholesome Dictator</p>
+          </div>
         </div>
-        <div class="col-lg-3 text-center">
-          <img src="./assets/img/profile_pic_zenen.jpg" class="rounded-circle" alt="Profile picture">
-          <h2>Zenen</h2>
-          <p>Very aware of time</p>
-        </div>
-        <div class="col-lg-3 text-center">
-          <img src="./assets/img/profile_pic_blake.jpg" class="rounded-circle" alt="Profile picture">
-          <h2>Blake</h2>
-          <p>Wholesome Dictator</p>
-        </div>
-      </div>
 
-      
-      <!-- START THE FEATURETTES -->
 
-      <!-- <hr class="featurette-divider">
+        <!-- START THE FEATURETTES -->
+
+        <!-- <hr class="featurette-divider">
     
         <div class="row featurette">
           <div class="col-md-7">
@@ -282,125 +284,133 @@
     
         <hr class="featurette-divider"> -->
 
-      <!-- /END THE FEATURETTES -->
-      <hr class="featurette-divider">
-    </div>
+        <!-- /END THE FEATURETTES -->
+        <hr class="featurette-divider">
+      </div>
 
-    <audio id="goose_honk">
-      <source src="./assets/audio/honk-sound.mp3">
-      <source src="./assets/audio/honk-sound.ogg"> 
-    </audio>
+      <audio id="goose_honk">
+        <source src="./assets/audio/honk-sound.mp3">
+        <source src="./assets/audio/honk-sound.ogg">
+      </audio>
 
-    <!-- FOOTER -->
-	<!--ALERTS-->
-	
-	
-	
-	
-	
-	
-	
-	
-    <footer class="container text-center">
-      <p>2020 Goose Logic, Inc.</p>
-      <img src="./assets/img/hidden_goose.png" class="hidden_goose" onclick="document.getElementById('goose_honk').play()">
-    </footer>
-  </main>
+      <!-- FOOTER -->
+      <!--ALERTS-->
 
-  <script>
 
-    async function getUserAsync() 
-    {
-        let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, {mode:"no-cors"})
+
+
+
+
+
+
+      <footer class="container text-center">
+        <p>2020 Goose Logic, Inc.</p>
+        <img src="./assets/img/hidden_goose.png" class="hidden_goose"
+          onclick="document.getElementById('goose_honk').play()">
+      </footer>
+    </main>
+
+    <script>
+
+      async function getUserAsync() {
+        let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, { mode: "no-cors" })
         let data = await response.json();
         return data;
-      
-    }
-  
-  $(document).ready(function(){
 
-    // delete account modal text fill - ZENEN
-    // $("#deleteModalAccountTerms").append('<p>ARE YOU SURE ABOUT THAT?!</p>' + `<p>${username}</p>` + `<p>${score}</p>`)
-    $("#deleteModalAccountTerms").append('<p>ARE YOU SURE ABOUT THAT?!</p>')
-
-    // orientaion checker #1
-    screen.orientation.onchange = function (){
-      // logs 'portrait' or 'landscape'
-      let orientation = screen.orientation.type.match(/\w+/)[0]
-      console.log("Good Browsers check | Screen Orientation: ", orientation);
-      if (orientation === "portrait") {
-        $("#orientationAlert").show();
-      } else {
-        $("#orientationAlert").hide();
       }
-    };
-  
-    // orientaion checker #2
-    function getOrientation(){
-      var orientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
-      console.log("Safari check | Screen Orientation: ", orientation)
-      if (orientation === "portrait") {
-        $("#orientationAlert").show();
-      } else {
-        $("#orientationAlert").hide();
-      }
-    }
-    window.onresize = function(){ getOrientation(); }
-    // On window load check.
-    getOrientation();
-  
-    // login checker
-    getUserAsync()
-    .then(response => {
-      if(!response.user){ 
-        $('#loggedOut').text(`You havent logged in yet! Please click login`)
-        $('#logoutAlert').show()
-    } else {
-      console.log('You are logged in, display popup here', response);
-      $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
-      $('#loginSuccess').show()
-    }
-    })
-    .catch(err => console.log(err))
-  });
-  
-   </script>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/phaser@3.23.0/dist/phaser.min.js"></script>
+      $(document).ready(function () {
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+        getUserAsync()
+          .then(response => {
+
+            if (!response.user) {
+              $("#deleteModalAccountTerms").append(`<p>I am sorry, You must be logged in to delete an account!</p>`);
+            }
+            else {
+
+              // delete account modal text fill - ZENEN
+              $("#deleteModalAccountTerms").append(`<p>Are you sure you want to delete your account ${response.user.username}?!</p>` + `<p>You have a great highscore of ${response.user.highScore}. <br>These stats will be deleted with your account.</p>`)
+            }});
+
+            // orientaion checker #1
+            screen.orientation.onchange = function () {
+              // logs 'portrait' or 'landscape'
+              let orientation = screen.orientation.type.match(/\w+/)[0]
+              console.log("Good Browsers check | Screen Orientation: ", orientation);
+              if (orientation === "portrait") {
+                $("#orientationAlert").show();
+              } else {
+                $("#orientationAlert").hide();
+              }
+            };
+
+            // orientaion checker #2
+            function getOrientation() {
+              var orientation = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+              console.log("Safari check | Screen Orientation: ", orientation)
+              if (orientation === "portrait") {
+                $("#orientationAlert").show();
+              } else {
+                $("#orientationAlert").hide();
+              }
+            }
+            window.onresize = function () { getOrientation(); }
+            // On window load check.
+            getOrientation();
+
+            // login checker
+            getUserAsync()
+              .then(response => {
+                if (!response.user) {
+                  $('#loggedOut').text(`You havent logged in yet! Please click login`)
+                  $('#logoutAlert').show()
+                } else {
+                  console.log('You are logged in, display popup here', response);
+                  $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
+                  $('#loginSuccess').show()
+                }
+              })
+              .catch(err => console.log(err))
+          });
+
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.23.0/dist/phaser.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
 
     <!-- Back to top button -->
     <button onclick="topFunction()" id="myBtn" title="Go to top">Back to Top</button>
     <script>
-      // Get the button created through HTML
-      var mybutton = document.getElementById("myBtn");
-      
-      // Popup the button when the user scrolls down
-      window.onscroll = function() {scrollFunction()};
-      
-      function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          mybutton.style.display = "block";
-        } else {
-          mybutton.style.display = "none";
-        }
+    // Get the button created through HTML
+    var mybutton = document.getElementById("myBtn");
+
+    // Popup the button when the user scrolls down
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
       }
-      
-      // When the user clicks on the button, scroll to the top of the document
-      function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      }
-      </script>
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+    </script>
 
 </html>
