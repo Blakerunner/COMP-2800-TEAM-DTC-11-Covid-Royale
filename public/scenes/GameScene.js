@@ -13,30 +13,18 @@ export class GameScene extends Phaser.Scene {
   }
 
   init() {
+
     console.log("GameScene start");
     // initilise socket
     this.socket = io();
-
-     // Server ends game
-     this.socket.on(
-      "serverGameEnd",
-      () => {
-        console.log("Server has instructed to end of round");
-        // fade out for end of round
-        this.scene.get('GameUI').cameras.main.fadeOut(1000, 0, 0, 0);;
-        this.cameras.main.fadeOut(1000, 0, 0, 0);
-        // reload game back to start
-        setTimeout( () => {
-          this.scene.start('PostRoundScene', {player: this.player, socket: this.socket})
-        }, 2000);
-      },
-      this
-    );
   }
 
-  preload() {}
+  preload() {
+
+  }
 
   create() {
+
     // ADD SCENES
     this.scene.launch("GameVirtualController", GameVirtualController, true, {
       x: 0,
@@ -620,20 +608,70 @@ export class GameScene extends Phaser.Scene {
     this.scene
       .get("GameVirtualController")
       .events.on("buttonUpdate", buttonUpdate, this);
-    
-    // event to add a score to play every second, emits to GameUI to update UI 
-    this.time.addEvent({ delay: 1000, callback: () => {
-      if(this.player){
-        this.player.score += 1
-        this.events.emit('playerScoreUpdate', 1)
-      }
-    }, callbackScope: this, loop: true });
 
     // Updates virutal button events
     function buttonUpdate(states) {
       this.virtualControllerStates = states;
     }
+    
+    // event to add a score to play every second, emits to GameUI to update UI 
+    this.time.addEvent({ delay: 1000, callback: () => {
+      // check if player risk is 100 or greater
+      // change staus to covid true | stop score incrementing
+      if (this.player.risk >= 100) {
+        this.player.covid = true
+      } else {
+        // score increment
+        this.player.score += 1
 
+        // check if player has protection
+        // 3 or more protection
+        if (this.player.protection >= 3) {
+          this.player.risk += 1
+          this.player.protection -= 3
+        }
+        // between 1 and 2 protection
+        else if (0 < this.player.protection && this.player.protection < 3) {
+          this.player.risk += 4 - this.player.protection
+          this.player.protection = 0
+        }
+        // player without protection
+        else {
+          this.player.risk += 4
+        }
+      }
+
+      // emit for player UI update every second
+      this.events.emit('playerUIUpdateTicker', {
+        score: this.player.score, 
+        risk: this.player.risk, 
+        protection: this.player.protection
+      });
+
+    }, callbackScope: this, loop: true });
+
+    // LISTEN FOR END OF ROUND
+     // Server ends game
+     this.socket.on("serverGameEnd", () => {
+      console.log("Server has instructed to end of round");
+      
+      // update server with player final data
+      this.socket.emit("playerStatsUpdate", {
+        score: this.player.score,
+        covid: this.player.covid,
+      });
+
+      // fade out for end of round
+      this.scene.get('GameUI').cameras.main.fadeOut(1000, 0, 0, 0);;
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+      // move to post game
+
+      setTimeout( () => {
+        this.scene.start('PostRoundScene', {player: this.player})
+      }, 2000);
+      });
+
+    
 
   }
 

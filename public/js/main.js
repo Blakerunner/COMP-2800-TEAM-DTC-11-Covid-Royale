@@ -21,7 +21,8 @@ const config = {
     render: {
         antialias: false,
         roundPixels: true,
-        pixelArt: true
+        pixelArt: true,
+        clearBeforeRender: true
     },
     physics: {
       default: 'arcade',

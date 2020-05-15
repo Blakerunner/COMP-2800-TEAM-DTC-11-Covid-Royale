@@ -9,7 +9,6 @@ export class PostRoundScene extends Phaser.Scene {
 
     init(data){
         this.player = data.player
-        // this.socket = data.socket
     }
     
     preload(){
@@ -18,7 +17,6 @@ export class PostRoundScene extends Phaser.Scene {
     
     create(){
         console.log('Player log: ', this.player)
-        console.log('Socket log: ', this.socket)
 
         // UI SETUP
         this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -27,10 +25,6 @@ export class PostRoundScene extends Phaser.Scene {
 
         // LISTENERS
         // listen for server passing post round data
-        // this.socket.on("serverPostRound", () => {
-        //     console.log("serverPostRound")
-          
-        //   }, this);
 
         // SPEAKERS
 
@@ -116,7 +110,8 @@ export class PostRoundScene extends Phaser.Scene {
 
         // wait for game reset
         setTimeout(function(){ 
-            location.reload(); }, 5000);
+            window.location.reload(true);
+        }, 20000);
         
         console.log("PostRoundScene complete")
     }
@@ -125,3 +120,4 @@ export class PostRoundScene extends Phaser.Scene {
 
     }
 }
+
