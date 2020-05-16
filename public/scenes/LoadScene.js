@@ -3,7 +3,7 @@ export class LoadScene extends Phaser.Scene {
     constructor(){
         super({
             key: "LoadScene",
-            active: true
+            active: false
         })
     }
 
@@ -12,9 +12,13 @@ export class LoadScene extends Phaser.Scene {
     }
     
     preload(){
+        this.load.bitmapFont('retroText', './assets/bitmapFont/retroText.png', './assets/bitmapFont/retroText.xml');
         this.load.image("game_instruct_bg", "./assets/img/game_instruct_scene_bg.png")
         this.load.image("overworld", "./assets/img/overworld.png");
         this.load.image("objects", "./assets/img/objects.png");
+        this.load.image("handSan", "./assets/img/handsanitizer.png");
+        this.load.image("faceMask", "./assets/img/facemasks.png");
+        this.load.image("hazSuit", "./assets/img/hazmatSuit.png");
         this.load.tilemapTiledJSON("bottom_left_skirt", "./assets/maps/map_skirts/bottom_left_skirt.json");
         this.load.tilemapTiledJSON("bottom_right_skirt", "./assets/maps/map_skirts/bottom_right_skirt.json");
         this.load.tilemapTiledJSON("bottom_skirt", "./assets/maps/map_skirts/bottom_skirt.json");
@@ -72,7 +76,6 @@ export class LoadScene extends Phaser.Scene {
 }
 fillbar(progressBar, 0.01, this.scene);
 
-        //this.scene.start("MenuScene")
     }
 
     update(){
