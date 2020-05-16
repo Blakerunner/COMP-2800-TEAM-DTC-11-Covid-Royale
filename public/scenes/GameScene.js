@@ -20,7 +20,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload() {
-
+    this.load.bitmapFont('retroText', '.assets/bitmapFont/retro-gaming.png', '.assets/bitmapFont/retro-gaming.xml');
   }
 
   create() {
@@ -586,15 +586,9 @@ export class GameScene extends Phaser.Scene {
       otherPlayer.playerId = playerInfo.playerId;
       self.otherPlayers.add(otherPlayer);
 
-      const otherPlayerName = self.add
-        .text(playerInfo.x, playerInfo.y - 18, playerInfo.playerName, {
-          fontSize: "12px",
-          padding: { x: 0, y: 0 },
-          backgroundColor: "white",
-          fill: "black",
-          align: "center",
-        })
-        .setOrigin(0.5, 0.5);
+      // const otherPlayerName = self.add.bitmapText(playerInfo.x, playerInfo.y - 18, 'retroText', playerInfo.playerName)
+      const otherPlayerName = self.add.bitmapText(playerInfo.x, playerInfo.y - 18, 'retroText', String(playerInfo.playerName), 12)
+      .setOrigin(0.5)
       otherPlayerName.playerId = playerInfo.playerId;
       self.otherPlayersNames.add(otherPlayerName);
     }

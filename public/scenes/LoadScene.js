@@ -12,6 +12,7 @@ export class LoadScene extends Phaser.Scene {
     }
     
     preload(){
+        this.load.bitmapFont('retroText', './assets/bitmapFont/retroText.png', './assets/bitmapFont/retroText.xml');
         this.load.image("game_instruct_bg", "./assets/img/game_instruct_scene_bg.png")
         this.load.image("overworld", "./assets/img/overworld.png");
         this.load.image("objects", "./assets/img/objects.png");
