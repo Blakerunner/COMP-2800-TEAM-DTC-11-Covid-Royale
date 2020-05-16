@@ -107,7 +107,6 @@ export class PostRoundScene extends Phaser.Scene {
               this.socket.end()
         })
         
-
         // SETTERS for UI
         playerScoreText.setText("Your Score: " + this.player.score)
         playerCovidText.setText("COVID-19 : " + this.player.covid)
