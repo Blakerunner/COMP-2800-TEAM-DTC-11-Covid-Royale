@@ -51,15 +51,13 @@ export class GameUI extends Phaser.Scene {
         let playerProtectionUIText = this.add.bitmapText(10, 42, 'retroText', 'Protection', 22)
 
         // Score UI
-        let playerScoreUIFillbar = this.add.graphics()
+        let playerScoreUIBackbar = this.add.rectangle(142, 8, 44, 28, cBlack , 0.5)
+        .setOrigin(0)
         .setScrollFactor(0)
-        .fillRect(142, 8, 44, 28)
-        .fillStyle(cPurple, 1);
 
-        let playerScoreUIBackbar = this.add.graphics()
+        let playerScoreUIFillbar = this.add.rectangle(144, 10, 40, 24 , cPurple , 0.8)
+        .setOrigin(0)
         .setScrollFactor(0)
-        .fillRect(144, 10, 40, 24)
-        .fillStyle(cBlack, 1);
 
         let playerScoreUIText = this.add.bitmapText(144, 10, 'retroText', '0', 22)
 
@@ -67,47 +65,24 @@ export class GameUI extends Phaser.Scene {
         // Player per second update
         this.scene
         .get("GameScene")
-        .events.on("playerUIUpdateTicker", playerUIUpdateTicker, this);
+        .events.on("playerUIUpdate", playerUIUpdate, this);
 
         // Updates virutal button events
-        function playerUIUpdateTicker(data) {
+        function playerUIUpdate(data) {
             this.score = data.score
             this.risk = data.risk
             this.protection = data.protection
+            let riskUIMaxWidthMutiplier = 1.24
+            let protectionUIMaxWidthMutiplier = 1.24
             // constant UI updating make sure to not draw larger than standard 2nd guard
             if (0 <= this.risk && this.risk <= 100) {
                 // playerRiskUIFillbar.fillRect(10, 10, this.risk * 1.24, 24)
-                playerRiskUIFillbar.width = data.risk
+                playerRiskUIFillbar.width = data.risk * riskUIMaxWidthMutiplier
             }
             if (0 <= this.protection && this.protection <= 100) {
-                playerProtectionUIFillbar.width = data.protection
+                playerProtectionUIFillbar.width = data.protection * protectionUIMaxWidthMutiplier
             }
             playerScoreUIText.setText(String(this.score))
-        }
-
-        // Player UI Updated Additive
-        this.scene
-        .get("GameScene")
-        .events.on("playerScoreUpdateAdditive", playerScoreUpdateAdditive, this);
-
-        // Updates player risk
-        function playerScoreUpdateAdditive(data) {
-            if (data.score) {
-                this.score += data.score;
-                playerScoreUIText.setText(String(this.score))
-            }
-            if (data.risk) {
-                this.risk += data.risk;
-                if (0 <= this.risk && this.risk <= 100) {
-                    playerRiskUIFillbar.width = data.risk
-                }
-            }
-            if (data.protection) {
-                this.protection += data.protection;
-                if (0 <= this.protection && this.protection <= 100) {
-                    playerProtectionUIFillbar.width = data.protection
-                }
-            }
         }
 
         console.log("GameUI complete")

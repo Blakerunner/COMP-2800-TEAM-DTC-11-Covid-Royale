@@ -194,7 +194,8 @@ export class GameScene extends Phaser.Scene {
       self.player.speed = 100
 
       // set camera to follow player
-      self.cameras.main.startFollow(self.player);
+      self.cameras.main.startFollow(self.player)
+      .setLerp(0.2, 0.2);
 
       // collision with world bounds
       self.player.setCollideWorldBounds(true);
@@ -839,36 +840,42 @@ export class GameScene extends Phaser.Scene {
     this.time.addEvent({ delay: 1000, callback: () => {
       // check if player risk is 100 or greater
       // change staus to covid true | stop score incrementing
-      if (this.player.risk >= 100) {
-        this.player.covid = true
-      } else {
-        // score increment
-        this.player.score += 1
-
-        // check if player has protection
-        // 3 or more protection
-        if (this.player.protection >= 3) {
-          this.player.risk += 1
-          this.player.protection -= 3
+      if (this.player) {
+        if (this.player.risk >= 100) {
+          let scoreReducer = 2
+          if (!this.player.covid) this.player.score = Math.floor(this.player.score / scoreReducer)
+          this.player.covid = true
+        } else {
+          // score increment
+          this.player.score += 1
+  
+          // check if player has protection
+          // 3 or more protection
+          if (this.player.protection >= 3) {
+            this.player.risk += 1
+            this.player.score += 3
+            this.player.protection -= 3
+          }
+          // between 1 and 2 protection
+          else if (0 < this.player.protection && this.player.protection < 3) {
+            this.player.risk += 4 - this.player.protection
+            this.player.score += this.player.protection
+            this.player.protection = 0
+          }
+          // player without protection
+          else {
+            this.player.risk += 4
+          }
         }
-        // between 1 and 2 protection
-        else if (0 < this.player.protection && this.player.protection < 3) {
-          this.player.risk += 4 - this.player.protection
-          this.player.protection = 0
-        }
-        // player without protection
-        else {
-          this.player.risk += 4
-        }
+  
+        // emit for player UI update every second
+        this.events.emit('playerUIUpdate', {
+          score: this.player.score, 
+          risk: this.player.risk, 
+          protection: this.player.protection
+        }, this);
       }
-
-      // emit for player UI update every second
-      this.events.emit('playerUIUpdateTicker', {
-        score: this.player.score, 
-        risk: this.player.risk, 
-        protection: this.player.protection
-      });
-
+      
     }, callbackScope: this, loop: true });
 
     // LISTEN FOR END OF ROUND
@@ -931,8 +938,9 @@ export class GameScene extends Phaser.Scene {
         this.cameras.main.pan(this.player.x, this.player.y, 700, "Linear");
       }
       if (this.cameraResetCounter === 65) {
-        this.cameras.main.startFollow(this.player, false);
-        this.cameras.main.zoomTo(1.8, 500);
+        this.cameras.main.startFollow(this.player, false)
+        .zoomTo(1.8, 500)
+        .setLerp(0.2, 0.2);
       }
     }
 
@@ -999,8 +1007,10 @@ export class GameScene extends Phaser.Scene {
 
         // Player stat balancer so cant go outside 0 to 100
       if (this.player.risk > 100) this.player.risk = 100
-      if (this.player.risk < 0) this.player.risk = 0
-      if (this.player.protection > 100) this.player.protection = 0
+      // if(this.player.covid) {
+      //   console.log("Camera shake engage")
+      //   this.cameras.main.setLerp(0.1, 0.1);
+      // }
     }
 
     // Item pickup collision checker
@@ -1010,7 +1020,7 @@ export class GameScene extends Phaser.Scene {
 
     map_items.forEach(item => {
       if (checkCollision(player, item, events)) {
-        pickUp(item.itemID, player, events);
+        if (!player.covid) pickUp(item.itemID, player, events);
         item.destroy();
         map_items.splice(map_items.indexOf(item),1);
       }
@@ -1024,26 +1034,72 @@ export class GameScene extends Phaser.Scene {
     }
 
     function pickUp(id, player, events) {
+      let maxProtection = 100
+
       if (id === 1) {
+        let sanitizerRiskValue = 20
         console.log("You picked up hand sanitizer");
-        console.log(`Risk: ${player.risk} => ${player.risk - 16}`)
-        player.risk -= 20
-        events.emit('playerScoreUpdateAdditive', {risk: -16})
+        console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
+
+        // make sure risk will only be reduced down to a minimum of 0
+        if (player.risk < sanitizerRiskValue) {
+          player.score += player.risk
+          player.risk -= player.risk
+        } else {
+          player.score += sanitizerRiskValue
+          player.risk -= sanitizerRiskValue
+        }
+         // emit for player UI update every second
       } else if (id === 2) {
+        let facemaskRiskValue = 5
+        let facemaskProtValue = 15
         console.log("You picked up a face mask");
-        console.log(`Risk: ${player.risk} => ${player.risk - 8}`)
-        console.log(`Prot: ${player.protection} => ${player.protection + 8}`)
-        player.risk -= 5
-        player.protection += 15
-        events.emit('playerScoreUpdateAdditive', {risk: -8, protection: 12})
+        console.log(`Risk: ${player.risk} => ${player.risk - facemaskRiskValue}`)
+        console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
+
+        // make sure risk will only be reduced down to a minimum of 0
+        if (player.risk < facemaskRiskValue) {
+          player.score += player.risk
+          player.risk -= player.risk
+        } else {
+          player.score += facemaskRiskValue
+          player.risk -= facemaskRiskValue
+        }
+        // make sure protection will only reach a maximum of 100
+        if ((maxProtection - player.protection) < facemaskProtValue) {
+          player.protection += (maxProtection - player.protection)
+        } else {
+          player.protection += facemaskProtValue
+        }
+
       } else if (id === 3) {
+        let hazsuitRiskValue = 10
+        let hazsuitProtValue = 20
         console.log("You picked up a hazmat suit");
         console.log(`Risk: ${player.risk} => ${player.risk - 12}`)
         console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
-        player.risk -= 10
-        player.protection += 20
-        events.emit('playerScoreUpdateAdditive', {risk: -12, protection: 16})
+        // make sure risk will only be reduced down to a minimum of 0
+        if (player.risk < hazsuitRiskValue) {
+          player.score += player.risk
+          player.risk -= player.risk
+        } else {
+          player.score += hazsuitRiskValue
+          player.risk -= hazsuitRiskValue
+        }
+        // make sure protection will only reach a maximum of 100
+        if ((maxProtection - player.protection) < hazsuitProtValue) {
+          player.protection += (maxProtection - player.protection)
+        } else {
+          player.protection += hazsuitProtValue
+        }
+
       }
+       // emit for player UI update every second
+       events.emit('playerUIUpdate', {
+        score: player.score, 
+        risk: player.risk, 
+        protection: player.protection
+      });
     }
   }
 }
