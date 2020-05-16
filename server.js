@@ -271,7 +271,8 @@ mongoose.connect(
             console.log("player highScore is", players[player].playerScore)
             if(players[player].playerScore > user.highScore){
               //Change HighScore here if its greater than database highscore
-               User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
+              console.log("USER LOG ---------------------- ", user)
+               User.findByIdAndUpdate(user.mongoID, {highScore: player.highScore})
                   .then(user => {
                       console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`)
                   })
