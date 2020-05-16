@@ -155,7 +155,27 @@ mongoose.connect(
 
     // array of players
     let players = {};
-    let playersSpawnLocations = [[400, 400]];
+    let playersSpawnLocations = [];
+    let spawnLocationCounter = 0
+
+    // generate spawn locations
+    let numOfChunksSpawnOn = 9
+    let openLocations = [[56, 152], [408, 376], [472, 152]]
+    let tileOffset = [[80, 80], [560, 80], [1040, 80], [80, 560], [560, 560], [1040, 560], [80, 1040], [560, 1040], [1040, 1040]]
+    for (let i = 0; i < openLocations.length; i++) {
+      for (let j = 0; j < numOfChunksSpawnOn; j++) {
+        playersSpawnLocations.push([tileOffset[j][0] + openLocations[i][0], tileOffset[j][1] + openLocations[i][1]])
+      }
+    }
+
+    // grab a spawn location from the list of potential locations, increment spawn counter
+    function getPlayerSpawnLocation() {
+      if (spawnLocationCounter >= playersSpawnLocations.length) {
+        spawnLocationCounter = 0
+      }
+      spawnLocationCounter++
+      return playersSpawnLocations[spawnLocationCounter]
+    }
 
     // number of server restarts
     let serverRestartNumber = 0;
@@ -178,6 +198,9 @@ mongoose.connect(
       //IS ACCESIBLE UNDER SOCKET.REQUEST.USER
       console.log("MARKER EASILY SEARCHABLE STRING", socket.request.user);
 
+      // get player spawn location
+      let thisSocketSpawn = getPlayerSpawnLocation()
+
       players[socket.id] = {
         playerMongoID: socket.request.user.id,
         playerId: socket.id,
@@ -189,8 +212,8 @@ mongoose.connect(
         mapBlueprint: mapData,
         // playerName: COOKIE ? username : "Homonucleus",
         // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
-        x: playersSpawnLocations[0][0],
-        y: playersSpawnLocations[0][1],
+        x: thisSocketSpawn[0],
+        y: thisSocketSpawn[1],
       };
 
       // console.log(players, "PLAYER VARIABLE");
@@ -282,7 +305,7 @@ mongoose.connect(
       console.log("Server | players post reset", players)
         
       }, 1000);
-      
+
     }
 
     // Time for each game round in ms
