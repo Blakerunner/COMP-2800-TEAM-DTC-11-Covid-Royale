@@ -661,8 +661,8 @@ export class GameScene extends Phaser.Scene {
         covid: this.player.covid,
       });
 
-      // force client disconnect
-      this.socket.emit("disconnect")
+      // // force client disconnect
+      // this.socket.emit("killMySocket", socket.id)
 
       // fade out for end of round
       this.scene.get('GameUI').cameras.main.fadeOut(2000, 0, 0, 0);;
@@ -670,7 +670,7 @@ export class GameScene extends Phaser.Scene {
       // move to post game
 
       setTimeout( () => {
-        this.scene.start('PostRoundScene', {player: this.player})
+        this.scene.start('PostRoundScene', {player: this.player, socket: this.socket})
       }, 3000);
       });
 
