@@ -11,6 +11,7 @@ export class GameScene extends Phaser.Scene {
 
     this.virtualControllerStates = {};
     this.playerScore = 0
+    this.playerSpeedCheatCounter = 0
   }
   
 
@@ -191,9 +192,11 @@ export class GameScene extends Phaser.Scene {
       self.player.risk = 0
       self.player.protection = 0
       self.player.covid = false
+      self.player.speed = 100
 
       // set camera to follow player
-      self.cameras.main.startFollow(self.player);
+      self.cameras.main.startFollow(self.player)
+      .setLerp(0.2, 0.2);
 
       // collision with world bounds
       self.player.setCollideWorldBounds(true);
@@ -838,36 +841,43 @@ export class GameScene extends Phaser.Scene {
     this.time.addEvent({ delay: 1000, callback: () => {
       // check if player risk is 100 or greater
       // change staus to covid true | stop score incrementing
-      if (this.player.risk >= 100) {
-        this.player.covid = true
-      } else {
-        // score increment
-        this.player.score += 1
-
-        // check if player has protection
-        // 3 or more protection
-        if (this.player.protection >= 3) {
-          this.player.risk += 1
-          this.player.protection -= 3
+      if (this.player) {
+        if (this.player.risk >= 100) {
+          let scoreReducer = 2
+          if (!this.player.covid) this.player.score = Math.floor(this.player.score / scoreReducer)
+          this.player.covid = true
+          this.player.speed = 50
+        } else {
+          // score increment
+          this.player.score += 1
+  
+          // check if player has protection
+          // 3 or more protection
+          if (this.player.protection >= 3) {
+            this.player.risk += 1
+            this.player.score += 3
+            this.player.protection -= 3
+          }
+          // between 1 and 2 protection
+          else if (0 < this.player.protection && this.player.protection < 3) {
+            this.player.risk += 4 - this.player.protection
+            this.player.score += this.player.protection
+            this.player.protection = 0
+          }
+          // player without protection
+          else {
+            this.player.risk += 4
+          }
         }
-        // between 1 and 2 protection
-        else if (0 < this.player.protection && this.player.protection < 3) {
-          this.player.risk += 4 - this.player.protection
-          this.player.protection = 0
-        }
-        // player without protection
-        else {
-          this.player.risk += 4
-        }
+  
+        // emit for player UI update every second
+        this.events.emit('playerUIUpdate', {
+          score: this.player.score, 
+          risk: this.player.risk, 
+          protection: this.player.protection
+        }, this);
       }
-
-      // emit for player UI update every second
-      this.events.emit('playerUIUpdateTicker', {
-        score: this.player.score, 
-        risk: this.player.risk, 
-        protection: this.player.protection
-      });
-
+      
     }, callbackScope: this, loop: true });
 
     // LISTEN FOR END OF ROUND
@@ -880,9 +890,6 @@ export class GameScene extends Phaser.Scene {
         score: this.player.score,
         covid: this.player.covid,
       });
-
-      // // force client disconnect
-      // this.socket.emit("killMySocket", socket.id)
 
       // fade out for end of round
       this.scene.get('GameUI').cameras.main.fadeOut(2000, 0, 0, 0);;
@@ -933,17 +940,17 @@ export class GameScene extends Phaser.Scene {
         this.cameras.main.pan(this.player.x, this.player.y, 700, "Linear");
       }
       if (this.cameraResetCounter === 65) {
-        this.cameras.main.startFollow(this.player, false);
-        this.cameras.main.zoomTo(1.8, 500);
+        this.cameras.main.startFollow(this.player, false)
+        .zoomTo(1.8, 500)
+        .setLerp(0.2, 0.2);
       }
     }
 
     // PLAYER MOVEMENT
-    let playerMovementSpeed = 100;
     if (this.player) {
       // left button down walk left
       if (this.cursors.left.isDown || this.virtualControllerStates.left) {
-        this.player.setVelocityX(-playerMovementSpeed);
+        this.player.setVelocityX(-this.player.speed);
         this.player.setVelocityY(0);
         this.player.anims.play("walkLeft", true);
         this.player.playerDir = "walkLeft";
@@ -953,21 +960,21 @@ export class GameScene extends Phaser.Scene {
         this.cursors.right.isDown ||
         this.virtualControllerStates.right
       ) {
-        this.player.setVelocityX(playerMovementSpeed);
+        this.player.setVelocityX(this.player.speed);
         this.player.setVelocityY(0);
         this.player.anims.play("walkRight", true);
         this.player.playerDir = "walkRight";
       }
       // down button down walk down
       else if (this.cursors.down.isDown || this.virtualControllerStates.down) {
-        this.player.setVelocityY(playerMovementSpeed);
+        this.player.setVelocityY(this.player.speed);
         this.player.setVelocityX(0);
         this.player.anims.play("walkDown", true);
         this.player.playerDir = "walkDown";
       }
       // up button down walk up
       else if (this.cursors.up.isDown || this.virtualControllerStates.up) {
-        this.player.setVelocityY(-playerMovementSpeed);
+        this.player.setVelocityY(-this.player.speed);
         this.player.setVelocityX(0);
         this.player.anims.play("walkUp", true);
         this.player.playerDir = "walkUp";
@@ -999,13 +1006,38 @@ export class GameScene extends Phaser.Scene {
         x: this.player.x,
         y: this.player.y,
       };
-      
-         
+
+        // Player stat balancer so cant go outside 0 to 100
+      if (this.player.risk > 100) this.player.risk = 100
+      // if(this.player.covid) {
+      //   console.log("Camera shake engage")
+      //   this.cameras.main.setLerp(0.1, 0.1);
+      // }
+
+      // easter egg / speed cheat
+      if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
+        this.playerSpeedCheatCounter += 1
+        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
+        if (this.playerSpeedCheatCounter > 500) {
+          console.log("Speed Cheat active")
+          console.log("Speed was: ", this.player.speed)
+          this.player.speed = 150
+          console.log("Speed is now: ", this.player.speed)
+        }
+      } else {
+        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
+        this.playerSpeedCheatCounter = 0
+      }
     }
 
+    // Item pickup collision checker
+
+    let player = this.player
+    let events = this.events
+
     map_items.forEach(item => {
-      if (checkCollision(this.player, item)) {
-        pickUp(item.itemID);
+      if (checkCollision(player, item, events)) {
+        if (!player.covid) pickUp(item.itemID, player, events);
         item.destroy();
         map_items.splice(map_items.indexOf(item),1);
       }
@@ -1018,14 +1050,77 @@ export class GameScene extends Phaser.Scene {
       return Phaser.Geom.Intersects.RectangleToRectangle(itemBounds, rect);
     }
 
-    function pickUp(id) {
+    function pickUp(id, player, events) {
+      let maxProtection = 100
+
       if (id === 1) {
-        console.log("you picked up hand sanitizer");
+        let sanitizerRiskValue = 20
+        console.log("You picked up hand sanitizer");
+        console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
+        // base score add
+        player.score += 5
+        // make sure risk will only be reduced down to a minimum of 0
+        if (player.risk < sanitizerRiskValue) {
+          player.score += player.risk
+          player.risk -= player.risk
+        } else {
+          player.score += sanitizerRiskValue
+          player.risk -= sanitizerRiskValue
+        }
+         // emit for player UI update every second
       } else if (id === 2) {
-        console.log("you picked up a face mask");
+        let facemaskRiskValue = 5
+        let facemaskProtValue = 15
+        console.log("You picked up a face mask");
+        console.log(`Risk: ${player.risk} => ${player.risk - facemaskRiskValue}`)
+        console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
+        // base score add
+        player.score += 10
+        // make sure risk will only be reduced down to a minimum of 0
+        if (player.risk < facemaskRiskValue) {
+          player.score += player.risk
+          player.risk -= player.risk
+        } else {
+          player.score += facemaskRiskValue
+          player.risk -= facemaskRiskValue
+        }
+        // make sure protection will only reach a maximum of 100
+        if ((maxProtection - player.protection) < facemaskProtValue) {
+          player.protection += (maxProtection - player.protection)
+        } else {
+          player.protection += facemaskProtValue
+        }
+
       } else if (id === 3) {
-        console.log("you picked up a hazmat suit");
+        let hazsuitRiskValue = 10
+        let hazsuitProtValue = 20
+        console.log("You picked up a hazmat suit");
+        console.log(`Risk: ${player.risk} => ${player.risk - 12}`)
+        console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
+        // base score add
+        player.score += 15
+        // make sure risk will only be reduced down to a minimum of 0
+        if (player.risk < hazsuitRiskValue) {
+          player.score += player.risk
+          player.risk -= player.risk
+        } else {
+          player.score += hazsuitRiskValue
+          player.risk -= hazsuitRiskValue
+        }
+        // make sure protection will only reach a maximum of 100
+        if ((maxProtection - player.protection) < hazsuitProtValue) {
+          player.protection += (maxProtection - player.protection)
+        } else {
+          player.protection += hazsuitProtValue
+        }
+
       }
+       // emit for player UI update every second
+       events.emit('playerUIUpdate', {
+        score: player.score, 
+        risk: player.risk, 
+        protection: player.protection
+      });
     }
   }
 }
