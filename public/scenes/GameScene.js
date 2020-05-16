@@ -1,6 +1,7 @@
 import { GameUI } from "../scenes/GameUI.js";
 import { GameVirtualController } from "../scenes/GameVirtualController.js";
 import {PostRoundScene} from "../scenes/PostRoundScene.js"
+var map_items = new Array;
 export class GameScene extends Phaser.Scene {
   constructor() {
     super({
@@ -11,6 +12,7 @@ export class GameScene extends Phaser.Scene {
     this.virtualControllerStates = {};
     this.playerScore = 0
   }
+  
 
   init() {
     console.log("GameScene start");
@@ -638,6 +640,10 @@ export class GameScene extends Phaser.Scene {
         )
         .setDepth(-2);
 
+      map_items = first_chunk_items.concat(second_chunk_items).concat(third_chunk_items)
+      .concat(fourth_chunk_items).concat(fifth_chunk_items).concat(sixth_chunk_items)
+      .concat(seventh_chunk_items).concat(eighth_chunk_items).concat(ninth_chunk_items);
+
       // map collisions
       // skirt collision
       top_left_skirt_baseLayer.setCollisionByProperty({ collides: true });
@@ -678,6 +684,7 @@ export class GameScene extends Phaser.Scene {
       ninth_chunk_middle.setCollisionByProperty({ collides: true });
       ninth_chunk_top.setCollisionByProperty({ collides: true });
 
+      //adds colliders bewteen the player and the different layers
       self.physics.add.collider(self.player, top_left_skirt_baseLayer);
       self.physics.add.collider(self.player, top_right_skirt_baseLayer);
       self.physics.add.collider(self.player, top_skirt_baseLayer);
@@ -934,5 +941,20 @@ export class GameScene extends Phaser.Scene {
       
          
     }
+
+    map_items.forEach(item => {
+      if (checkCollision(this.player, item)) {
+        console.log("item lol fuck you");
+      }
+    });
+    
+    function checkCollision(player, item) {
+      var itemBounds = item.getBounds();
+      var rect = player.getBounds(rect);
+      var playerBounds = new Phaser.Geom.Rectangle(rect[0], rect[1], rect[2], rect[3])
+
+      return Phaser.Geom.Intersects.RectangleToRectangle(itemBounds, rect);
+    }
+
   }
 }
