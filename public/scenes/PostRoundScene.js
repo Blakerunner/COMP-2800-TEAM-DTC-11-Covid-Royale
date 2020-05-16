@@ -9,6 +9,7 @@ export class PostRoundScene extends Phaser.Scene {
 
     init(data){
         this.player = data.player
+        this.socket = data.socket
     }
     
     preload(){
@@ -101,6 +102,9 @@ export class PostRoundScene extends Phaser.Scene {
                 }).setScrollFactor(0);
                 highscorePlayerY += 48
               }, this);
+
+              // end socket
+              this.socket.end()
         })
         
 

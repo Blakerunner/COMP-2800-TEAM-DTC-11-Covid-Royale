@@ -224,15 +224,16 @@ mongoose.connect(
       // })
 
       // socket event on disconnect
-      socket.on("disconnect", function (players) {
+      socket.on("disconnect", function () {
         let mongoID = socket.request.user.id;
         
         // User.findByIdAndUpdate(mongoID, {username: "gobble"})
         //   .then(user => console.log)
 
-        console.log("user disconnected", socket.id);
+        console.log("user disconnected | delete", players[socket.id]);
         // remove this player from our players object
         delete players[socket.id];
+        console.log("user disconnected | delete | should be null", players[socket.id])
         // emit a message to all players to remove this player
         io.emit("disconnect", socket.id);
       });
@@ -256,44 +257,48 @@ mongoose.connect(
       console.log("pre-player-reset:", players);
 
       // Wait time buffer for all browsers to update player info
-      // setTimeout( () => {
+      setTimeout( () => {
 
-      //   //Loop through current players
-      // Object.keys(players).forEach(function (player) {
+        //Loop through current players
+      Object.keys(players).forEach(function (player) {
         
-      //   //Get the users current highscore
-      //   //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
+        //Get the users current highscore
+        //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
         
-      //   User.findById(players[player].playerMongoID)
-      //     .then(user => {
-      //       console.log("Database Highscore is", user.highScore)
-      //       console.log("player highScore is", players[player].playerScore)
-      //       if(players[player].playerScore > user.highScore){
-      //         //Change HighScore here if its greater than database highscore
-      //          User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
-      //             .then(user => {
-      //                 console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`)
-      //             })
-      //       }
-      //     })
-      //   // console.log(players[player], "GOBBLED");
-      // })
+        User.findById(players[player].playerMongoID)
+          .then(user => {
+            console.log("Database Highscore is", user.highScore)
+            console.log("player highScore is", players[player].playerScore)
+            if(players[player].playerScore > user.highScore){
+              //Change HighScore here if its greater than database highscore
+               User.findByIdAndUpdate(mongoID, {highScore: player.highScore})
+                  .then(user => {
+                      console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${player.highScore}`)
+                  })
+            }
+          })
+        // console.log(players[player], "GOBBLED");
+      })
 
-      // // reset server player list
-      // console.log("Server | players pre reset", players)
-      // console.log("===============================================================================")
-      // console.log("Server | players post reset", players)
+      // reset server player list
+      console.log("Server | players pre reset", players)
+      console.log("===============================================================================")
+      console.log("Server | players post reset", players)
         
-      // }, 2000);
+      }, 2000);
       
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 30000
+    let gameRoundInterval = 60000
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);
     }, gameRoundInterval);
+
+
+    // socket garbage collection, kill socket on round reset
+
 
     // server to listen on port 8080
     server.listen(8080, function () {
