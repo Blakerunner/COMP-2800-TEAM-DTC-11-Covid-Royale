@@ -83,7 +83,7 @@ function onAuthorizeFail(data, message, error, accept) {
 //Connect to mognodb
 mongoose.connect(
   process.env.mongoURI,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
   function () {
     console.log("Connected to mongoDB");
 
