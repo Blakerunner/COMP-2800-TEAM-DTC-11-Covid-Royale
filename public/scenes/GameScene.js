@@ -229,18 +229,21 @@ export class GameScene extends Phaser.Scene {
         "hand",
         {key: "handSan"}
       );
+      first_chunk_hand.forEach(item => {item.itemID = 1});
       //loads all face mask items
       const first_chunk_face = first_chunk.createFromObjects(
         "item",
         "face",
         {key: "faceMask"}
-      );
+        );
+        first_chunk_face.forEach(item => {item.itemID = 2});
       //loads all hazmat suit items
       const first_chunk_haz = first_chunk.createFromObjects(
         "item",
         "haz",
         {key: "hazSuit"}
-      );
+        );
+        first_chunk_haz.forEach(item => {item.itemID = 3});
       //combines all 3 item arrays into one array
       var first_chunk_items = first_chunk_face.concat(first_chunk_hand).concat(first_chunk_haz);
       //offsets the items by the chunks position to put them in the proper place
@@ -280,16 +283,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        second_chunk_hand.forEach(item => {item.itemID = 1});
         const second_chunk_face = second_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        second_chunk_hand.forEach(item => {item.itemID = 2});
         const second_chunk_haz = second_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        second_chunk_hand.forEach(item => {item.itemID = 3});
         var second_chunk_items = second_chunk_face.concat(second_chunk_hand).concat(second_chunk_haz);
         second_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -327,16 +333,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        third_chunk_hand.forEach(item => {item.itemID = 1});
         const third_chunk_face = third_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        third_chunk_hand.forEach(item => {item.itemID = 2});
         const third_chunk_haz = third_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        third_chunk_hand.forEach(item => {item.itemID = 3});
         var third_chunk_items = third_chunk_face.concat(third_chunk_hand).concat(third_chunk_haz);
         third_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -374,16 +383,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        fourth_chunk_hand.forEach(item => {item.itemID = 1});
         const fourth_chunk_face = fourth_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        fourth_chunk_hand.forEach(item => {item.itemID = 2});
         const fourth_chunk_haz = fourth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        fourth_chunk_hand.forEach(item => {item.itemID = 3});
         var fourth_chunk_items = fourth_chunk_face.concat(fourth_chunk_hand).concat(fourth_chunk_haz);
         fourth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 0)
@@ -421,16 +433,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        fifth_chunk_hand.forEach(item => {item.itemID = 1});
         const fifth_chunk_face = fifth_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        fifth_chunk_hand.forEach(item => {item.itemID = 2});
         const fifth_chunk_haz = fifth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        fifth_chunk_hand.forEach(item => {item.itemID = 3});
         var fifth_chunk_items = fifth_chunk_face.concat(fifth_chunk_hand).concat(fifth_chunk_haz);
         fifth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -468,16 +483,18 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        sixth_chunk_hand.forEach(item => {item.itemID = 1});
         const sixth_chunk_face = sixth_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        sixth_chunk_hand.forEach(item => {item.itemID = 2});
         const sixth_chunk_haz = sixth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
-        );
+        );sixth_chunk_hand.forEach(item => {item.itemID = 3});
         var sixth_chunk_items = sixth_chunk_face.concat(sixth_chunk_hand).concat(sixth_chunk_haz);
         sixth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -515,16 +532,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        seventh_chunk_hand.forEach(item => {item.itemID = 1});
         const seventh_chunk_face = seventh_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        seventh_chunk_hand.forEach(item => {item.itemID = 2});
         const seventh_chunk_haz = seventh_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        seventh_chunk_hand.forEach(item => {item.itemID = 3});
         var seventh_chunk_items = seventh_chunk_face.concat(seventh_chunk_hand).concat(seventh_chunk_haz);
         seventh_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 0)
@@ -562,16 +582,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        eighth_chunk_hand.forEach(item => {item.itemID = 1});
         const eighth_chunk_face = eighth_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        eighth_chunk_hand.forEach(item => {item.itemID = 2});
         const eighth_chunk_haz = eighth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        eighth_chunk_hand.forEach(item => {item.itemID = 3});
         var eighth_chunk_items = eighth_chunk_face.concat(eighth_chunk_hand).concat(eighth_chunk_haz);
         eighth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -609,16 +632,19 @@ export class GameScene extends Phaser.Scene {
           "hand",
           {key: "handSan"}
         );
+        ninth_chunk_hand.forEach(item => {item.itemID = 1});
         const ninth_chunk_face = ninth_chunk.createFromObjects(
           "item",
           "face",
           {key: "faceMask"}
         );
+        ninth_chunk_hand.forEach(item => {item.itemID = 2});
         const ninth_chunk_haz = ninth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
+        ninth_chunk_hand.forEach(item => {item.itemID = 3});
         var ninth_chunk_items = ninth_chunk_face.concat(ninth_chunk_hand).concat(ninth_chunk_haz);
         ninth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -944,17 +970,27 @@ export class GameScene extends Phaser.Scene {
 
     map_items.forEach(item => {
       if (checkCollision(this.player, item)) {
-        console.log("item lol fuck you");
+        pickUp(item.itemID);
+        item.destroy();
+        map_items.splice(map_items.indexOf(item),1);
       }
     });
-    
+
     function checkCollision(player, item) {
       var itemBounds = item.getBounds();
       var rect = player.getBounds(rect);
-      var playerBounds = new Phaser.Geom.Rectangle(rect[0], rect[1], rect[2], rect[3])
 
       return Phaser.Geom.Intersects.RectangleToRectangle(itemBounds, rect);
     }
 
+    function pickUp(id) {
+      if (id === 1) {
+        console.log("you picked up hand sanitizer");
+      } else if (id === 2) {
+        console.log("you picked up a face mask");
+      } else if (id === 3) {
+        console.log("you picked up a hazmat suit");
+      }
+    }
   }
 }
