@@ -112,7 +112,7 @@ mongoose.connect(
       res.json(req.session);
     });
 
-    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 10 USER OBJECTS
+    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 5 USER OBJECTS
     //SORTED BY HIghSCORE 
     app.get('/highscore', function (req, res){
       User.find({highScore: {$exists: true}})
@@ -253,9 +253,6 @@ mongoose.connect(
       // generate new map seed
       mapData = generateMapBluprint();
 
-     //Before we reset player data, update anything in the db that needs to be updated
-      console.log("pre-player-reset:", players);
-
       // Wait time buffer for all browsers to update player info
       setTimeout( () => {
 
@@ -281,12 +278,10 @@ mongoose.connect(
         // console.log(players[player], "GOBBLED");
       })
 
-      // reset server player list
-      console.log("Server | players pre reset", players)
       console.log("===============================================================================")
       console.log("Server | players post reset", players)
         
-      }, 2000);
+      }, 1000);
       
     }
 

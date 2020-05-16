@@ -29,42 +29,24 @@ export class GameUI extends Phaser.Scene {
         let cPurple = '0x2F329F'
 
         // Risk UI
-        let playerRiskUIFillbar = this.add.graphics()
+        let playerRiskUIBackbar = this.add.rectangle(8, 8, 128 , 28 , cBlack , 0.5)
+        .setOrigin(0)
         .setScrollFactor(0)
-        .fillRect(8, 8, 128, 28)
-        .fillStyle(cRed, 1);
 
-        let playerRiskUIBackbar = this.add.graphics()
+        let playerRiskUIFillbar = this.add.rectangle(10, 10, 0 , 24 , cRed , 0.8)
+        .setOrigin(0)
         .setScrollFactor(0)
-        .fillRect(10, 10, 0, 24)
-        .fillStyle(cBlack, 1);
-        
-        // let playerRiskText = this.add.text(10, 10, 'Risk', {
-        //     fontSize: '12px',
-        //     padding: { x: 4, y: 4 },
-        //     fill: 'white',
-        //     align: 'center'
-        // }).setScrollFactor(0);
 
         let playerRiskUIText = this.add.bitmapText(10, 10, 'retroText', 'Risk', 22)
 
         // // Protection UI
-        let playerProtectionUIFillbar = this.add.graphics()
+        let playerProtectionUIBackbar = this.add.rectangle(8, 40, 128, 28 , cBlack , 0.5)
+        .setOrigin(0)
         .setScrollFactor(0)
-        .fillRect(8, 40, 128, 28)
-        .fillStyle(cBlue, 1);
 
-        let playerProtectionUIBackbar = this.add.graphics()
+        let playerProtectionUIFillbar = this.add.rectangle(10, 42, 0, 24 , cBlue , 0.8)
+        .setOrigin(0)
         .setScrollFactor(0)
-        .fillRect(10, 42, 0, 24)
-        .fillStyle(cBlack, 1);
-
-        // let playerProtectionUIText = this.add.text(10, 42, 'Protection', {
-        //     fontSize: '12px',
-        //     padding: { x: 4, y: 4 },
-        //     fill: 'white',
-        //     align: 'center'
-        // }).setScrollFactor(0);
 
         let playerProtectionUIText = this.add.bitmapText(10, 42, 'retroText', 'Protection', 22)
 
@@ -79,14 +61,7 @@ export class GameUI extends Phaser.Scene {
         .fillRect(144, 10, 40, 24)
         .fillStyle(cBlack, 1);
 
-        // let playerScoreUIText = this.add.text(144, 10, '0', {
-        //     fontSize: '12px',
-        //     padding: { x: 4, y: 4 },
-        //     fill: 'black',
-        //     align: 'center'
-        // }).setScrollFactor(0);
-
-        let playerScoreUIText = this.add.bitmapText(144, 10, 'retroText', '7', 22)
+        let playerScoreUIText = this.add.bitmapText(144, 10, 'retroText', '0', 22)
 
         // EVENTS
         // Player per second update
@@ -99,45 +74,40 @@ export class GameUI extends Phaser.Scene {
             this.score = data.score
             this.risk = data.risk
             this.protection = data.protection
-            // constant UI updating
-            
-            playerScoreUIText.setText(String(data.score))
-            playerRiskUIFillbar.fillRect(10, 10, data.risk * 1.24, 24)
-            playerProtectionUIBackbar.fillRect(10, 42, data.protection * 1.24, 24)
+            // constant UI updating make sure to not draw larger than standard 2nd guard
+            if (0 <= this.risk && this.risk <= 100) {
+                // playerRiskUIFillbar.fillRect(10, 10, this.risk * 1.24, 24)
+                playerRiskUIFillbar.width = data.risk
+            }
+            if (0 <= this.protection && this.protection <= 100) {
+                playerProtectionUIFillbar.width = data.protection
+            }
+            playerScoreUIText.setText(String(this.score))
         }
 
-
-        // Player Score Update
+        // Player UI Updated Additive
         this.scene
         .get("GameScene")
-        .events.on("playerScoreUpdate", playerScoreUpdate, this);
-
-        // Updates player score
-        function playerScoreUpdate(score) {
-            // add score to playerScore
-            this.playerScore += score;
-        }
-
-        // Player Risk Update
-        this.scene
-        .get("GameScene")
-        .events.on("playerRiskUpdate", playerRiskUpdate, this);
+        .events.on("playerScoreUpdateAdditive", playerScoreUpdateAdditive, this);
 
         // Updates player risk
-        function playerRiskUpdate(risk) {
-            // add score to playerScore
-            this.playerRisk += risk;
-        }
-
-        // Player Protection Update
-        this.scene
-        .get("GameScene")
-        .events.on("playerProtectionUpdate", playerProtectionUpdate, this);
-
-        // Updates player protection
-        function playerProtectionUpdate(protection) {
-            // add protection to playerProtection
-            this.playerProtection += protection;
+        function playerScoreUpdateAdditive(data) {
+            if (data.score) {
+                this.score += data.score;
+                playerScoreUIText.setText(String(this.score))
+            }
+            if (data.risk) {
+                this.risk += data.risk;
+                if (0 <= this.risk && this.risk <= 100) {
+                    playerRiskUIFillbar.width = data.risk
+                }
+            }
+            if (data.protection) {
+                this.protection += data.protection;
+                if (0 <= this.protection && this.protection <= 100) {
+                    playerProtectionUIFillbar.width = data.protection
+                }
+            }
         }
 
         console.log("GameUI complete")

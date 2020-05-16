@@ -191,6 +191,7 @@ export class GameScene extends Phaser.Scene {
       self.player.risk = 0
       self.player.protection = 0
       self.player.covid = false
+      self.player.speed = 100
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player);
@@ -881,9 +882,6 @@ export class GameScene extends Phaser.Scene {
         covid: this.player.covid,
       });
 
-      // // force client disconnect
-      // this.socket.emit("killMySocket", socket.id)
-
       // fade out for end of round
       this.scene.get('GameUI').cameras.main.fadeOut(2000, 0, 0, 0);;
       this.cameras.main.fadeOut(2000, 0, 0, 0);
@@ -939,11 +937,10 @@ export class GameScene extends Phaser.Scene {
     }
 
     // PLAYER MOVEMENT
-    let playerMovementSpeed = 100;
     if (this.player) {
       // left button down walk left
       if (this.cursors.left.isDown || this.virtualControllerStates.left) {
-        this.player.setVelocityX(-playerMovementSpeed);
+        this.player.setVelocityX(-this.player.speed);
         this.player.setVelocityY(0);
         this.player.anims.play("walkLeft", true);
         this.player.playerDir = "walkLeft";
@@ -953,21 +950,21 @@ export class GameScene extends Phaser.Scene {
         this.cursors.right.isDown ||
         this.virtualControllerStates.right
       ) {
-        this.player.setVelocityX(playerMovementSpeed);
+        this.player.setVelocityX(this.player.speed);
         this.player.setVelocityY(0);
         this.player.anims.play("walkRight", true);
         this.player.playerDir = "walkRight";
       }
       // down button down walk down
       else if (this.cursors.down.isDown || this.virtualControllerStates.down) {
-        this.player.setVelocityY(playerMovementSpeed);
+        this.player.setVelocityY(this.player.speed);
         this.player.setVelocityX(0);
         this.player.anims.play("walkDown", true);
         this.player.playerDir = "walkDown";
       }
       // up button down walk up
       else if (this.cursors.up.isDown || this.virtualControllerStates.up) {
-        this.player.setVelocityY(-playerMovementSpeed);
+        this.player.setVelocityY(-this.player.speed);
         this.player.setVelocityX(0);
         this.player.anims.play("walkUp", true);
         this.player.playerDir = "walkUp";
@@ -999,13 +996,21 @@ export class GameScene extends Phaser.Scene {
         x: this.player.x,
         y: this.player.y,
       };
-      
-         
+
+        // Player stat balancer so cant go outside 0 to 100
+      if (this.player.risk > 100) this.player.risk = 100
+      if (this.player.risk < 0) this.player.risk = 0
+      if (this.player.protection > 100) this.player.protection = 0
     }
 
+    // Item pickup collision checker
+
+    let player = this.player
+    let events = this.events
+
     map_items.forEach(item => {
-      if (checkCollision(this.player, item)) {
-        pickUp(item.itemID);
+      if (checkCollision(player, item, events)) {
+        pickUp(item.itemID, player, events);
         item.destroy();
         map_items.splice(map_items.indexOf(item),1);
       }
@@ -1018,13 +1023,26 @@ export class GameScene extends Phaser.Scene {
       return Phaser.Geom.Intersects.RectangleToRectangle(itemBounds, rect);
     }
 
-    function pickUp(id) {
+    function pickUp(id, player, events) {
       if (id === 1) {
-        console.log("you picked up hand sanitizer");
+        console.log("You picked up hand sanitizer");
+        console.log(`Risk: ${player.risk} => ${player.risk - 16}`)
+        player.risk -= 20
+        events.emit('playerScoreUpdateAdditive', {risk: -16})
       } else if (id === 2) {
-        console.log("you picked up a face mask");
+        console.log("You picked up a face mask");
+        console.log(`Risk: ${player.risk} => ${player.risk - 8}`)
+        console.log(`Prot: ${player.protection} => ${player.protection + 8}`)
+        player.risk -= 5
+        player.protection += 15
+        events.emit('playerScoreUpdateAdditive', {risk: -8, protection: 12})
       } else if (id === 3) {
-        console.log("you picked up a hazmat suit");
+        console.log("You picked up a hazmat suit");
+        console.log(`Risk: ${player.risk} => ${player.risk - 12}`)
+        console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
+        player.risk -= 10
+        player.protection += 20
+        events.emit('playerScoreUpdateAdditive', {risk: -12, protection: 16})
       }
     }
   }
