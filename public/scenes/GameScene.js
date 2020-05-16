@@ -11,6 +11,7 @@ export class GameScene extends Phaser.Scene {
 
     this.virtualControllerStates = {};
     this.playerScore = 0
+    this.playerSpeedCheatCounter = 0
   }
   
 
@@ -845,6 +846,7 @@ export class GameScene extends Phaser.Scene {
           let scoreReducer = 2
           if (!this.player.covid) this.player.score = Math.floor(this.player.score / scoreReducer)
           this.player.covid = true
+          this.player.speed = 50
         } else {
           // score increment
           this.player.score += 1
@@ -1011,6 +1013,21 @@ export class GameScene extends Phaser.Scene {
       //   console.log("Camera shake engage")
       //   this.cameras.main.setLerp(0.1, 0.1);
       // }
+
+      // easter egg / speed cheat
+      if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
+        this.playerSpeedCheatCounter += 1
+        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
+        if (this.playerSpeedCheatCounter > 500) {
+          console.log("Speed Cheat active")
+          console.log("Speed was: ", this.player.speed)
+          this.player.speed = 150
+          console.log("Speed is now: ", this.player.speed)
+        }
+      } else {
+        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
+        this.playerSpeedCheatCounter = 0
+      }
     }
 
     // Item pickup collision checker
@@ -1040,7 +1057,8 @@ export class GameScene extends Phaser.Scene {
         let sanitizerRiskValue = 20
         console.log("You picked up hand sanitizer");
         console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
-
+        // base score add
+        player.score += 5
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < sanitizerRiskValue) {
           player.score += player.risk
@@ -1056,7 +1074,8 @@ export class GameScene extends Phaser.Scene {
         console.log("You picked up a face mask");
         console.log(`Risk: ${player.risk} => ${player.risk - facemaskRiskValue}`)
         console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
-
+        // base score add
+        player.score += 10
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < facemaskRiskValue) {
           player.score += player.risk
@@ -1078,6 +1097,8 @@ export class GameScene extends Phaser.Scene {
         console.log("You picked up a hazmat suit");
         console.log(`Risk: ${player.risk} => ${player.risk - 12}`)
         console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
+        // base score add
+        player.score += 15
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < hazsuitRiskValue) {
           player.score += player.risk
