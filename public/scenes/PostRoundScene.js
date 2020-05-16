@@ -103,8 +103,8 @@ export class PostRoundScene extends Phaser.Scene {
                 highscorePlayerY += 48
               }, this);
 
-              // end socket
-              this.socket.end()
+            //   // end socket
+            //   this.socket.end()
         })
         
         // SETTERS for UI
