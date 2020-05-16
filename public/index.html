@@ -80,7 +80,7 @@
           <div class="modal-body justify-content-center" id="deleteModalAccountTerms">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger mr-auto" onclick="location.href = '/deleteAccount';">Delete Account</button>
+            <button id='delBtn'type="button" class="btn btn-danger mr-auto" onclick="location.href = '/deleteAccount';">Delete Account</button>
             <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -326,6 +326,7 @@
 
             if (!response.user) {
               $("#deleteModalAccountTerms").append(`<p>I am sorry, You must be logged in to delete an account!</p>`);
+              $("#delBtn").hide();
             }
             else {
 
