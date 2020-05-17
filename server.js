@@ -26,6 +26,7 @@ const expressSession = session({
     maxAge: 1000 * 60 * 60,
   },
   saveUninitialized: false,
+	unset: 'destroy'
 });
 app.use(cors());
 app.use(passport.initialize());
