@@ -144,7 +144,7 @@ mongoose.connect(
         return;
       }
       let mongoID = req.session.passport.user;
-      User.findOneAndDelete(req.session.user.id)
+      User.findOneAndDelete(req.session.user._id)
         .then(result => {
           res.redirect('login/logout')
           // res.send(`Sucesfully deleted user ${req.session.user.username}`);
