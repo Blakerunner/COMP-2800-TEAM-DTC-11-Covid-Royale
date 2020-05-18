@@ -853,7 +853,7 @@ export class GameScene extends Phaser.Scene {
           this.player.speed = 50
           // chance to shake camera
           let shakerChance = Math.floor(Math.random() * 3)
-          if (shakerChance === 1) this.cameras.main.shake(500);
+          if (shakerChance === 1) this.cameras.main.shake(100);
         } else {
           // score increment
           this.player.score += 1
@@ -897,10 +897,18 @@ export class GameScene extends Phaser.Scene {
             console.log(`OTHER | Loc: X: ${otherPlayer.x} Y: ${otherPlayer.y} Covid: ${otherPlayer.covid}`)
             let deltaX = Math.abs(otherPlayer.x - player.x)
             let deltaY = Math.abs(otherPlayer.y - player.y)
-            let radius = (otherPlayer.covid) ? 400 : 50
+            let radius = (otherPlayer.covid) ? 200 : 100
+            let riskFactor = (otherPlayer.covid) ? 3 : 2
             if (deltaX < radius && deltaY < radius) {
               console.log(`Radius: ${radius}`)
-              player.risk += 1
+              if (player.protection >= riskFactor) {
+                player.protection -= riskFactor
+              } if (player.protection < riskFactor) {
+                player.protection -= riskFactor - player.protection
+                player.risk += player.protection - riskFactor
+              } else {
+                player.risk += riskFactor
+              }
             }
           });
         }
