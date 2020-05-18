@@ -243,6 +243,7 @@ mongoose.connect(
         players[socket.id].x = movementData.x;
         players[socket.id].y = movementData.y;
         players[socket.id].playerDir = movementData.playerDir;
+        players[socket.id].playerCovidPos = movementData.covid;
         // emit a message to all players about the player that moved
         socket.broadcast.emit("playerMoved", players[socket.id]);
       });
