@@ -138,11 +138,13 @@ export class GameScene extends Phaser.Scene {
 
       self.otherPlayers.getChildren().forEach(function (otherPlayer) {
         if (playerInfo.playerId === otherPlayer.playerId) {
+          // updates otherPlayer postion
           otherPlayer.setPosition(playerInfo.x, playerInfo.y);
+          // update otherPlayer covid status
+          otherPlayer.covid = playerInfo.covid
           if (playerInfo.playerDir === "stand") {
             otherPlayer.anims.stop();
           } else {
-            console.log(playerInfo.playerId, "is moving", playerInfo.playerDir);
             otherPlayer.anims.play(playerInfo.playerDir, true);
           }
         }
@@ -850,7 +852,7 @@ export class GameScene extends Phaser.Scene {
           this.player.speed = 50
           // chance to shake camera
           let shakerChance = Math.floor(Math.random() * 3)
-          if (shakerChance === 1) this.cameras.main.shake(1000);
+          if (shakerChance === 1) this.cameras.main.shake(750);
         } else {
           // score increment
           this.player.score += 1
@@ -879,6 +881,31 @@ export class GameScene extends Phaser.Scene {
           score: this.player.score, 
           risk: this.player.risk, 
           protection: this.player.protection
+        }, this);
+      }
+      
+    }, callbackScope: this, loop: true });
+
+    // event to check distance from otherPlayers
+    this.time.addEvent({ delay: 200, callback: () => {
+      if (this.player) {
+        console.log(`YOUR | Loc: X: ${this.player.x} Y: ${this.player.y}`)
+        if (this.player.risk <= 100) {
+          let player = this.player
+          this.otherPlayers.getChildren().forEach(function (otherPlayer) {
+            console.log(`OTHER | Loc: X: ${otherPlayer.x} Y: ${otherPlayer.y} Covid: ${otherPlayer.covid}`)
+            let deltaX = Math.abs(otherPlayer.x - player.x)
+            let deltaY = Math.abs(otherPlayer.y - player.y)
+            let radius = (otherPlayer.covid) ? 400 : 50
+            if (deltaX < radius && deltaY < radius) {
+              console.log(`Radius: ${radius}`)
+              player.risk += 1
+            }
+          });
+        }
+        // emit for player UI update every second
+        this.events.emit('playerUIUpdate', {
+          risk: this.player.risk
         }, this);
       }
       
@@ -1002,6 +1029,7 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
           playerDir: this.player.playerDir,
+          covid: this.player.covid
         });
       }
 

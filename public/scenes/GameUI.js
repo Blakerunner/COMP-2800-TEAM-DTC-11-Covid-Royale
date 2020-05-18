@@ -106,13 +106,21 @@ export class GameUI extends Phaser.Scene {
             let riskUIMaxWidthMutiplier = 1.24
             let protectionUIMaxWidthMutiplier = 1.24
             // constant UI updating make sure to not draw larger than standard 2nd guard
-            if (0 <= data.risk && data.risk <= 100) {
-                playerRiskUIFillbar.width = data.risk * riskUIMaxWidthMutiplier
+            if (data.risk) {
+                if (0 <= data.risk && data.risk <= 100) {
+                    playerRiskUIFillbar.width = data.risk * riskUIMaxWidthMutiplier
+                }
             }
-            if (0 <= data.protection && data.protection <= 100) {
-                playerProtectionUIFillbar.width = data.protection * protectionUIMaxWidthMutiplier
+            
+            if (data.protection) {
+                if (0 <= data.protection && data.protection <= 100) {
+                    playerProtectionUIFillbar.width = data.protection * protectionUIMaxWidthMutiplier
+                }
             }
-            playerScoreUIText.setText(String(data.score))
+
+            if (data.score) {
+                playerScoreUIText.setText(String(data.score))
+            }
 
             // items update
             if (data.items) {
