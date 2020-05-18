@@ -240,12 +240,6 @@ mongoose.connect(
         socket.broadcast.emit("playerMoved", players[socket.id]);
       });
 
-      // // remove player on end of round
-      // socket.on("endRoundRemoveMe", function(players) {
-      //   console.log("End Round removing | ", socket.id, players[socket.id].username)
-      //   delete players[socket.id]
-      // })
-
       // socket event on disconnect
       socket.on("disconnect", function () {
         let mongoID = socket.request.user.id;
