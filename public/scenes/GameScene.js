@@ -847,6 +847,9 @@ export class GameScene extends Phaser.Scene {
           if (!this.player.covid) this.player.score = Math.floor(this.player.score / scoreReducer)
           this.player.covid = true
           this.player.speed = 50
+          // chance to shake camera
+          let shakerChance = Math.floor(Math.random() * 3)
+          if (shakerChance === 1) this.cameras.main.shake(1000);
         } else {
           // score increment
           this.player.score += 1
