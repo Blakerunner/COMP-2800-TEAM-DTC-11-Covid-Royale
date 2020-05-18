@@ -110,9 +110,11 @@ mongoose.connect(
 
     app.get("/whoami", cors(), function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
-      res.json(req.session);
+      User.findById(req.session.user._id)
+      .then(user => {
+        res.json(user)
     });
-
+ });
     //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 5 USER OBJECTS
     //SORTED BY HIghSCORE 
     app.get('/highscore', function (req, res){
