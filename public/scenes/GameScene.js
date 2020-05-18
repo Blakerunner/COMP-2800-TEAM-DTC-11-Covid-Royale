@@ -141,7 +141,7 @@ export class GameScene extends Phaser.Scene {
           // updates otherPlayer postion
           otherPlayer.setPosition(playerInfo.x, playerInfo.y);
           // update otherPlayer covid status
-          otherPlayer.covid = playerInfo.covid
+          otherPlayer.covid = playerInfo.playerCovidPos
           if (playerInfo.playerDir === "stand") {
             otherPlayer.anims.stop();
           } else {
@@ -853,7 +853,7 @@ export class GameScene extends Phaser.Scene {
           this.player.speed = 50
           // chance to shake camera
           let shakerChance = Math.floor(Math.random() * 3)
-          if (shakerChance === 1) this.cameras.main.shake(750);
+          if (shakerChance === 1) this.cameras.main.shake(500);
         } else {
           // score increment
           this.player.score += 1
