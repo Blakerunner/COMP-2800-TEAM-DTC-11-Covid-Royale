@@ -891,8 +891,8 @@ export class GameScene extends Phaser.Scene {
     this.time.addEvent({ delay: 200, callback: () => {
       if (this.player) {
         console.log(`YOUR | Loc: X: ${this.player.x} Y: ${this.player.y}`)
+        let player = this.player
         if (this.player.risk <= 100) {
-          let player = this.player
           this.otherPlayers.getChildren().forEach(function (otherPlayer) {
             console.log(`OTHER | Loc: X: ${otherPlayer.x} Y: ${otherPlayer.y} Covid: ${otherPlayer.covid}`)
             let deltaX = Math.abs(otherPlayer.x - player.x)
