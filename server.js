@@ -110,6 +110,10 @@ mongoose.connect(
 
     app.get("/whoami", cors(), function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
+	    if(! req.session.user){
+		    res.json({user:null})
+		    return
+	    }
       User.findById(req.session.user._id)
       .then(user => {
         res.json(user)

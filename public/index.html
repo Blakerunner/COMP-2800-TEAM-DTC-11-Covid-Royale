@@ -324,14 +324,14 @@
         getUserAsync()
           .then(response => {
 
-            if (!response.user) {
+            if (!response.username) {
               $("#deleteModalAccountTerms").append(`<p>I am sorry, You must be logged in to delete an account!</p>`);
               $("#delBtn").hide();
             }
             else {
 
               // delete account modal text fill - ZENEN
-              $("#deleteModalAccountTerms").append(`<p>Are you sure you want to delete your account ${response.user.username}?!</p>` + `<p>You have a great highscore of ${response.user.highScore}. <br>These stats will be deleted with your account.</p>`)
+              $("#deleteModalAccountTerms").append(`<p>Are you sure you want to delete your account ${response.username}?!</p>` + `<p>You have a great highscore of ${response.highScore}. <br>These stats will be deleted with your account.</p>`)
             }});
 
             // orientaion checker #1
@@ -363,12 +363,12 @@
             // login checker
             getUserAsync()
               .then(response => {
-                if (!response.user) {
+                if (!response.username) {
                   $('#loggedOut').text(`You havent logged in yet! Please click login`)
                   $('#logoutAlert').show()
                 } else {
                   console.log('You are logged in, display popup here', response);
-                  $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
+                  $('#loginSuccess').text(`You are currently logged in as ${response.username}`)
                   $('#loginSuccess').show()
                 }
               })
