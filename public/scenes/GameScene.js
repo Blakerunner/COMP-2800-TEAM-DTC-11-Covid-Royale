@@ -177,11 +177,11 @@ export class GameScene extends Phaser.Scene {
           });
       });
     });
-
+    // generate player character
     function addPlayer(self, playerInfo) {
 
       console.log("Players Made")
-      // generate
+      // create sprite
       self.player = self.physics.add
         .sprite(playerInfo.x, playerInfo.y, "character", 0)
         .setOrigin(0.5, 0.5);
@@ -193,6 +193,7 @@ export class GameScene extends Phaser.Scene {
       self.player.protection = 0
       self.player.covid = false
       self.player.speed = 100
+      self.player.items = {hand: 0, mask: 0, haz: 0}
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player)
@@ -1020,15 +1021,12 @@ export class GameScene extends Phaser.Scene {
       // easter egg / speed cheat
       if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
         this.playerSpeedCheatCounter += 1
-        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
         if (this.playerSpeedCheatCounter > 500) {
           console.log("Speed Cheat active")
           console.log("Speed was: ", this.player.speed)
           this.player.speed = 150
-          console.log("Speed is now: ", this.player.speed)
         }
       } else {
-        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
         this.playerSpeedCheatCounter = 0
       }
     }
@@ -1062,6 +1060,10 @@ export class GameScene extends Phaser.Scene {
         console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
         // base score add
         player.score += 5
+        // add item count
+        console.log("Hand sanitizer count pre: ", player.items.hand)
+        player.items.hand += 1
+        console.log("Hand sanitizer count post: ", player.items.hand)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < sanitizerRiskValue) {
           player.score += player.risk
@@ -1079,6 +1081,10 @@ export class GameScene extends Phaser.Scene {
         console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
         // base score add
         player.score += 10
+        // add item count
+        console.log("Mask count pre: ", player.items.mask)
+        player.items.mask += 1
+        console.log("Mask count post: ", player.items.mask)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < facemaskRiskValue) {
           player.score += player.risk
@@ -1102,6 +1108,10 @@ export class GameScene extends Phaser.Scene {
         console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
         // base score add
         player.score += 15
+        // add item count
+        console.log("Mask count pre: ", player.items.haz)
+        player.items.haz += 1
+        console.log("Mask count post: ", player.items.haz)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < hazsuitRiskValue) {
           player.score += player.risk
@@ -1122,7 +1132,8 @@ export class GameScene extends Phaser.Scene {
        events.emit('playerUIUpdate', {
         score: player.score, 
         risk: player.risk, 
-        protection: player.protection
+        protection: player.protection,
+        items: player.items
       });
     }
   }
