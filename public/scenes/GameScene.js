@@ -816,6 +816,7 @@ export class GameScene extends Phaser.Scene {
         .sprite(playerInfo.x, playerInfo.y, "character", 0)
         .setOrigin(0.5, 0.5);
       otherPlayer.playerId = playerInfo.playerId;
+      otherPlayer.covid = playerInfo.playerCovidPos
       self.otherPlayers.add(otherPlayer);
 
       // const otherPlayerName = self.add.bitmapText(playerInfo.x, playerInfo.y - 18, 'retroText', playerInfo.playerName)
