@@ -901,20 +901,27 @@ export class GameScene extends Phaser.Scene {
             let riskFactor = (otherPlayer.covid) ? 3 : 2
             if (deltaX < radius && deltaY < radius) {
               console.log(`Radius: ${radius}`)
+              // if player has over the riskFactor to remove from protection
               if (player.protection >= riskFactor) {
                 player.protection -= riskFactor
-              } if (player.protection < riskFactor) {
+              } 
+              // if the player has less than the riskFactor, remove from protection and then add risk remaining
+              else if (player.protection < riskFactor) {
                 player.protection -= riskFactor - player.protection
                 player.risk += player.protection - riskFactor
-              } else {
+              } 
+              // otherwise just add risk
+              else {
                 player.risk += riskFactor
               }
             }
           });
         }
-        // emit for player UI update every second
         this.events.emit('playerUIUpdate', {
-          risk: this.player.risk
+          score: player.score, 
+          risk: player.risk, 
+          protection: player.protection,
+          items: player.items
         }, this);
       }
       
@@ -1048,12 +1055,9 @@ export class GameScene extends Phaser.Scene {
         y: this.player.y,
       };
 
-        // Player stat balancer so cant go outside 0 to 100
-      if (this.player.risk > 100) this.player.risk = 100
-      // if(this.player.covid) {
-      //   console.log("Camera shake engage")
-      //   this.cameras.main.setLerp(0.1, 0.1);
-      // }
+      // Player stat balancer so cant go outside 0 to 100
+      if (this.player.risk >= 100) this.player.risk = 100
+    
 
       // easter egg / speed cheat
       if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
