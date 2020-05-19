@@ -826,8 +826,8 @@ export class GameScene extends Phaser.Scene {
     // CONTROLS SETUP
     // keyboard inputs
     self.cursors = this.input.keyboard.createCursorKeys()
-    self.runKey = this.input.keyboard.addKey('A')
-    self.pickUpKey = this.input.keyboard.addKey('S')
+    self.runKey = this.input.keyboard.addKey('S')
+    self.pickUpKey = this.input.keyboard.addKey('A')
 
     // EVENTS
     // Virtual controller state event change
