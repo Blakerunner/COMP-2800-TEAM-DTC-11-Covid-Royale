@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="46">
  <editorsettings>
-  <export target="chunk1.json" format="json"/>
+  <export target="chunk8.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="overworld" tilewidth="16" tileheight="16" tilecount="1440" columns="40">
   <image source="../../img/overworld.png" width="640" height="576"/>
@@ -1473,12 +1473,12 @@
   </tile>
   <tile id="213">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="214">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="215">
@@ -1729,7 +1729,7 @@
   </tile>
   <tile id="253">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="3">
     <object id="3" name="small house" type="collsion" x="16" y="0">
@@ -1739,7 +1739,7 @@
   </tile>
   <tile id="254">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="small house" type="collsion" x="11.0938" y="-0.03125">
@@ -8434,7 +8434,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1012,1014,0,0,
 0,0,0,0,0,1012,1014,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1052,1054,0,0,
 0,0,0,0,0,1052,1055,1013,1014,0,0,0,1012,1014,0,0,0,0,0,0,0,294,295,0,0,1012,1056,1054,0,0,
-0,0,0,0,0,1092,1093,1093,1094,0,0,1012,1056,1054,0,85,86,0,0,1092,0,0,0,0,0,1052,1015,1094,0,0,
+0,0,0,0,0,1092,1093,1093,1094,0,0,1012,1056,1054,0,85,86,0,0,0,0,0,0,0,0,1052,1015,1094,0,0,
 0,0,0,0,209,0,0,0,0,0,0,1092,1093,1094,0,0,0,0,0,0,207,0,0,0,0,1092,1094,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

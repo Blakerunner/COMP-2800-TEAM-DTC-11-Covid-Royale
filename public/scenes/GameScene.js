@@ -208,8 +208,8 @@ export class GameScene extends Phaser.Scene {
       self.player.body.setSize(4, 4, true).setOffset(5, 15);
 
       //FIRST CHUNK
-      //
-      var first_chunk = chunk_array[playerInfo.mapBlueprint[0]];
+      //chunk_array[playerInfo.mapBlueprint[0]]
+      var first_chunk = chunk1;
       const first_chunk_top = first_chunk.createStaticLayer(
           "top",
           [objects, overworld],
@@ -240,6 +240,8 @@ export class GameScene extends Phaser.Scene {
         first_chunk_haz.forEach(item => {item.itemID = 3});
       //combines all 3 item arrays into one array
       var first_chunk_items = first_chunk_face.concat(first_chunk_hand).concat(first_chunk_haz);
+      console.log("chunk 1 item ids")
+      first_chunk_items.forEach(item => {console.log(item.itemID)});
       //offsets the items by the chunks position to put them in the proper place
       first_chunk_items.forEach(item => {
         item.x = item.x + (80 + 30 * 0)
@@ -263,7 +265,7 @@ export class GameScene extends Phaser.Scene {
 
       //SECOND CHUNK
       //
-      var second_chunk = chunk_array[playerInfo.mapBlueprint[1]];
+      var second_chunk = chunk2;
       const second_chunk_top = second_chunk
         .createStaticLayer(
           "top",
@@ -283,14 +285,16 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        second_chunk_hand.forEach(item => {item.itemID = 2});
+        second_chunk_face.forEach(item => {item.itemID = 2});
         const second_chunk_haz = second_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        second_chunk_hand.forEach(item => {item.itemID = 3});
+        second_chunk_haz.forEach(item => {item.itemID = 3});
         var second_chunk_items = second_chunk_face.concat(second_chunk_hand).concat(second_chunk_haz);
+        console.log("chunk 2 item ids")
+      second_chunk_items.forEach(item => {console.log(item.itemID)});
         second_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
           item.y = item.y + (80 + 30 * 0)});
@@ -313,7 +317,7 @@ export class GameScene extends Phaser.Scene {
 
       //THIRD CHUNK
       //
-      var third_chunk = chunk_array[playerInfo.mapBlueprint[2]];
+      var third_chunk = chunk3;
       const third_chunk_top = third_chunk
         .createStaticLayer(
           "top",
@@ -333,13 +337,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        third_chunk_hand.forEach(item => {item.itemID = 2});
+        third_chunk_face.forEach(item => {item.itemID = 2});
         const third_chunk_haz = third_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        third_chunk_hand.forEach(item => {item.itemID = 3});
+        third_chunk_haz.forEach(item => {item.itemID = 3});
         var third_chunk_items = third_chunk_face.concat(third_chunk_hand).concat(third_chunk_haz);
         third_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -363,7 +367,7 @@ export class GameScene extends Phaser.Scene {
 
       //FOURTH CHUNK
       //
-      var fourth_chunk = chunk_array[playerInfo.mapBlueprint[3]];
+      var fourth_chunk = chunk4;
       const fourth_chunk_top = fourth_chunk
         .createStaticLayer(
           "top",
@@ -383,13 +387,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        fourth_chunk_hand.forEach(item => {item.itemID = 2});
+        fourth_chunk_face.forEach(item => {item.itemID = 2});
         const fourth_chunk_haz = fourth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        fourth_chunk_hand.forEach(item => {item.itemID = 3});
+        fourth_chunk_haz.forEach(item => {item.itemID = 3});
         var fourth_chunk_items = fourth_chunk_face.concat(fourth_chunk_hand).concat(fourth_chunk_haz);
         fourth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 0)
@@ -413,7 +417,7 @@ export class GameScene extends Phaser.Scene {
 
       //FIFTH CHUNK
       //
-      var fifth_chunk = chunk_array[playerInfo.mapBlueprint[4]];
+      var fifth_chunk = chunk5;
       const fifth_chunk_top = fifth_chunk
         .createStaticLayer(
           "top",
@@ -433,13 +437,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        fifth_chunk_hand.forEach(item => {item.itemID = 2});
+        fifth_chunk_face.forEach(item => {item.itemID = 2});
         const fifth_chunk_haz = fifth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        fifth_chunk_hand.forEach(item => {item.itemID = 3});
+        fifth_chunk_haz.forEach(item => {item.itemID = 3});
         var fifth_chunk_items = fifth_chunk_face.concat(fifth_chunk_hand).concat(fifth_chunk_haz);
         fifth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -463,7 +467,7 @@ export class GameScene extends Phaser.Scene {
 
       //SIXTH CHUNK
       //
-      var sixth_chunk = chunk_array[playerInfo.mapBlueprint[5]];
+      var sixth_chunk = chunk6;
       const sixth_chunk_top = sixth_chunk
         .createStaticLayer(
           "top",
@@ -483,12 +487,12 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        sixth_chunk_hand.forEach(item => {item.itemID = 2});
+        sixth_chunk_face.forEach(item => {item.itemID = 2});
         const sixth_chunk_haz = sixth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
-        );sixth_chunk_hand.forEach(item => {item.itemID = 3});
+        );sixth_chunk_haz.forEach(item => {item.itemID = 3});
         var sixth_chunk_items = sixth_chunk_face.concat(sixth_chunk_hand).concat(sixth_chunk_haz);
         sixth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -512,7 +516,7 @@ export class GameScene extends Phaser.Scene {
 
       //SEVENTH CHUNK
       //
-      var seventh_chunk = chunk_array[playerInfo.mapBlueprint[6]];
+      var seventh_chunk = chunk7;
       const seventh_chunk_top = seventh_chunk
         .createStaticLayer(
           "top",
@@ -532,13 +536,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        seventh_chunk_hand.forEach(item => {item.itemID = 2});
+        seventh_chunk_face.forEach(item => {item.itemID = 2});
         const seventh_chunk_haz = seventh_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        seventh_chunk_hand.forEach(item => {item.itemID = 3});
+        seventh_chunk_haz.forEach(item => {item.itemID = 3});
         var seventh_chunk_items = seventh_chunk_face.concat(seventh_chunk_hand).concat(seventh_chunk_haz);
         seventh_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 0)
@@ -562,7 +566,7 @@ export class GameScene extends Phaser.Scene {
 
       //EIGHTH CHUNK
       //
-      var eighth_chunk = chunk_array[playerInfo.mapBlueprint[7]];
+      var eighth_chunk = chunk8;
       const eighth_chunk_top = eighth_chunk
         .createStaticLayer(
           "top",
@@ -582,13 +586,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        eighth_chunk_hand.forEach(item => {item.itemID = 2});
+        eighth_chunk_face.forEach(item => {item.itemID = 2});
         const eighth_chunk_haz = eighth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        eighth_chunk_hand.forEach(item => {item.itemID = 3});
+        eighth_chunk_haz.forEach(item => {item.itemID = 3});
         var eighth_chunk_items = eighth_chunk_face.concat(eighth_chunk_hand).concat(eighth_chunk_haz);
         eighth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -612,7 +616,7 @@ export class GameScene extends Phaser.Scene {
 
       //NINTH CHUNK
       //
-      var ninth_chunk = chunk_array[playerInfo.mapBlueprint[8]];
+      var ninth_chunk = chunk9;
       const ninth_chunk_top = ninth_chunk
         .createStaticLayer(
           "top",
@@ -632,13 +636,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        ninth_chunk_hand.forEach(item => {item.itemID = 2});
+        ninth_chunk_face.forEach(item => {item.itemID = 2});
         const ninth_chunk_haz = ninth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        ninth_chunk_hand.forEach(item => {item.itemID = 3});
+        ninth_chunk_haz.forEach(item => {item.itemID = 3});
         var ninth_chunk_items = ninth_chunk_face.concat(ninth_chunk_hand).concat(ninth_chunk_haz);
         ninth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -1079,7 +1083,9 @@ export class GameScene extends Phaser.Scene {
 
     map_items.forEach(item => {
       if (checkCollision(player, item, events)) {
-        if (!player.covid) pickUp(item.itemID, player, events);
+        if (!player.covid) {
+          pickUp(item.itemID, player, events);
+        }
         item.destroy();
         map_items.splice(map_items.indexOf(item),1);
       }
@@ -1123,9 +1129,9 @@ export class GameScene extends Phaser.Scene {
         // base score add
         player.score += 10
         // add item count
-        console.log("Mask count pre: ", player.items.mask)
+        console.log("face count pre: ", player.items.mask)
         player.items.mask += 1
-        console.log("Mask count post: ", player.items.mask)
+        console.log("face count post: ", player.items.mask)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < facemaskRiskValue) {
           player.score += player.risk
@@ -1150,9 +1156,9 @@ export class GameScene extends Phaser.Scene {
         // base score add
         player.score += 15
         // add item count
-        console.log("Mask count pre: ", player.items.haz)
+        console.log("hazmat count pre: ", player.items.haz)
         player.items.haz += 1
-        console.log("Mask count post: ", player.items.haz)
+        console.log("hazmat count post: ", player.items.haz)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < hazsuitRiskValue) {
           player.score += player.risk
