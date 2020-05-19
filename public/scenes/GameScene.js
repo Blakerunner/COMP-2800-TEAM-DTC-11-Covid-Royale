@@ -69,12 +69,8 @@ export class GameScene extends Phaser.Scene {
     const chunk8 = this.add.tilemap("chunk8");
     const chunk9 = this.add.tilemap("chunk9");
     //adding Tileset Images
-    const overworld = chunk1.addTilesetImage("overworld");
-    const objects = chunk1.addTilesetImage("objects");
-    // not required atm but will in future
-    // let objects = map.addTilesetImage("objects")
-    // let character = map.addTilesetImage("character")
-    // let npc_test = map.addTilesetImage("npc_test")
+    const overworld = chunk1.addTilesetImage("overworld", "overworld", 16, 16, 1, 2)
+    const objects = chunk1.addTilesetImage("objects", "objects", 16, 16, 0, 0);
 
     // LAYERS
     //top left corner skirt layer
