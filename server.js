@@ -250,7 +250,7 @@ mongoose.connect(
           }
         });
         // calculate average
-        // playersScoreAverage
+        playersScoreAverage = (playersScoreAverage / numPlayers)
         // calculate victory
         let failRatio = 0.20
         let victory = ((numPlayersInfected / numPlayers) <= failRatio) ? true : false
