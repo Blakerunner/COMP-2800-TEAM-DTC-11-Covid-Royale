@@ -235,13 +235,18 @@ mongoose.connect(
         let numPlayersInfected = 0
         let numPlayers = 0
         let playersScoreAverage = 0
+        let bestPlayer = {name: "", score: 0}
         Object.keys(players).forEach(function (player) {
           numPlayers++
-          if(players[player].playerCovidPos) {
+          if (players[player].playerCovidPos) {
             numPlayersInfected++
           }
-          if(players[player].playerScore) {
+          if (players[player].playerScore) {
             playersScoreAverage += players[player].playerScore
+            if (players[player].playerScore > bestPlayer.score) {
+              bestPlayer.score = players[player].playerScore
+              bestPlayer.name = players[player].playerName
+            }
           }
         });
         // calculate average
@@ -253,7 +258,8 @@ mongoose.connect(
           infected: numPlayersInfected, 
           playerCount: numPlayers, 
           scoreAvg: playersScoreAverage,
-          victorious: victory
+          victorious: victory,
+          bestPlayer: bestPlayer
         }
         socket.emit("roundOutcomeReply", data)
       });
