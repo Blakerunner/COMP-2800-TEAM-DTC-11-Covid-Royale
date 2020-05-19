@@ -41,9 +41,12 @@ export class PostRoundScene extends Phaser.Scene {
         // Round outcome title
         let roundOutcomeTitle = this.add.bitmapText(96, 160, 'retroText', 'ROUND OUTCOME', 22)
         // victory or defeat
-        let roundOutcomeText = this.add.bitmapText(32, 176, 'retroText', `1`, 22)
+        let roundOutcomeText = this.add.bitmapText(32, 176, 'retroText', ``, 22)
+        // best round score
+        let bestRoundPlayerText =  this.add.bitmapText(32, 192, 'retroText', ``, 22)
         // average score
-        let scoreAverageText = this.add.bitmapText(32, 192, 'retroText', `1`, 22)
+        let scoreAverageText = this.add.bitmapText(32, 208, 'retroText', ``, 22)
+        
         
         this.socket.on("roundOutcomeReply", function(data) {
             console.log("reply |", data)
@@ -52,7 +55,8 @@ export class PostRoundScene extends Phaser.Scene {
             } else {
                 roundOutcomeText.setText(`Defeat!   ${data.infected} of ${data.playerCount} infected`)
             }
-            scoreAverageText.setText(`"Score Average   ${data.scoreAvg}`)
+            bestRoundPlayerText.setText(`Best Player   ${data.bestPlayer.name}   ${data.bestPlayer.score}`)
+            scoreAverageText.setText(`Score Average   ${data.scoreAvg}`)
         })
 
         // Leaderboard Title

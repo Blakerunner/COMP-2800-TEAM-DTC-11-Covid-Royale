@@ -909,12 +909,12 @@ export class GameScene extends Phaser.Scene {
               // if player has over the riskFactor to remove from protection
               if (player.protection >= riskFactor) {
                 player.protection -= riskFactor
-              } 
+              }
               // if the player has less than the riskFactor, remove from protection and then add risk remaining
               else if (player.protection < riskFactor) {
-                player.risk += (player.protection - riskFactor)
+                player.risk += (riskFactor - player.protection)
                 player.protection = 0
-              } 
+              }
               // otherwise just add risk
               else {
                 player.risk += riskFactor
