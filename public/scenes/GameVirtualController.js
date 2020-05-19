@@ -35,6 +35,8 @@ export class GameVirtualController extends Phaser.Scene {
         let buttonXPosY = 320
         let buttonYPosX = 592
         let buttonYPosY = 288
+        let buttonYSinglePosX = 568
+        let buttonYSinglePosY = 300
         let buttonLeftPosX = 43
         let buttonLeftPosY = 272
         let buttonRightPosX = 149
@@ -47,29 +49,29 @@ export class GameVirtualController extends Phaser.Scene {
         // virtual game controller buttons
         
         // a button
-        let buttonX = this.add.sprite(buttonXPosX, buttonXPosY, 'buttonX', 1).setScale(1).setScrollFactor(0).setInteractive();
-        buttonX.on("pointerdown", () => {
-            buttonX.setFrame(0).setScale(0.9)
-            virtualControllerStates.pickUp = true;
-            this.events.emit('buttonUpdate', virtualControllerStates)
-        });
-        buttonX.on("pointerup", () => {
-            buttonX.setFrame(1).setScale(1)
-            virtualControllerStates.pickUp = false;
-            this.events.emit('buttonUpdate', virtualControllerStates)
-        });
-        buttonX.on("pointerover", () => {
-            buttonX.setFrame(0).setScale(0.9)
-            virtualControllerStates.pickUp = true;
-            this.events.emit('buttonUpdate', virtualControllerStates)
-        });
-        buttonX.on("pointerout", () => {
-            buttonX.setFrame(1).setScale(1)
-            virtualControllerStates.pickUp = false;
-            this.events.emit('buttonUpdate', virtualControllerStates)
-        });
+        // let buttonX = this.add.sprite(buttonXPosX, buttonXPosY, 'buttonX', 1).setScale(1).setScrollFactor(0).setInteractive();
+        // buttonX.on("pointerdown", () => {
+        //     buttonX.setFrame(0).setScale(0.9)
+        //     virtualControllerStates.pickUp = true;
+        //     this.events.emit('buttonUpdate', virtualControllerStates)
+        // });
+        // buttonX.on("pointerup", () => {
+        //     buttonX.setFrame(1).setScale(1)
+        //     virtualControllerStates.pickUp = false;
+        //     this.events.emit('buttonUpdate', virtualControllerStates)
+        // });
+        // buttonX.on("pointerover", () => {
+        //     buttonX.setFrame(0).setScale(0.9)
+        //     virtualControllerStates.pickUp = true;
+        //     this.events.emit('buttonUpdate', virtualControllerStates)
+        // });
+        // buttonX.on("pointerout", () => {
+        //     buttonX.setFrame(1).setScale(1)
+        //     virtualControllerStates.pickUp = false;
+        //     this.events.emit('buttonUpdate', virtualControllerStates)
+        // });
         // b button
-        let buttonY = this.add.sprite(buttonYPosX, buttonYPosY, 'buttonY', 1).setScale(1).setScrollFactor(0).setInteractive();
+        let buttonY = this.add.sprite(buttonYSinglePosX, buttonYSinglePosY, 'buttonY', 1).setScale(1).setScrollFactor(0).setInteractive();
         buttonY.on("pointerdown", () => {
             buttonY.setFrame(0).setScale(0.9)
             virtualControllerStates.run = true;

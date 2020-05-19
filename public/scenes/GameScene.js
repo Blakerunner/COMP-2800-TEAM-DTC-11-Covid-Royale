@@ -856,7 +856,7 @@ export class GameScene extends Phaser.Scene {
       // change staus to covid true | stop score incrementing
       if (this.player) {
         if (this.player.covid) {
-          let shakerChance = Math.floor(Math.random() * 10);
+          let shakerChance = Math.floor(Math.random() * 8);
           if (shakerChance === 1) {
             sickSounds[Math.floor(Math.random()*2)].play(soundConfig);
             this.cameras.main.shake(200);
@@ -902,7 +902,7 @@ export class GameScene extends Phaser.Scene {
           this.otherPlayers.getChildren().forEach(function (otherPlayer) {
             let deltaX = Math.abs(otherPlayer.x - player.x)
             let deltaY = Math.abs(otherPlayer.y - player.y)
-            let radius = (otherPlayer.covid) ? 200 : 100
+            let radius = (otherPlayer.covid) ? 100 : 50
             let riskFactor = (otherPlayer.covid) ? 3 : 2
             if (deltaX < radius && deltaY < radius) {
               console.log(`YOU ARE AT RISK | Player is Covid: ${otherPlayer.covid} | Distance < ${radius}`)
