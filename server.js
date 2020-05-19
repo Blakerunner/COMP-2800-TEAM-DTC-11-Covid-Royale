@@ -124,7 +124,7 @@ mongoose.connect(
     app.get('/highscore', function (req, res){
       User.find({highScore: {$exists: true}})
       .sort('-highScore')
-      .limit(5)
+      .limit(10)
       .exec(function(err, userArray) {
         res.json(userArray);
       });
@@ -223,13 +223,39 @@ mongoose.connect(
         y: thisSocketSpawn[1],
       };
 
-      // console.log(players, "PLAYER VARIABLE");
-
       // update server with player final data
       socket.on("playerStatsUpdate", function(player) {
         console.log("Updating player End Game Scores | ", players[socket.id].playerName)
         players[socket.id].playerScore = player.score
         players[socket.id].playerCovidPos = player.covid
+      });
+
+      // update final board
+      socket.on("roundOutcomeRequest", function() {
+        let numPlayersInfected = 0
+        let numPlayers = 0
+        let playersScoreAverage = 0
+        Object.keys(players).forEach(function (player) {
+          numPlayers++
+          if(players[player].playerCovidPos) {
+            numPlayersInfected++
+          }
+          if(players[player].playerScore) {
+            playersScoreAverage += players[player].playerScore
+          }
+        });
+        // calculate average
+        // playersScoreAverage
+        // calculate victory
+        let failRatio = 0.20
+        let victory = ((numPlayersInfected / numPlayers) <= failRatio) ? true : false
+        let data = {
+          infected: numPlayersInfected, 
+          playerCount: numPlayers, 
+          scoreAvg: playersScoreAverage,
+          victorious: victory
+        }
+        socket.emit("roundOutcomeReply", data)
       });
 
       // send the players object to the new player
@@ -302,9 +328,6 @@ mongoose.connect(
           })
         // console.log(players[player], "GOBBLED");
       })
-
-      console.log("===============================================================================")
-      console.log("Server | players post reset", players)
         
       }, 1000);
 
