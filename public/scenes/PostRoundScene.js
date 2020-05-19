@@ -10,6 +10,7 @@ export class PostRoundScene extends Phaser.Scene {
     init(data){
         this.player = data.player
         this.socket = data.socket
+        this.socket.emit("roundOutcomeRequest")
     }
     
     preload(){
@@ -17,7 +18,7 @@ export class PostRoundScene extends Phaser.Scene {
     }
     
     create(){
-        console.log('Player log: ', this.player)
+        let endRoundData = {}
 
         // UI SETUP
         this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -31,9 +32,28 @@ export class PostRoundScene extends Phaser.Scene {
         let playerStatsTitle = this.add.bitmapText(96, 32, 'retroText', 'STATS', 22)
         
         // Player Score
-        let playerScoreText = this.add.bitmapText(32, 80, 'retroText', 'Score   ', 22)
+        let playerScoreText = this.add.bitmapText(32, 48, 'retroText', 'Score   ', 22)
         // Player Covid status
-        let playerCovidText = this.add.bitmapText(32, 128, 'retroText', "COVID-19   ", 22)
+        let playerCovidText = this.add.bitmapText(32, 64, 'retroText', "COVID-19   ", 22)
+        
+
+        // ROUND OUTCOME
+        // Round outcome title
+        let roundOutcomeTitle = this.add.bitmapText(96, 160, 'retroText', 'ROUND OUTCOME', 22)
+        // victory or defeat
+        let roundOutcomeText = this.add.bitmapText(32, 176, 'retroText', `1`, 22)
+        // average score
+        let scoreAverageText = this.add.bitmapText(32, 192, 'retroText', `1`, 22)
+        
+        this.socket.on("roundOutcomeReply", function(data) {
+            console.log("reply |", data)
+            if (data.victorious) {
+                roundOutcomeText.setText(`Victory!   ${data.infected} of ${data.playerCount} infected`)
+            } else {
+                roundOutcomeText.setText(`Defeat!   ${data.infected} of ${data.playerCount} infected`)
+            }
+            scoreAverageText.setText(`"Score Average   ${data.scoreAvg}`)
+        })
 
         // Leaderboard Title
         let highscoresText = this.add.bitmapText(448, 32, 'retroText', "LEADERBOARD", 22)
@@ -46,16 +66,15 @@ export class PostRoundScene extends Phaser.Scene {
             let data = await response.json();
             return data
         }
-
         getHighScores().then(data => {
             let highscorePlayerX = 368
-            let highscorePlayerY = 80
+            let highscorePlayerY = 48
             console.log(data)
 
             Object.keys(data).forEach(function (player) {
                 // generate player name and score
-                this.add.bitmapText(highscorePlayerX, highscorePlayerY, 'retroText', `${data[player].username} + "   " + ${data[player].highScore}`, 22)
-                highscorePlayerY += 48
+                this.add.bitmapText(highscorePlayerX, highscorePlayerY, 'retroText', `${data[player].username}   ${data[player].highScore}`, 22)
+                highscorePlayerY += 16
               }, this);
         })
         

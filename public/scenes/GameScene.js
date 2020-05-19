@@ -923,7 +923,7 @@ export class GameScene extends Phaser.Scene {
      // Server ends game
      this.socket.on("serverGameEnd", () => {
       console.log("Server has instructed to end of round");
-      
+
       // update server with player final data
       this.socket.emit("playerStatsUpdate", {
         score: this.player.score,

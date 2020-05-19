@@ -43,7 +43,7 @@ const config = {
   };
 
 // Grab fullscreen status for different browsers
-function fs_status()
+function fullScreenStatus()
 {
 	if(document.fullscreenElement)
 	{
@@ -67,7 +67,7 @@ function fs_status()
 function goFullscreen()
 { 
   // end early if already at fullscreen
-	if(fs_status())
+	if(fullScreenStatus())
 	{
 		return;
 	}
