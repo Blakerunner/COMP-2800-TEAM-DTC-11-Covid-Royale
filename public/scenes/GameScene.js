@@ -196,6 +196,7 @@ export class GameScene extends Phaser.Scene {
       self.player.covid = false
       self.player.speed = 100
       self.player.items = {hand: 0, mask: 0, haz: 0}
+      self.player.scoreReduced = false
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player)
@@ -828,7 +829,9 @@ export class GameScene extends Phaser.Scene {
 
     // CONTROLS SETUP
     // keyboard inputs
-    self.cursors = this.input.keyboard.createCursorKeys();
+    self.cursors = this.input.keyboard.createCursorKeys()
+    self.runKey = this.input.keyboard.addKey('A')
+    self.pickUpKey = this.input.keyboard.addKey('S')
 
     // EVENTS
     // Virtual controller state event change
@@ -846,14 +849,9 @@ export class GameScene extends Phaser.Scene {
       // check if player risk is 100 or greater
       // change staus to covid true | stop score incrementing
       if (this.player) {
-        if (this.player.risk >= 100) {
-          let scoreReducer = 2
-          if (!this.player.covid) this.player.score = Math.floor(this.player.score / scoreReducer)
-          this.player.covid = true
-          this.player.speed = 50
-          // chance to shake camera
+        if (this.player.covid) {
           let shakerChance = Math.floor(Math.random() * 3)
-          if (shakerChance === 1) this.cameras.main.shake(100);
+          if (shakerChance === 1) this.cameras.main.shake(200);
         } else {
           // score increment
           this.player.score += 1
@@ -890,25 +888,23 @@ export class GameScene extends Phaser.Scene {
     // event to check distance from otherPlayers
     this.time.addEvent({ delay: 200, callback: () => {
       if (this.player) {
-        console.log(`YOUR | Loc: X: ${this.player.x} Y: ${this.player.y}`)
         let player = this.player
-        if (this.player.risk <= 100) {
+        if (!this.player.covid) {
           this.otherPlayers.getChildren().forEach(function (otherPlayer) {
-            console.log(`OTHER | Loc: X: ${otherPlayer.x} Y: ${otherPlayer.y} Covid: ${otherPlayer.covid}`)
             let deltaX = Math.abs(otherPlayer.x - player.x)
             let deltaY = Math.abs(otherPlayer.y - player.y)
             let radius = (otherPlayer.covid) ? 200 : 100
             let riskFactor = (otherPlayer.covid) ? 3 : 2
             if (deltaX < radius && deltaY < radius) {
-              console.log(`Radius: ${radius}`)
+              console.log(`YOU ARE AT RISK | Player is Covid: ${otherPlayer.covid} | Distance < ${radius}`)
               // if player has over the riskFactor to remove from protection
               if (player.protection >= riskFactor) {
                 player.protection -= riskFactor
               } 
               // if the player has less than the riskFactor, remove from protection and then add risk remaining
               else if (player.protection < riskFactor) {
-                player.protection -= riskFactor - player.protection
-                player.risk += player.protection - riskFactor
+                player.risk += (player.protection - riskFactor)
+                player.protection = 0
               } 
               // otherwise just add risk
               else {
@@ -995,6 +991,19 @@ export class GameScene extends Phaser.Scene {
 
     // PLAYER MOVEMENT
     if (this.player) {
+      // pickup item, check
+      if(this.pickUpKey.isDown || this.virtualControllerStates.pickUp) {
+        // KEEGAN - PICK UP ITEM FUNCTIONS HERE
+        console.log("Im trying to pick up an item.")
+      }
+      // run check, wont overwrite speed cheat, wont work if you've covid true
+      else if (!this.player.covid && this.player.speed === 60 && (this.runKey.isDown || this.virtualControllerStates.run)) {
+        this.player.speed = 110
+      } else {
+        if (this.player.speed = 110) {
+          this.player.speed = 60
+        }
+      }
       // left button down walk left
       if (this.cursors.left.isDown || this.virtualControllerStates.left) {
         this.player.setVelocityX(-this.player.speed);
@@ -1055,10 +1064,6 @@ export class GameScene extends Phaser.Scene {
         y: this.player.y,
       };
 
-      // Player stat balancer so cant go outside 0 to 100
-      if (this.player.risk >= 100) this.player.risk = 100
-    
-
       // easter egg / speed cheat
       if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
         this.playerSpeedCheatCounter += 1
@@ -1069,6 +1074,17 @@ export class GameScene extends Phaser.Scene {
         }
       } else {
         this.playerSpeedCheatCounter = 0
+      }
+
+      // player covid checker
+      if (this.player.risk >= 100) {
+        this.player.risk = 100
+        this.player.covid = true
+        if (!this.player.scoreReduced) {
+          let scoreReducer = 2
+          this.player.score = Math.floor(this.player.score / scoreReducer)
+          this.player.scoreReduced = true
+        }
       }
     }
 
