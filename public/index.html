@@ -309,10 +309,8 @@
         <img src="./assets/img/hidden_goose.png" class="hidden_goose"
           onclick="document.getElementById('goose_honk').play()">
       
-            <div class="sharethis-inline-share-buttons"></div>
-            <!-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
-
-        
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Think you cna beat me? Come join me for a game!" data-url="https://covid-royale.westus.cloudapp.azure.com/" data-hashtags="covidRoyal" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          
       </footer>
     </main>
 
@@ -326,6 +324,7 @@
       }
 
       $(document).ready(function () {
+        let myHighScore;
 
         getUserAsync()
           .then(response => {
@@ -337,7 +336,9 @@
             else {
 
               // delete account modal text fill - ZENEN
+
               $("#deleteModalAccountTerms").append(`<p>Are you sure you want to delete your account ${response.username}?!</p>` + `<p>You have a great highscore of ${response.highScore}. <br>These stats will be deleted with your account.</p>`)
+
             }});
 
             // orientaion checker #1
