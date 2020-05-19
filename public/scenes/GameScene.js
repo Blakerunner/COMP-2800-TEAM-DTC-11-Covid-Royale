@@ -2,6 +2,16 @@ import { GameUI } from "../scenes/GameUI.js";
 import { GameVirtualController } from "../scenes/GameVirtualController.js";
 import {PostRoundScene} from "../scenes/PostRoundScene.js"
 var map_items = new Array;
+var pickUpSounds = new Array;
+var soundConfig = {
+  mute: false,
+  volume: 0.15,
+  rate: 1,
+  detune: 0,
+  seek: 0,
+  loop: false,
+  delay: 0
+}
 export class GameScene extends Phaser.Scene {
   constructor() {
     super({
@@ -846,8 +856,11 @@ export class GameScene extends Phaser.Scene {
       // change staus to covid true | stop score incrementing
       if (this.player) {
         if (this.player.covid) {
-          let shakerChance = Math.floor(Math.random() * 3)
-          if (shakerChance === 1) this.cameras.main.shake(200);
+          let shakerChance = Math.floor(Math.random() * 10);
+          if (shakerChance === 1) {
+            sickSounds[Math.floor(Math.random()*2)].play(soundConfig);
+            this.cameras.main.shake(200);
+          }
         } else {
           // score increment
           this.player.score += 1
@@ -940,8 +953,23 @@ export class GameScene extends Phaser.Scene {
       }, 3000);
       });
 
-    
-
+    this.coughSound = this.sound.add("cough");
+    this.sneezeSound = this.sound.add("sneeze");
+    this.pickUpSound1 = this.sound.add("pickUp1");
+    this.pickUpSound2 = this.sound.add("pickUp2");
+    this.backgroundMusic = this.sound.add("backgroundMusic");
+    pickUpSounds = [this.pickUpSound1, this.pickUpSound2];
+    var sickSounds = [this.coughSound, this.sneezeSound];
+    var backgroundMusicConfig = {
+      mute: false,
+      volume: 0.03,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0
+    }
+    this.backgroundMusic.play(backgroundMusicConfig);
   }
 
   update() {
@@ -1093,7 +1121,9 @@ export class GameScene extends Phaser.Scene {
       if (checkCollision(player, item, events)) {
         if (!player.covid) {
           pickUp(item.itemID, player, events);
+          pickUpSounds[Math.floor(Math.random() * 2)].play(soundConfig);
         }
+
         item.destroy();
         map_items.splice(map_items.indexOf(item),1);
       }
