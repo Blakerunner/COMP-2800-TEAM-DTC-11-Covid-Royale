@@ -1473,12 +1473,12 @@
   </tile>
   <tile id="213">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="214">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="215">
@@ -1729,7 +1729,7 @@
   </tile>
   <tile id="253">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="3">
     <object id="3" name="small house" type="collsion" x="16" y="0">
@@ -1739,7 +1739,7 @@
   </tile>
   <tile id="254">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" name="small house" type="collsion" x="11.0938" y="-0.03125">

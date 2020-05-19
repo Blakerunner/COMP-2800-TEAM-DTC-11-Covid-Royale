@@ -69,12 +69,8 @@ export class GameScene extends Phaser.Scene {
     const chunk8 = this.add.tilemap("chunk8");
     const chunk9 = this.add.tilemap("chunk9");
     //adding Tileset Images
-    const overworld = chunk1.addTilesetImage("overworld");
-    const objects = chunk1.addTilesetImage("objects");
-    // not required atm but will in future
-    // let objects = map.addTilesetImage("objects")
-    // let character = map.addTilesetImage("character")
-    // let npc_test = map.addTilesetImage("npc_test")
+    const overworld = chunk1.addTilesetImage("overworld", "overworld", 16, 16, 1, 2)
+    const objects = chunk1.addTilesetImage("objects", "objects", 16, 16, 0, 0);
 
     // LAYERS
     //top left corner skirt layer
@@ -138,11 +134,13 @@ export class GameScene extends Phaser.Scene {
 
       self.otherPlayers.getChildren().forEach(function (otherPlayer) {
         if (playerInfo.playerId === otherPlayer.playerId) {
+          // updates otherPlayer postion
           otherPlayer.setPosition(playerInfo.x, playerInfo.y);
+          // update otherPlayer covid status
+          otherPlayer.covid = playerInfo.playerCovidPos
           if (playerInfo.playerDir === "stand") {
             otherPlayer.anims.stop();
           } else {
-            console.log(playerInfo.playerId, "is moving", playerInfo.playerDir);
             otherPlayer.anims.play(playerInfo.playerDir, true);
           }
         }
@@ -177,11 +175,11 @@ export class GameScene extends Phaser.Scene {
           });
       });
     });
-
+    // generate player character
     function addPlayer(self, playerInfo) {
 
       console.log("Players Made")
-      // generate
+      // create sprite
       self.player = self.physics.add
         .sprite(playerInfo.x, playerInfo.y, "character", 0)
         .setOrigin(0.5, 0.5);
@@ -193,6 +191,8 @@ export class GameScene extends Phaser.Scene {
       self.player.protection = 0
       self.player.covid = false
       self.player.speed = 100
+      self.player.items = {hand: 0, mask: 0, haz: 0}
+      self.player.scoreReduced = false
 
       // set camera to follow player
       self.cameras.main.startFollow(self.player)
@@ -280,13 +280,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        second_chunk_hand.forEach(item => {item.itemID = 2});
+        second_chunk_face.forEach(item => {item.itemID = 2});
         const second_chunk_haz = second_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        second_chunk_hand.forEach(item => {item.itemID = 3});
+        second_chunk_haz.forEach(item => {item.itemID = 3});
         var second_chunk_items = second_chunk_face.concat(second_chunk_hand).concat(second_chunk_haz);
         second_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -330,13 +330,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        third_chunk_hand.forEach(item => {item.itemID = 2});
+        third_chunk_face.forEach(item => {item.itemID = 2});
         const third_chunk_haz = third_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        third_chunk_hand.forEach(item => {item.itemID = 3});
+        third_chunk_haz.forEach(item => {item.itemID = 3});
         var third_chunk_items = third_chunk_face.concat(third_chunk_hand).concat(third_chunk_haz);
         third_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -380,13 +380,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        fourth_chunk_hand.forEach(item => {item.itemID = 2});
+        fourth_chunk_face.forEach(item => {item.itemID = 2});
         const fourth_chunk_haz = fourth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        fourth_chunk_hand.forEach(item => {item.itemID = 3});
+        fourth_chunk_haz.forEach(item => {item.itemID = 3});
         var fourth_chunk_items = fourth_chunk_face.concat(fourth_chunk_hand).concat(fourth_chunk_haz);
         fourth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 0)
@@ -430,13 +430,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        fifth_chunk_hand.forEach(item => {item.itemID = 2});
+        fifth_chunk_face.forEach(item => {item.itemID = 2});
         const fifth_chunk_haz = fifth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        fifth_chunk_hand.forEach(item => {item.itemID = 3});
+        fifth_chunk_haz.forEach(item => {item.itemID = 3});
         var fifth_chunk_items = fifth_chunk_face.concat(fifth_chunk_hand).concat(fifth_chunk_haz);
         fifth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -480,12 +480,12 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        sixth_chunk_hand.forEach(item => {item.itemID = 2});
+        sixth_chunk_face.forEach(item => {item.itemID = 2});
         const sixth_chunk_haz = sixth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
-        );sixth_chunk_hand.forEach(item => {item.itemID = 3});
+        );sixth_chunk_haz.forEach(item => {item.itemID = 3});
         var sixth_chunk_items = sixth_chunk_face.concat(sixth_chunk_hand).concat(sixth_chunk_haz);
         sixth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -529,13 +529,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        seventh_chunk_hand.forEach(item => {item.itemID = 2});
+        seventh_chunk_face.forEach(item => {item.itemID = 2});
         const seventh_chunk_haz = seventh_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        seventh_chunk_hand.forEach(item => {item.itemID = 3});
+        seventh_chunk_haz.forEach(item => {item.itemID = 3});
         var seventh_chunk_items = seventh_chunk_face.concat(seventh_chunk_hand).concat(seventh_chunk_haz);
         seventh_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 0)
@@ -579,13 +579,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        eighth_chunk_hand.forEach(item => {item.itemID = 2});
+        eighth_chunk_face.forEach(item => {item.itemID = 2});
         const eighth_chunk_haz = eighth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        eighth_chunk_hand.forEach(item => {item.itemID = 3});
+        eighth_chunk_haz.forEach(item => {item.itemID = 3});
         var eighth_chunk_items = eighth_chunk_face.concat(eighth_chunk_hand).concat(eighth_chunk_haz);
         eighth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
@@ -629,13 +629,13 @@ export class GameScene extends Phaser.Scene {
           "face",
           {key: "faceMask"}
         );
-        ninth_chunk_hand.forEach(item => {item.itemID = 2});
+        ninth_chunk_face.forEach(item => {item.itemID = 2});
         const ninth_chunk_haz = ninth_chunk.createFromObjects(
           "item",
           "haz",
           {key: "hazSuit"}
         );
-        ninth_chunk_hand.forEach(item => {item.itemID = 3});
+        ninth_chunk_haz.forEach(item => {item.itemID = 3});
         var ninth_chunk_items = ninth_chunk_face.concat(ninth_chunk_hand).concat(ninth_chunk_haz);
         ninth_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 32)
@@ -813,6 +813,7 @@ export class GameScene extends Phaser.Scene {
         .sprite(playerInfo.x, playerInfo.y, "character", 0)
         .setOrigin(0.5, 0.5);
       otherPlayer.playerId = playerInfo.playerId;
+      otherPlayer.covid = playerInfo.playerCovidPos
       self.otherPlayers.add(otherPlayer);
 
       // const otherPlayerName = self.add.bitmapText(playerInfo.x, playerInfo.y - 18, 'retroText', playerInfo.playerName)
@@ -824,7 +825,9 @@ export class GameScene extends Phaser.Scene {
 
     // CONTROLS SETUP
     // keyboard inputs
-    self.cursors = this.input.keyboard.createCursorKeys();
+    self.cursors = this.input.keyboard.createCursorKeys()
+    self.runKey = this.input.keyboard.addKey('S')
+    self.pickUpKey = this.input.keyboard.addKey('A')
 
     // EVENTS
     // Virtual controller state event change
@@ -842,11 +845,9 @@ export class GameScene extends Phaser.Scene {
       // check if player risk is 100 or greater
       // change staus to covid true | stop score incrementing
       if (this.player) {
-        if (this.player.risk >= 100) {
-          let scoreReducer = 2
-          if (!this.player.covid) this.player.score = Math.floor(this.player.score / scoreReducer)
-          this.player.covid = true
-          this.player.speed = 50
+        if (this.player.covid) {
+          let shakerChance = Math.floor(Math.random() * 3)
+          if (shakerChance === 1) this.cameras.main.shake(200);
         } else {
           // score increment
           this.player.score += 1
@@ -875,6 +876,44 @@ export class GameScene extends Phaser.Scene {
           score: this.player.score, 
           risk: this.player.risk, 
           protection: this.player.protection
+        }, this);
+      }
+      
+    }, callbackScope: this, loop: true });
+
+    // event to check distance from otherPlayers
+    this.time.addEvent({ delay: 200, callback: () => {
+      if (this.player) {
+        let player = this.player
+        if (!this.player.covid) {
+          this.otherPlayers.getChildren().forEach(function (otherPlayer) {
+            let deltaX = Math.abs(otherPlayer.x - player.x)
+            let deltaY = Math.abs(otherPlayer.y - player.y)
+            let radius = (otherPlayer.covid) ? 200 : 100
+            let riskFactor = (otherPlayer.covid) ? 3 : 2
+            if (deltaX < radius && deltaY < radius) {
+              console.log(`YOU ARE AT RISK | Player is Covid: ${otherPlayer.covid} | Distance < ${radius}`)
+              // if player has over the riskFactor to remove from protection
+              if (player.protection >= riskFactor) {
+                player.protection -= riskFactor
+              } 
+              // if the player has less than the riskFactor, remove from protection and then add risk remaining
+              else if (player.protection < riskFactor) {
+                player.risk += (player.protection - riskFactor)
+                player.protection = 0
+              } 
+              // otherwise just add risk
+              else {
+                player.risk += riskFactor
+              }
+            }
+          });
+        }
+        this.events.emit('playerUIUpdate', {
+          score: player.score, 
+          risk: player.risk, 
+          protection: player.protection,
+          items: player.items
         }, this);
       }
       
@@ -948,6 +987,19 @@ export class GameScene extends Phaser.Scene {
 
     // PLAYER MOVEMENT
     if (this.player) {
+      // pickup item, check
+      if(this.pickUpKey.isDown || this.virtualControllerStates.pickUp) {
+        // KEEGAN - PICK UP ITEM FUNCTIONS HERE
+        console.log("Im trying to pick up an item.")
+      }
+      // run check, wont overwrite speed cheat, wont work if you've covid true
+      else if (!this.player.covid && this.player.speed === 60 && (this.runKey.isDown || this.virtualControllerStates.run)) {
+        this.player.speed = 110
+      } else {
+        if (this.player.speed = 110) {
+          this.player.speed = 60
+        }
+      }
       // left button down walk left
       if (this.cursors.left.isDown || this.virtualControllerStates.left) {
         this.player.setVelocityX(-this.player.speed);
@@ -998,6 +1050,7 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
           playerDir: this.player.playerDir,
+          covid: this.player.covid
         });
       }
 
@@ -1007,26 +1060,27 @@ export class GameScene extends Phaser.Scene {
         y: this.player.y,
       };
 
-        // Player stat balancer so cant go outside 0 to 100
-      if (this.player.risk > 100) this.player.risk = 100
-      // if(this.player.covid) {
-      //   console.log("Camera shake engage")
-      //   this.cameras.main.setLerp(0.1, 0.1);
-      // }
-
       // easter egg / speed cheat
       if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
         this.playerSpeedCheatCounter += 1
-        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
         if (this.playerSpeedCheatCounter > 500) {
           console.log("Speed Cheat active")
           console.log("Speed was: ", this.player.speed)
           this.player.speed = 150
-          console.log("Speed is now: ", this.player.speed)
         }
       } else {
-        console.log("Speed Cheat count: ", this.playerSpeedCheatCounter)
         this.playerSpeedCheatCounter = 0
+      }
+
+      // player covid checker
+      if (this.player.risk >= 100) {
+        this.player.risk = 100
+        this.player.covid = true
+        if (!this.player.scoreReduced) {
+          let scoreReducer = 2
+          this.player.score = Math.floor(this.player.score / scoreReducer)
+          this.player.scoreReduced = true
+        }
       }
     }
 
@@ -1037,7 +1091,9 @@ export class GameScene extends Phaser.Scene {
 
     map_items.forEach(item => {
       if (checkCollision(player, item, events)) {
-        if (!player.covid) pickUp(item.itemID, player, events);
+        if (!player.covid) {
+          pickUp(item.itemID, player, events);
+        }
         item.destroy();
         map_items.splice(map_items.indexOf(item),1);
       }
@@ -1059,6 +1115,10 @@ export class GameScene extends Phaser.Scene {
         console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
         // base score add
         player.score += 5
+        // add item count
+        console.log("Hand sanitizer count pre: ", player.items.hand)
+        player.items.hand += 1
+        console.log("Hand sanitizer count post: ", player.items.hand)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < sanitizerRiskValue) {
           player.score += player.risk
@@ -1076,6 +1136,10 @@ export class GameScene extends Phaser.Scene {
         console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
         // base score add
         player.score += 10
+        // add item count
+        console.log("face count pre: ", player.items.mask)
+        player.items.mask += 1
+        console.log("face count post: ", player.items.mask)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < facemaskRiskValue) {
           player.score += player.risk
@@ -1099,6 +1163,10 @@ export class GameScene extends Phaser.Scene {
         console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
         // base score add
         player.score += 15
+        // add item count
+        console.log("hazmat count pre: ", player.items.haz)
+        player.items.haz += 1
+        console.log("hazmat count post: ", player.items.haz)
         // make sure risk will only be reduced down to a minimum of 0
         if (player.risk < hazsuitRiskValue) {
           player.score += player.risk
@@ -1119,7 +1187,8 @@ export class GameScene extends Phaser.Scene {
        events.emit('playerUIUpdate', {
         score: player.score, 
         risk: player.risk, 
-        protection: player.protection
+        protection: player.protection,
+        items: player.items
       });
     }
   }

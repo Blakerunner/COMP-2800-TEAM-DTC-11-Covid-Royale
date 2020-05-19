@@ -26,7 +26,9 @@ export class GameVirtualController extends Phaser.Scene {
             left: false, 
             right: false, 
             up: false, 
-            down: false
+            down: false,
+            run: false,
+            pickUp: false
         }
 
         let buttonXPosX = 512
@@ -44,38 +46,48 @@ export class GameVirtualController extends Phaser.Scene {
 
         // virtual game controller buttons
         
-        // x button
+        // a button
         let buttonX = this.add.sprite(buttonXPosX, buttonXPosY, 'buttonX', 1).setScale(1).setScrollFactor(0).setInteractive();
         buttonX.on("pointerdown", () => {
             buttonX.setFrame(0).setScale(0.9)
-            virtualControllerStates.x = true;
+            virtualControllerStates.pickUp = true;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
         buttonX.on("pointerup", () => {
             buttonX.setFrame(1).setScale(1)
-            virtualControllerStates.x = false;
+            virtualControllerStates.pickUp = false;
+            this.events.emit('buttonUpdate', virtualControllerStates)
+        });
+        buttonX.on("pointerover", () => {
+            buttonX.setFrame(0).setScale(0.9)
+            virtualControllerStates.pickUp = true;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
         buttonX.on("pointerout", () => {
             buttonX.setFrame(1).setScale(1)
-            virtualControllerStates.x = false;
+            virtualControllerStates.pickUp = false;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
-        // y button
+        // b button
         let buttonY = this.add.sprite(buttonYPosX, buttonYPosY, 'buttonY', 1).setScale(1).setScrollFactor(0).setInteractive();
         buttonY.on("pointerdown", () => {
             buttonY.setFrame(0).setScale(0.9)
-            virtualControllerStates.y = true;
+            virtualControllerStates.run = true;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
         buttonY.on("pointerup", () => {
             buttonY.setFrame(1).setScale(1)
-            virtualControllerStates.y = false;
+            virtualControllerStates.run = false;
+            this.events.emit('buttonUpdate', virtualControllerStates)
+        });
+        buttonY.on("pointerover", () => {
+            buttonY.setFrame(0).setScale(0.9)
+            virtualControllerStates.run = true;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
         buttonY.on("pointerout", () => {
             buttonY.setFrame(1).setScale(1)
-            virtualControllerStates.y = false;
+            virtualControllerStates.run = false;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });  
         // left button
@@ -88,6 +100,11 @@ export class GameVirtualController extends Phaser.Scene {
         buttonLeft.on("pointerup", () => {
             buttonLeft.setFrame(1).setScale(1, 1.3)
             virtualControllerStates.left = false;
+            this.events.emit('buttonUpdate', virtualControllerStates)
+        });
+        buttonLeft.on("pointerover", () => {
+            buttonLeft.setFrame(0).setScale(0.9, 1.2)
+            virtualControllerStates.left = true;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
         buttonLeft.on("pointerout", () => {
@@ -107,6 +124,11 @@ export class GameVirtualController extends Phaser.Scene {
             virtualControllerStates.right = false;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
+        buttonRight.on("pointerover", () => {
+            buttonRight.setFrame(0).setScale(0.9, 1.2)
+            virtualControllerStates.right = true;
+            this.events.emit('buttonUpdate', virtualControllerStates)
+        });
         buttonRight.on("pointerout", () => {
             buttonRight.setFrame(1).setScale(1, 1.3)
             virtualControllerStates.right = false;
@@ -124,6 +146,11 @@ export class GameVirtualController extends Phaser.Scene {
             virtualControllerStates.up = false;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
+        buttonUp.on("pointerover", () => {
+            buttonUp.setFrame(0).setScale(1.2, 0.9)
+            virtualControllerStates.up = true;
+            this.events.emit('buttonUpdate', virtualControllerStates)
+        });
         buttonUp.on("pointerout", () => {
             buttonUp.setFrame(1).setScale(1.3, 1)
             virtualControllerStates.up = false;
@@ -139,6 +166,11 @@ export class GameVirtualController extends Phaser.Scene {
         buttonDown.on("pointerup", () => {
             buttonDown.setFrame(1).setScale(1.3, 1)
             virtualControllerStates.down = false;
+            this.events.emit('buttonUpdate', virtualControllerStates)
+        });
+        buttonDown.on("pointerover", () => {
+            buttonDown.setFrame(0).setScale(1.2, 0.9)
+            virtualControllerStates.down = true;
             this.events.emit('buttonUpdate', virtualControllerStates)
         });
         buttonDown.on("pointerout", () => {

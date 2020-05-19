@@ -110,9 +110,15 @@ mongoose.connect(
 
     app.get("/whoami", cors(), function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
-      res.json(req.session);
+	    if(! req.session.user){
+		    res.json({user:null})
+		    return
+	    }
+      User.findById(req.session.user._id)
+      .then(user => {
+        res.json(user)
     });
-
+ });
     //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 5 USER OBJECTS
     //SORTED BY HIghSCORE 
     app.get('/highscore', function (req, res){
@@ -237,15 +243,10 @@ mongoose.connect(
         players[socket.id].x = movementData.x;
         players[socket.id].y = movementData.y;
         players[socket.id].playerDir = movementData.playerDir;
+        players[socket.id].playerCovidPos = movementData.covid;
         // emit a message to all players about the player that moved
         socket.broadcast.emit("playerMoved", players[socket.id]);
       });
-
-      // // remove player on end of round
-      // socket.on("endRoundRemoveMe", function(players) {
-      //   console.log("End Round removing | ", socket.id, players[socket.id].username)
-      //   delete players[socket.id]
-      // })
 
       // socket event on disconnect
       socket.on("disconnect", function () {
