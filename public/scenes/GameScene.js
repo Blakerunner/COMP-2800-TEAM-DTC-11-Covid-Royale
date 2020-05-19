@@ -208,8 +208,8 @@ export class GameScene extends Phaser.Scene {
       self.player.body.setSize(4, 4, true).setOffset(5, 15);
 
       //FIRST CHUNK
-      //chunk_array[playerInfo.mapBlueprint[0]]
-      var first_chunk = chunk1;
+      //
+      var first_chunk = chunk_array[playerInfo.mapBlueprint[0]];
       const first_chunk_top = first_chunk.createStaticLayer(
           "top",
           [objects, overworld],
@@ -240,8 +240,6 @@ export class GameScene extends Phaser.Scene {
         first_chunk_haz.forEach(item => {item.itemID = 3});
       //combines all 3 item arrays into one array
       var first_chunk_items = first_chunk_face.concat(first_chunk_hand).concat(first_chunk_haz);
-      console.log("chunk 1 item ids")
-      first_chunk_items.forEach(item => {console.log(item.itemID)});
       //offsets the items by the chunks position to put them in the proper place
       first_chunk_items.forEach(item => {
         item.x = item.x + (80 + 30 * 0)
@@ -265,7 +263,7 @@ export class GameScene extends Phaser.Scene {
 
       //SECOND CHUNK
       //
-      var second_chunk = chunk2;
+      var second_chunk = chunk_array[playerInfo.mapBlueprint[1]];
       const second_chunk_top = second_chunk
         .createStaticLayer(
           "top",
@@ -293,8 +291,6 @@ export class GameScene extends Phaser.Scene {
         );
         second_chunk_haz.forEach(item => {item.itemID = 3});
         var second_chunk_items = second_chunk_face.concat(second_chunk_hand).concat(second_chunk_haz);
-        console.log("chunk 2 item ids")
-      second_chunk_items.forEach(item => {console.log(item.itemID)});
         second_chunk_items.forEach(item => {
           item.x = item.x + (80 + 30 * 16)
           item.y = item.y + (80 + 30 * 0)});
@@ -317,7 +313,7 @@ export class GameScene extends Phaser.Scene {
 
       //THIRD CHUNK
       //
-      var third_chunk = chunk3;
+      var third_chunk = chunk_array[playerInfo.mapBlueprint[2]];
       const third_chunk_top = third_chunk
         .createStaticLayer(
           "top",
@@ -367,7 +363,7 @@ export class GameScene extends Phaser.Scene {
 
       //FOURTH CHUNK
       //
-      var fourth_chunk = chunk4;
+      var fourth_chunk = chunk_array[playerInfo.mapBlueprint[3]];
       const fourth_chunk_top = fourth_chunk
         .createStaticLayer(
           "top",
@@ -417,7 +413,7 @@ export class GameScene extends Phaser.Scene {
 
       //FIFTH CHUNK
       //
-      var fifth_chunk = chunk5;
+      var fifth_chunk = chunk_array[playerInfo.mapBlueprint[4]];
       const fifth_chunk_top = fifth_chunk
         .createStaticLayer(
           "top",
@@ -467,7 +463,7 @@ export class GameScene extends Phaser.Scene {
 
       //SIXTH CHUNK
       //
-      var sixth_chunk = chunk6;
+      var sixth_chunk = chunk_array[playerInfo.mapBlueprint[5]];
       const sixth_chunk_top = sixth_chunk
         .createStaticLayer(
           "top",
@@ -516,7 +512,7 @@ export class GameScene extends Phaser.Scene {
 
       //SEVENTH CHUNK
       //
-      var seventh_chunk = chunk7;
+      var seventh_chunk = chunk_array[playerInfo.mapBlueprint[6]];
       const seventh_chunk_top = seventh_chunk
         .createStaticLayer(
           "top",
@@ -566,7 +562,7 @@ export class GameScene extends Phaser.Scene {
 
       //EIGHTH CHUNK
       //
-      var eighth_chunk = chunk8;
+      var eighth_chunk = chunk_array[playerInfo.mapBlueprint[7]];
       const eighth_chunk_top = eighth_chunk
         .createStaticLayer(
           "top",
@@ -616,7 +612,7 @@ export class GameScene extends Phaser.Scene {
 
       //NINTH CHUNK
       //
-      var ninth_chunk = chunk9;
+      var ninth_chunk = chunk_array[playerInfo.mapBlueprint[8]];
       const ninth_chunk_top = ninth_chunk
         .createStaticLayer(
           "top",
