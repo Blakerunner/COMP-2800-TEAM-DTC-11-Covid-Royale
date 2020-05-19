@@ -957,8 +957,19 @@ export class GameScene extends Phaser.Scene {
     this.sneezeSound = this.sound.add("sneeze");
     this.pickUpSound1 = this.sound.add("pickUp1");
     this.pickUpSound2 = this.sound.add("pickUp2");
+    this.backgroundMusic = this.sound.add("backgroundMusic");
     pickUpSounds = [this.pickUpSound1, this.pickUpSound2];
     var sickSounds = [this.coughSound, this.sneezeSound];
+    var backgroundMusicConfig = {
+      mute: false,
+      volume: 0.03,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0
+    }
+    this.backgroundMusic.play(backgroundMusicConfig);
   }
 
   update() {

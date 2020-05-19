@@ -42,6 +42,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.audio("pickUp2", ["./assets/audio/pickUp2.ogg", "./assets/audio/pickUp2.mp3"]);
         this.load.audio("cough", ["./assets/audio/cough.ogg", "./assets/audio/cough.mp3"]);
         this.load.audio("sneeze", ["./assets/audio/sneeze.ogg", "./assets/audio/sneeze.mp3"]);
+        this.load.audio("backgroundMusic", ["./assets/audio/backgroundMusic.ogg", "./assets/audio/backgroundMusic.mp3"])
     }
     
     create(){
