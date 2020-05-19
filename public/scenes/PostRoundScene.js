@@ -43,9 +43,9 @@ export class PostRoundScene extends Phaser.Scene {
         // victory or defeat
         let roundOutcomeText = this.add.bitmapText(32, 176, 'retroText', ``, 22)
         // best round score
-        let bestRoundPlayerText =  this.add.bitmapText(32, 192, 'retroText', ``, 22)
+        let bestRoundPlayerText =  this.add.bitmapText(32, 208, 'retroText', ``, 22)
         // average score
-        let scoreAverageText = this.add.bitmapText(32, 208, 'retroText', ``, 22)
+        let scoreAverageText = this.add.bitmapText(32, 192, 'retroText', ``, 22)
         
         
         this.socket.on("roundOutcomeReply", function(data) {
