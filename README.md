@@ -4,7 +4,7 @@ To play our game, please [click here to visit our homepage.](https://covid-royal
 
 <hr>
 
-![Poster](https://i.imgur.com/Hm62url.png "Poster")
+![Poster](https://i.imgur.com/xcIztM7.jpg "Poster")
 
 ## Requirements
 
