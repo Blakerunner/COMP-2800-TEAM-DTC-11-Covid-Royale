@@ -84,6 +84,76 @@ From here the core file to run is ``server.js``
 
 -  Open your browser of choice, navigate to ``localhost:8080`` , you should now see a fully functional webpage. You now have a development environment for you to play around with!
 
+## File Structure
+
+![directory](https://i.imgur.com/zL1oyWN.png)
+
+**server.js**
+
+- Core js file, this controls all client traffic, game restarts, database querying. This file should be run to start.
+
+**"public" folder**
+
+- Contains all outward facing files, client accessible files.
+
+   **"assets" folder**
+
+   - Contains loadable content, eg images, audio
+
+      **"audio" folder**
+
+      - Contains sound effects and music for the application.
+
+      **"bitmapFont" folder**
+
+      - Contains bitmap font images to be used within the game.
+
+      **"favicon" folder**
+
+      - Contains assets for html page favicon's
+
+      **"img" folder**
+
+      - Contains image assets for the webpage and game tilesheets/sprites.
+
+      **"maps" folder**
+
+      - Contains .tmx and .json files that are imported into phaser as game maps.
+
+   **"css" folder**
+
+   - Contains css styling for homepage. > *index.html*
+
+   **"js" folder**
+
+   - Contains files for core boot up of game application. > *main.js*
+
+   **"scenes" folder**
+
+   - Contains scene files for the game. 
+   - These are scene classes to extend Phaser 3 scenes.
+   - *LoadScene.js* loads in majority of game assets.
+   - *GameScene.js* is core game code.
+   - *GameUI.js* contains the Game UI code for the game.
+   - *GameVirtualController.js* contains the game's Virtual Controller code.
+   - *PostRoundScene.js* contains the Leaderboard display and end of game code.
+
+   **game.html**
+
+   - html file to boot *main.js*. Serves as a holder for the game canvas.
+
+   **authenticated.html**
+
+   - 
+
+   **index.html**
+
+   - landing page for the application
+
+**"routes" folder**
+
+- 
+
 ## Resources
 
 #### Frameworks
@@ -96,6 +166,9 @@ From here the core file to run is ``server.js``
 
 - [Socket.io](https://socket.io/) - Used for Server to Client Websocketing. Things like players locations are emitted to the Server, and then broadcast to all other Clients connected to update X and Y co-ordinates. Socket.io handles this.
 - [MongoDB](https://www.mongodb.com/) - Used to store persistent information, sessions, users and user data.
+
+#### Middleware
+
 - [Passport](http://www.passportjs.org/) - For OAuth user Authentication, the application specifically uses the Google strategy. 
 
 #### Applications
