@@ -4,7 +4,7 @@ To play our game, please [click here to visit our homepage.](https://covid-royal
 
 <hr>
 
-![Goose Logic](https://imgur.com/a/2pFnZIx)
+![Poster](https://imgur.com/a/2pFnZIx "Poster")
 
 ## Requirements
 
@@ -48,7 +48,7 @@ Once you have cloned our repo, the first step to set up a development environmen
 
  - A message similar to the image below should display in the chat after waiting a few seconds to display that you have successfully installed all required packages.
  
- ![npm install result](https://imgur.com/a/aZI1PTx)
+ ![npm results](https://imgur.com/a/aZI1PTx "NPM Results")
 
 #### API Setup
 
@@ -70,7 +70,7 @@ From here the core file to run is ``server.js``
 
   - If the server loading is successful, you will see a message exactly like the image below.
 
-    ![server running](https://imgur.com/a/CCmXTln)
+    ![Server running](https://imgur.com/a/CCmXTln "Server Running")
 
 -  Open your browser of choice, navigate to ``localhost:8080`` , you should now see a fully functional webpage. You now have a development environment for you to play around with!
 
