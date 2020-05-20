@@ -1139,7 +1139,7 @@ export class GameScene extends Phaser.Scene {
       let maxProtection = 100
 
       if (id === 1) {
-        let sanitizerRiskValue = 20
+        let sanitizerRiskValue = 25
         console.log("You picked up hand sanitizer");
         console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
         // base score add
@@ -1158,8 +1158,8 @@ export class GameScene extends Phaser.Scene {
         }
          // emit for player UI update every second
       } else if (id === 2) {
-        let facemaskRiskValue = 5
-        let facemaskProtValue = 15
+        let facemaskRiskValue = 10
+        let facemaskProtValue = 25
         console.log("You picked up a face mask");
         console.log(`Risk: ${player.risk} => ${player.risk - facemaskRiskValue}`)
         console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
@@ -1185,8 +1185,8 @@ export class GameScene extends Phaser.Scene {
         }
 
       } else if (id === 3) {
-        let hazsuitRiskValue = 10
-        let hazsuitProtValue = 20
+        let hazsuitRiskValue = 15
+        let hazsuitProtValue = 40
         console.log("You picked up a hazmat suit");
         console.log(`Risk: ${player.risk} => ${player.risk - 12}`)
         console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
