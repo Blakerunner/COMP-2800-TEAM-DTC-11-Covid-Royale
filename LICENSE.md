@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020 Blake Michalzik
+Copyright (c) 2020 Blake Michalzik | Zenen Hornstein | Lawrance On | Keegan Maundrell
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
