@@ -1021,9 +1021,9 @@ export class GameScene extends Phaser.Scene {
         console.log("Im trying to pick up an item.")
       }
       // run check, wont overwrite speed cheat, wont work if you've covid true
-      else if ((!this.player.covid && this.player.speed === 60) && (this.runKey.isDown || this.virtualControllerStates.run)) {
+      else if (!this.player.covid && this.player.speed != 150 && (this.runKey.isDown || this.virtualControllerStates.run)) {
         this.player.speed = 110
-      } else if (this.player.speed = 110) {
+      } else if (this.player.speed != 150) {
         this.player.speed = 60
       }
       // left button down walk left
