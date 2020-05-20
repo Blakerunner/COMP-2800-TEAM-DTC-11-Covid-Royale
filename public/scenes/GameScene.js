@@ -1021,7 +1021,7 @@ export class GameScene extends Phaser.Scene {
         console.log("Im trying to pick up an item.")
       }
       // run check, wont overwrite speed cheat, wont work if you've covid true
-      else if (!this.player.covid && this.player.speed === 60 && (this.runKey.isDown || this.virtualControllerStates.run)) {
+      else if ((!this.player.covid && this.player.speed === 60) && (this.runKey.isDown || this.virtualControllerStates.run)) {
         this.player.speed = 110
       } else {
         if (this.player.speed = 110) {
@@ -1089,7 +1089,7 @@ export class GameScene extends Phaser.Scene {
       };
 
       // easter egg / speed cheat
-      if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
+      if ((80 < this.player.x && this.player.x < 84) && (75 < this.player.y && this.player.y < 79)) {
         this.playerSpeedCheatCounter += 1
         if (this.playerSpeedCheatCounter > 100) {
           console.log("Speed Cheat active")
