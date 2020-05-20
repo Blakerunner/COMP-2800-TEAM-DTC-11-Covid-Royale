@@ -121,7 +121,7 @@ export class GameUI extends Phaser.Scene {
             }
 
             if (data.score) {
-                playerScoreUITextCount.setText(String(data.score+1000))
+                playerScoreUITextCount.setText(String(data.score))
             }
 
             // items update

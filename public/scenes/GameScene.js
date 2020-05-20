@@ -212,7 +212,7 @@ export class GameScene extends Phaser.Scene {
       self.player.setCollideWorldBounds(true);
 
       //sets the collision size and placement
-      self.player.body.setSize(4, 4, true).setOffset(5, 15);
+      self.player.body.setSize(4, 4, false).setOffset(6, 16);
 
       //FIRST CHUNK
       //
