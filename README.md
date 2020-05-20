@@ -1,10 +1,9 @@
+![Poster](https://i.imgur.com/xcIztM7.jpg "Poster")
+
 # COVID ROYALE
+
 Online Multiplayer Game to spread awareness about COVID-19
 To play our game, please [click here to visit our homepage.](https://covid-royale.westus.cloudapp.azure.com/)
-
-<hr>
-
-![Poster](https://i.imgur.com/xcIztM7.jpg "Poster")
 
 ## Requirements
 
