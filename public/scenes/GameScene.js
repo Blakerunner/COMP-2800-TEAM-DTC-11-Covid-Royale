@@ -1023,10 +1023,8 @@ export class GameScene extends Phaser.Scene {
       // run check, wont overwrite speed cheat, wont work if you've covid true
       else if ((!this.player.covid && this.player.speed === 60) && (this.runKey.isDown || this.virtualControllerStates.run)) {
         this.player.speed = 110
-      } else {
-        if (this.player.speed = 110) {
-          this.player.speed = 60
-        }
+      } else if (this.player.speed = 110) {
+        this.player.speed = 60
       }
       // left button down walk left
       if (this.cursors.left.isDown || this.virtualControllerStates.left) {
