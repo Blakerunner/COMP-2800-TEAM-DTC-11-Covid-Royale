@@ -61,7 +61,7 @@
             <a class="nav-link" href="./login/logout">Logout</a>
           </li>
           <li class="nav-item active px-3 mx-3 rounded">
-            <a class="nav-link" href="./covid_royal">Play Covid-Royale</a>
+            <a id="playCovid" class="nav-link" href="./covid_royal">Play Covid-Royale</a>
           </li>
           <li class="nav-item active px-3 mx-3 rounded">
             <a class="nav-link" href="" data-toggle="modal" data-target="#deleteModalLong">Account Details</a>
@@ -309,6 +309,7 @@
             if (!response.username) {
               $("#deleteModalAccountTerms").append(`<p>I am sorry, You must be logged in to delete an account!</p>`);
               $("#delBtn").hide();
+              $('#playCovid').hide();
             }
             else {
 
