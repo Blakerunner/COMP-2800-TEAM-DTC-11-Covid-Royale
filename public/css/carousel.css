@@ -14,14 +14,14 @@ body {
 /* Carousel base class */
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-  bottom: 3rem;
+  bottom: 2rem;
   z-index: 10;
 }
 
 /* Declare heights because of positioning of img element */
 .carousel-item {
   height: 24rem;
-}y
+}
 .carousel-item img {
   margin-left: auto;
   margin-right: auto;
