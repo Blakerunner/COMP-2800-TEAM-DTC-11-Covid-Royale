@@ -27,10 +27,8 @@
   <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- SOME JQUERY FOR ALERTS -->
-
-  <!-- <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5ec2d99faa9dfe001ab3f78c&product=inline-share-buttons" async="async"></script> -->
-
   <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5ec59a998afab1001288f732&product=inline-share-buttons" async="async"></script>
 
              
@@ -44,7 +42,6 @@
 </head>
 
 <body>
-  <div class="sharethis-inline-share-buttons"></div>
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="#">Goose Logic</a>
@@ -65,9 +62,6 @@
           </li>
           <li class="nav-item active px-3 mx-3 rounded">
             <a class="nav-link" href="" data-toggle="modal" data-target="#deleteModalLong">Account Details</a>
-          </li>
-          <li class="nav-item active px-3 mx-3 rounded">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Think you can beat me? Come join me for a game!" data-url="https://covid-royale.westus.cloudapp.azure.com/" data-hashtags="covidRoyal" data-size="large" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </li>
         </ul>
       </div>
@@ -97,14 +91,15 @@
     </div>
 
     <main role="main">
-      <div id="loginSuccess" style="display:none;" class="alert alert-success mt-3" role="alert">
+      <div class="sharethis-inline-share-buttons mt-4 mb-3"></div>
+      <div id="loginSuccess" style="display:none;" class="alert alert-success mb-3" role="alert">
         <p id='loggedInText' class=""> You have been logged in!</p>
         <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
       </div>
-      <div id="logoutAlert" style="display:none;" class="alert alert-primary mt-3" role="alert">
+      <div id="logoutAlert" style="display:none;" class="alert alert-primary mb-3" role="alert">
         You havent logged in yet! Please click login.
       </div>
-      <div id="orientationAlert" style="display:none;" class="alert alert-danger mt-3" role="alert">
+      <div id="orientationAlert" style="display:none;" class="alert alert-danger mb-3" role="alert">
         Game is best played in landscape mode.
       </div>
 
@@ -122,9 +117,6 @@
             </picture>
             <div class="container">
               <div class="carousel-caption">
-                <!-- <h1>Another example headline.</h1>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p> -->
               </div>
             </div>
           </div>
