@@ -212,7 +212,7 @@ export class GameScene extends Phaser.Scene {
       self.player.setCollideWorldBounds(true);
 
       //sets the collision size and placement
-      self.player.body.setSize(4, 4, true).setOffset(5, 15);
+      self.player.body.setSize(4, 4, false).setOffset(6, 16);
 
       //FIRST CHUNK
       //
@@ -1021,12 +1021,10 @@ export class GameScene extends Phaser.Scene {
         console.log("Im trying to pick up an item.")
       }
       // run check, wont overwrite speed cheat, wont work if you've covid true
-      else if ((!this.player.covid && this.player.speed === 60) && (this.runKey.isDown || this.virtualControllerStates.run)) {
+      else if (!this.player.covid && this.player.speed != 150 && (this.runKey.isDown || this.virtualControllerStates.run)) {
         this.player.speed = 110
-      } else {
-        if (this.player.speed = 110) {
-          this.player.speed = 60
-        }
+      } else if (this.player.speed != 150) {
+        this.player.speed = 60
       }
       // left button down walk left
       if (this.cursors.left.isDown || this.virtualControllerStates.left) {

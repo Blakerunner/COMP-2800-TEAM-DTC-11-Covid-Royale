@@ -8,9 +8,15 @@ To play our game, please [click here to visit our homepage.](https://covid-royal
 
 ## Requirements
 
+#### MongoDB Atlas Account
 
+account requirements
 
-## Instructions
+#### OAuth Account
+
+account requirements
+
+## Setup Instructions
 
 #### Integrated Development Environment
 
@@ -44,12 +50,36 @@ Once you have cloned our repo, the first step to set up a development environmen
  
  ![](https://imgur.com/a/aZI1PTx)
 
+#### API Setup
+
+##### MongoDB Atlas Setup
+
+instructions
+
+##### OAuth Setup
+
+instructions
+
 #### Running
 
-From here the core file to run is ````
+From here the core file to run is ``server.js``
 
-  - In your terminal window, type ``npm run dev``
+  - In your terminal window, in root <i>COMP-2800-TEAM-DTC-11-Covid-Royale</i>>  type ``npm start``
+
+  - Alternatively for development we have used [Nodemon](https://www.npmjs.com/package/nodemon) type ``npm run dev``
+
   - If the server loading is successful, you will see a message exactly like the image below.
 
-If you now type ``localhost:8080``, you should now see a fully functional webpage.
-You now have a development environment for you to play around with!<br/>
+    ![](https://imgur.com/a/CCmXTln)
+
+-  Open your browser of choice, navigate to ``localhost:8080`` , you should now see a fully functional webpage. You now have a development environment for you to play around with!
+
+## Resources
+
+#### Frameworks
+
+#### APIs
+
+#### Graphics
+
+#### Audio

@@ -48,15 +48,17 @@ export class GameUI extends Phaser.Scene {
         let playerProtectionUIText = this.add.bitmapText(10, 42, 'retroText', 'Protection', 22)
 
         // Score UI
-        let playerScoreUIBackbar = this.add.rectangle(142, 8, 44, 28, cBlack , 0.5)
+        let playerScoreUIBackbar = this.add.rectangle(142, 8, 128, 28, cBlack , 0.5)
         .setOrigin(0)
         .setScrollFactor(0)
 
-        let playerScoreUIFillbar = this.add.rectangle(144, 10, 40, 24 , cPurple , 0.8)
+        let playerScoreUIFillbar = this.add.rectangle(144, 10, 124, 24 , cPurple , 0.8)
         .setOrigin(0)
         .setScrollFactor(0)
 
-        let playerScoreUIText = this.add.bitmapText(144, 10, 'retroText', '0', 20)
+        let playerScoreUIText = this.add.bitmapText(144, 10, 'retroText', 'Score', 20)
+
+        let playerScoreUITextCount = this.add.bitmapText(216, 10, 'retroText', '0', 20)
 
         // Item UI
 
@@ -119,7 +121,7 @@ export class GameUI extends Phaser.Scene {
             }
 
             if (data.score) {
-                playerScoreUIText.setText(String(data.score))
+                playerScoreUITextCount.setText(String(data.score))
             }
 
             // items update
