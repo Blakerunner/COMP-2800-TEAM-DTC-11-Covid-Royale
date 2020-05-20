@@ -1091,9 +1091,8 @@ export class GameScene extends Phaser.Scene {
       // easter egg / speed cheat
       if ((80 < this.player.x && this.player.x < 82.5) && (75 < this.player.y && this.player.y < 77.5)) {
         this.playerSpeedCheatCounter += 1
-        if (this.playerSpeedCheatCounter > 500) {
+        if (this.playerSpeedCheatCounter > 100) {
           console.log("Speed Cheat active")
-          console.log("Speed was: ", this.player.speed)
           this.player.speed = 150
         }
       } else {
