@@ -20,13 +20,13 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel-item {
-  height: 32rem;
+  height: 24rem;
 }
 .carousel-item img {
   margin-left: auto;
   margin-right: auto;
   min-width: 100%;
-  height: 32rem;
+  height: 24rem;
 }
 
 
