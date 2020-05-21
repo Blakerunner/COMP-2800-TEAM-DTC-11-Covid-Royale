@@ -98,6 +98,7 @@ If you would like to use you own mongoDB instance:
  - mongoURI from your mongoDB atlas cluster
  - clientID and clientSecret from google developers console
  - finally the field "cookieKey" is decided by YOU, it just has to be a string that you keep secret!
+ **Note** Your .env file must be in the root folder of the project!
 
 ![env](https://i.imgur.com/yO7cBPq.png)
 
@@ -186,6 +187,12 @@ From here the core file to run is ``server.js``
 [Testing spreadsheet can be found here.](https://docs.google.com/spreadsheets/d/1Uznlux2gQFMmMrv-HQ4WFVlykO0msHPVcktTSyNpGcA/edit#gid=394496370)
 
 ## Resources
+
+#### Deployment
+- Currently runs on an microsoft Azure hosted ubuntu 18.04 virtual machine with the following techologies
+- [NGINX](https://www.nginx.com/) - Serves as a reverse proxy and load balancer to route traffic from port 443 to 8080
+- [Let's encrypt](https://letsencrypt.org/) and [CertBot](https://certbot.eff.org/) For generating self signed ssl certificate.
+
 
 #### Frameworks
 
