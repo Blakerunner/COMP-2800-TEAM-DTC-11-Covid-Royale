@@ -10,7 +10,14 @@ export class PostRoundScene extends Phaser.Scene {
     init(data){
         this.player = data.player
         this.socket = data.socket
-        this.socket.emit("roundOutcomeRequest")
+
+        // update server with player final data
+        data.socket.emit("playerStatsUpdate", {
+            score: data.player.score,
+            covid: data.player.covid,
+        });
+        // as for leaderboard
+        data.socket.emit("roundOutcomeRequest")
     }
     
     preload(){
