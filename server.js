@@ -223,13 +223,6 @@ mongoose.connect(
         y: thisSocketSpawn[1],
       };
 
-      // update server with player final data
-      socket.on("playerStatsUpdate", function(player) {
-        console.log("Updating player End Game Scores | ", players[socket.id].playerName)
-        players[socket.id].playerScore = player.score
-        players[socket.id].playerCovidPos = player.covid
-      });
-
       // update final board
       socket.on("roundOutcomeRequest", function() {
         let numPlayersInfected = 0
@@ -271,11 +264,12 @@ mongoose.connect(
       socket.broadcast.emit("newPlayer", players[socket.id]);
 
       // update player movement
-      socket.on("playerMovement", function (movementData) {
-        players[socket.id].x = movementData.x;
-        players[socket.id].y = movementData.y;
-        players[socket.id].playerDir = movementData.playerDir;
-        players[socket.id].playerCovidPos = movementData.covid;
+      socket.on("playerMovement", function (data) {
+        players[socket.id].x = data.x;
+        players[socket.id].y = data.y;
+        players[socket.id].playerDir = data.playerDir;
+        players[socket.id].playerCovidPos = data.covid;
+        players[socket.id].playerScore = data.score;
         // emit a message to all players about the player that moved
         socket.broadcast.emit("playerMoved", players[socket.id]);
       });
