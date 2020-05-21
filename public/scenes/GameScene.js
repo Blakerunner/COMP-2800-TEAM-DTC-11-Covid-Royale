@@ -937,12 +937,6 @@ export class GameScene extends Phaser.Scene {
      this.socket.on("serverGameEnd", () => {
       console.log("Server has instructed to end of round");
 
-      // update server with player final data
-      this.socket.emit("playerStatsUpdate", {
-        score: this.player.score,
-        covid: this.player.covid,
-      });
-
       // fade out for end of round
       this.scene.get('GameUI').cameras.main.fadeOut(2000, 0, 0, 0);;
       this.cameras.main.fadeOut(2000, 0, 0, 0);
@@ -950,7 +944,7 @@ export class GameScene extends Phaser.Scene {
 
       setTimeout( () => {
         this.scene.start('PostRoundScene', {player: this.player, socket: this.socket})
-      }, 3000);
+      }, 2000);
       });
 
     this.coughSound = this.sound.add("cough");
@@ -1137,7 +1131,7 @@ export class GameScene extends Phaser.Scene {
       let maxProtection = 100
 
       if (id === 1) {
-        let sanitizerRiskValue = 25
+        let sanitizerRiskValue = 20
         console.log("You picked up hand sanitizer");
         console.log(`Risk: ${player.risk} => ${player.risk - sanitizerRiskValue}`)
         // base score add
@@ -1156,8 +1150,8 @@ export class GameScene extends Phaser.Scene {
         }
          // emit for player UI update every second
       } else if (id === 2) {
-        let facemaskRiskValue = 10
-        let facemaskProtValue = 25
+        let facemaskRiskValue = 5
+        let facemaskProtValue = 20
         console.log("You picked up a face mask");
         console.log(`Risk: ${player.risk} => ${player.risk - facemaskRiskValue}`)
         console.log(`Prot: ${player.protection} => ${player.protection + facemaskProtValue}`)
@@ -1183,13 +1177,13 @@ export class GameScene extends Phaser.Scene {
         }
 
       } else if (id === 3) {
-        let hazsuitRiskValue = 15
-        let hazsuitProtValue = 40
+        let hazsuitRiskValue = 10
+        let hazsuitProtValue = 30
         console.log("You picked up a hazmat suit");
         console.log(`Risk: ${player.risk} => ${player.risk - 12}`)
         console.log(`Prot: ${player.protection} => ${player.protection + 16}`)
         // base score add
-        player.score += 15
+        player.score += 20
         // add item count
         console.log("hazmat count pre: ", player.items.haz)
         player.items.haz += 1

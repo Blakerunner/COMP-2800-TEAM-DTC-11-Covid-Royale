@@ -214,7 +214,7 @@ This game uses sprites from https://opengameart.org/
 
 **BitmapFont**
 
-- [Retro-Font](https://www.dafont.com/bitmap.php) - Used for player Nameplate text, UI text and Post-Round text. BitmapFonts are needed specifically for pixel games as smoothing looks poor on low pixel numbers.
+- [Retro-Font](https://www.dafont.com/retro-gaming.font) - Used for player Nameplate text, UI text and Post-Round text. BitmapFonts are needed specifically for pixel games as smoothing looks poor on low pixel numbers.
 
 #### Audio
 
