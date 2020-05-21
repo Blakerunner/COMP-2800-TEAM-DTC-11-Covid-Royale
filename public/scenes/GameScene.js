@@ -938,13 +938,13 @@ export class GameScene extends Phaser.Scene {
       console.log("Server has instructed to end of round");
 
       // fade out for end of round
-      this.scene.get('GameUI').cameras.main.fadeOut(2000, 0, 0, 0);;
-      this.cameras.main.fadeOut(2000, 0, 0, 0);
+      this.scene.get('GameUI').cameras.main.fadeOut(1000, 0, 0, 0);;
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
       // move to post game
 
       setTimeout( () => {
         this.scene.start('PostRoundScene', {player: this.player, socket: this.socket})
-      }, 2000);
+      }, 1000);
       });
 
     this.coughSound = this.sound.add("cough");
@@ -1070,7 +1070,8 @@ export class GameScene extends Phaser.Scene {
           x: this.player.x,
           y: this.player.y,
           playerDir: this.player.playerDir,
-          covid: this.player.covid
+          covid: this.player.covid,
+          score: this.player.score
         });
       }
 

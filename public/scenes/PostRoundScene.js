@@ -10,14 +10,7 @@ export class PostRoundScene extends Phaser.Scene {
     init(data){
         this.player = data.player
         this.socket = data.socket
-
-        // update server with player final data
-        data.socket.emit("playerStatsUpdate", {
-            score: data.player.score,
-            covid: data.player.covid,
-        });
-        // as for leaderboard
-        data.socket.emit("roundOutcomeRequest")
+        data.socket.emit("roundOutcomeRequest");
     }
     
     preload(){
@@ -28,7 +21,7 @@ export class PostRoundScene extends Phaser.Scene {
         let endRoundData = {}
 
         // UI SETUP
-        this.cameras.main.fadeIn(1000, 0, 0, 0);
+        this.cameras.main.fadeIn(2000, 0, 0, 0);
         
         // Round End Title
         let roundEndText = this.add.bitmapText(272, 16, 'retroText', 'ROUND END', 22)
