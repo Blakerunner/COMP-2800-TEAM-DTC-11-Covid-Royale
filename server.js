@@ -26,6 +26,7 @@ const expressSession = session({
     maxAge: 1000 * 60 * 60,
   },
   saveUninitialized: false,
+	unset: 'destroy'
 });
 app.use(cors());
 app.use(passport.initialize());
@@ -109,15 +110,21 @@ mongoose.connect(
 
     app.get("/whoami", cors(), function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
-      res.json(req.session);
+	    if(! req.session.user){
+		    res.json({user:null})
+		    return
+	    }
+      User.findById(req.session.user._id)
+      .then(user => {
+        res.json(user)
     });
-
-    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 10 USER OBJECTS
+ });
+    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 5 USER OBJECTS
     //SORTED BY HIghSCORE 
     app.get('/highscore', function (req, res){
       User.find({highScore: {$exists: true}})
       .sort('-highScore')
-      .limit(5)
+      .limit(10)
       .exec(function(err, userArray) {
         res.json(userArray);
       });
@@ -144,7 +151,7 @@ mongoose.connect(
         return;
       }
       let mongoID = req.session.passport.user;
-      User.findOneAndDelete(req.session.user.id)
+      User.findOneAndDelete(req.session.user._id)
         .then(result => {
           res.redirect('login/logout')
           // res.send(`Sucesfully deleted user ${req.session.user.username}`);
@@ -155,7 +162,27 @@ mongoose.connect(
 
     // array of players
     let players = {};
-    let playersSpawnLocations = [[400, 400]];
+    let playersSpawnLocations = [];
+    let spawnLocationCounter = 0
+
+    // generate spawn locations
+    let numOfChunksSpawnOn = 9
+    let openLocations = [[56, 152], [408, 376], [472, 152]]
+    let tileOffset = [[80, 80], [560, 80], [1040, 80], [80, 560], [560, 560], [1040, 560], [80, 1040], [560, 1040], [1040, 1040]]
+    for (let i = 0; i < openLocations.length; i++) {
+      for (let j = 0; j < numOfChunksSpawnOn; j++) {
+        playersSpawnLocations.push([tileOffset[j][0] + openLocations[i][0], tileOffset[j][1] + openLocations[i][1]])
+      }
+    }
+
+    // grab a spawn location from the list of potential locations, increment spawn counter
+    function getPlayerSpawnLocation() {
+      if (spawnLocationCounter >= playersSpawnLocations.length) {
+        spawnLocationCounter = 0
+      }
+      spawnLocationCounter++
+      return playersSpawnLocations[spawnLocationCounter]
+    }
 
     // number of server restarts
     let serverRestartNumber = 0;
@@ -178,6 +205,9 @@ mongoose.connect(
       //IS ACCESIBLE UNDER SOCKET.REQUEST.USER
       console.log("MARKER EASILY SEARCHABLE STRING", socket.request.user);
 
+      // get player spawn location
+      let thisSocketSpawn = getPlayerSpawnLocation()
+
       players[socket.id] = {
         playerMongoID: socket.request.user.id,
         playerId: socket.id,
@@ -189,17 +219,49 @@ mongoose.connect(
         mapBlueprint: mapData,
         // playerName: COOKIE ? username : "Homonucleus",
         // currently spawn in middle of map TODO: afte map complete add an array of viable spawn locations in playersSpawnLocations
-        x: playersSpawnLocations[0][0],
-        y: playersSpawnLocations[0][1],
+        x: thisSocketSpawn[0],
+        y: thisSocketSpawn[1],
       };
-
-      // console.log(players, "PLAYER VARIABLE");
 
       // update server with player final data
       socket.on("playerStatsUpdate", function(player) {
         console.log("Updating player End Game Scores | ", players[socket.id].playerName)
         players[socket.id].playerScore = player.score
         players[socket.id].playerCovidPos = player.covid
+      });
+
+      // update final board
+      socket.on("roundOutcomeRequest", function() {
+        let numPlayersInfected = 0
+        let numPlayers = 0
+        let playersScoreAverage = 0
+        let bestPlayer = {name: "", score: 0}
+        Object.keys(players).forEach(function (player) {
+          numPlayers++
+          if (players[player].playerCovidPos) {
+            numPlayersInfected++
+          }
+          if (players[player].playerScore) {
+            playersScoreAverage += players[player].playerScore
+            if (players[player].playerScore > bestPlayer.score) {
+              bestPlayer.score = players[player].playerScore
+              bestPlayer.name = players[player].playerName
+            }
+          }
+        });
+        // calculate average
+        playersScoreAverage = Math.floor(playersScoreAverage / numPlayers)
+        // calculate victory
+        let failRatio = 0.20
+        let victory = ((numPlayersInfected / numPlayers) <= failRatio) ? true : false
+        let data = {
+          infected: numPlayersInfected, 
+          playerCount: numPlayers, 
+          scoreAvg: playersScoreAverage,
+          victorious: victory,
+          bestPlayer: bestPlayer
+        }
+        socket.emit("roundOutcomeReply", data)
       });
 
       // send the players object to the new player
@@ -213,15 +275,10 @@ mongoose.connect(
         players[socket.id].x = movementData.x;
         players[socket.id].y = movementData.y;
         players[socket.id].playerDir = movementData.playerDir;
+        players[socket.id].playerCovidPos = movementData.covid;
         // emit a message to all players about the player that moved
         socket.broadcast.emit("playerMoved", players[socket.id]);
       });
-
-      // // remove player on end of round
-      // socket.on("endRoundRemoveMe", function(players) {
-      //   console.log("End Round removing | ", socket.id, players[socket.id].username)
-      //   delete players[socket.id]
-      // })
 
       // socket event on disconnect
       socket.on("disconnect", function () {
@@ -253,9 +310,6 @@ mongoose.connect(
       // generate new map seed
       mapData = generateMapBluprint();
 
-     //Before we reset player data, update anything in the db that needs to be updated
-      console.log("pre-player-reset:", players);
-
       // Wait time buffer for all browsers to update player info
       setTimeout( () => {
 
@@ -280,18 +334,13 @@ mongoose.connect(
           })
         // console.log(players[player], "GOBBLED");
       })
-
-      // reset server player list
-      console.log("Server | players pre reset", players)
-      console.log("===============================================================================")
-      console.log("Server | players post reset", players)
         
-      }, 2000);
-      
+      }, 1000);
+
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 60000
+    let gameRoundInterval = 130000
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);

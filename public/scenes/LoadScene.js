@@ -14,7 +14,8 @@ export class LoadScene extends Phaser.Scene {
     preload(){
         this.load.bitmapFont('retroText', './assets/bitmapFont/retroText.png', './assets/bitmapFont/retroText.xml');
         this.load.image("game_instruct_bg", "./assets/img/game_instruct_scene_bg.png")
-        this.load.image("overworld", "./assets/img/overworld.png");
+        // this.load.image("overworld", "./assets/img/overworld.png");
+        this.load.image("overworld", "./assets/img/overworld_extruded.png");
         this.load.image("objects", "./assets/img/objects.png");
         this.load.image("handSan", "./assets/img/handsanitizer.png");
         this.load.image("faceMask", "./assets/img/facemasks.png");
@@ -37,6 +38,11 @@ export class LoadScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("chunk8", "./assets/maps/map_chunks/chunk8.json");
         this.load.tilemapTiledJSON("chunk9", "./assets/maps/map_chunks/chunk9.json");
         this.load.atlas("character", "./assets/img/characterSprites.png", "./assets/img/characterSprites.json");
+        this.load.audio("pickUp1", ["./assets/audio/pickup1.ogg", "./assets/audio/pickup1.mp3"]);
+        this.load.audio("pickUp2", ["./assets/audio/pickup2.ogg", "./assets/audio/pickup2.mp3"]);
+        this.load.audio("cough", ["./assets/audio/cough.ogg", "./assets/audio/cough.mp3"]);
+        this.load.audio("sneeze", ["./assets/audio/sneeze.ogg", "./assets/audio/sneeze.mp3"]);
+        this.load.audio("backgroundMusic", ["./assets/audio/backgroundMusic.ogg", "./assets/audio/backgroundMusic.mp3"])
     }
     
     create(){

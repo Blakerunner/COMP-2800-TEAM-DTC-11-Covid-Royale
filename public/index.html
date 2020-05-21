@@ -27,7 +27,11 @@
   <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- SOME JQUERY FOR ALERTS -->
+  <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5ec59a998afab1001288f732&product=inline-share-buttons" async="async"></script>
+
+             
 </head>
 
 
@@ -54,16 +58,15 @@
             <a class="nav-link" href="./login/logout">Logout</a>
           </li>
           <li class="nav-item active px-3 mx-3 rounded">
-            <a class="nav-link" href="./covid_royal">Play Covid-Royale</a>
+            <a class="nav-link" href="" data-toggle="modal" data-target="#deleteModalLong">Account Details</a>
           </li>
           <li class="nav-item active px-3 mx-3 rounded">
-            <a class="nav-link" href="" data-toggle="modal" data-target="#deleteModalLong">Account Details</a>
+            <a id='playCovid' class="nav-link" href="./covid_royal">Play Covid-Royale!</a>
           </li>
         </ul>
       </div>
     </nav>
   </header>
-  <div>
 
 
     <!-- Modal -->
@@ -88,14 +91,15 @@
     </div>
 
     <main role="main">
-      <div id="loginSuccess" style="display:none;" class="alert alert-success mt-3" role="alert">
+      <div class="sharethis-inline-share-buttons mt-4 mb-3"></div>
+      <div id="loginSuccess" style="display:none;" class="alert alert-success mb-3" role="alert">
         <p id='loggedInText' class=""> You have been logged in!</p>
         <button type="button" class="close" data-dismiss='alert'><span aria-hidden='true'>&times;</span></button>
       </div>
-      <div id="logoutAlert" style="display:none;" class="alert alert-primary mt-3" role="alert">
+      <div id="logoutAlert" style="display:none;" class="alert alert-primary mb-3" role="alert">
         You havent logged in yet! Please click login.
       </div>
-      <div id="orientationAlert" style="display:none;" class="alert alert-danger mt-3" role="alert">
+      <div id="orientationAlert" style="display:none;" class="alert alert-danger mb-3" role="alert">
         Game is best played in landscape mode.
       </div>
 
@@ -113,9 +117,6 @@
             </picture>
             <div class="container">
               <div class="carousel-caption">
-                <!-- <h1>Another example headline.</h1>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p> -->
               </div>
             </div>
           </div>
@@ -267,24 +268,6 @@
           </div>
         </div>
 
-
-        <!-- START THE FEATURETTES -->
-
-        <!-- <hr class="featurette-divider">
-    
-        <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          </div>
-          <div class="col-md-5">
-            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-          </div>
-        </div>
-    
-        <hr class="featurette-divider"> -->
-
-        <!-- /END THE FEATURETTES -->
         <hr class="featurette-divider">
       </div>
 
@@ -292,16 +275,6 @@
         <source src="./assets/audio/honk-sound.mp3">
         <source src="./assets/audio/honk-sound.ogg">
       </audio>
-
-      <!-- FOOTER -->
-      <!--ALERTS-->
-
-
-
-
-
-
-
 
       <footer class="container text-center">
         <p>2020 Goose Logic, Inc.</p>
@@ -320,18 +293,22 @@
       }
 
       $(document).ready(function () {
+        let myHighScore;
 
         getUserAsync()
           .then(response => {
 
-            if (!response.user) {
+            if (!response.username) {
               $("#deleteModalAccountTerms").append(`<p>I am sorry, You must be logged in to delete an account!</p>`);
               $("#delBtn").hide();
+              $('#playCovid').hide();
             }
             else {
 
               // delete account modal text fill - ZENEN
-              $("#deleteModalAccountTerms").append(`<p>Are you sure you want to delete your account ${response.user.username}?!</p>` + `<p>You have a great highscore of ${response.user.highScore}. <br>These stats will be deleted with your account.</p>`)
+
+              $("#deleteModalAccountTerms").append(`<p>Are you sure you want to delete your account ${response.username}?!</p>` + `<p>You have a great highscore of ${response.highScore}. <br>These stats will be deleted with your account.</p>`)
+
             }});
 
             // orientaion checker #1
@@ -363,12 +340,12 @@
             // login checker
             getUserAsync()
               .then(response => {
-                if (!response.user) {
+                if (!response.username) {
                   $('#loggedOut').text(`You havent logged in yet! Please click login`)
                   $('#logoutAlert').show()
                 } else {
                   console.log('You are logged in, display popup here', response);
-                  $('#loginSuccess').text(`You are currently logged in as ${response.user.username}`)
+                  $('#loginSuccess').text(`You are currently logged in as ${response.username}`)
                   $('#loginSuccess').show()
                 }
               })
@@ -400,7 +377,7 @@
     window.onscroll = function () { scrollFunction() };
 
     function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
         mybutton.style.display = "block";
       } else {
         mybutton.style.display = "none";
