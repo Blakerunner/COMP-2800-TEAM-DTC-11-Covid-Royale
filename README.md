@@ -237,6 +237,3 @@ This game uses these sounds from [Freesound](https://freesound.org/):
 Royalty free music from https://www.fesliyanstudios.com
 
 - ["A Bit Of Hope" by David Fesliyan](https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565)
-
-
-
