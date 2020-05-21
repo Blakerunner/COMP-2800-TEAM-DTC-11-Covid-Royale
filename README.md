@@ -177,6 +177,10 @@ From here the core file to run is ``server.js``
 
 - *auth-routes.js* contains the logic needed for passport authentication via Google OAuth.
 
+## Testing
+
+[Testing spreadsheet can be found here.](https://docs.google.com/spreadsheets/d/1Uznlux2gQFMmMrv-HQ4WFVlykO0msHPVcktTSyNpGcA/edit#gid=394496370)
+
 ## Resources
 
 #### Frameworks
@@ -198,7 +202,7 @@ From here the core file to run is ``server.js``
 
 - [Shoebox](https://renderhjs.net/shoebox/) - Used for sprite packing and sprite animation stripping.
 - [Tiled](https://www.mapeditor.org/) - Used for Tile mapping and generating our map layouts.
-- [tile-extruder](https://github.com/sporadic-labs/tile-extruder) - To extrude tile maps to remove the dreaded "Tile-bleed"
+- [tile-extruder](https://github.com/sporadic-labs/tile-extruder) - To extrude tile maps to remove the dreaded "Tile-bleed" effect
 
 #### Graphics
 
@@ -210,7 +214,7 @@ This game uses sprites from https://opengameart.org/
 
 **BitmapFont**
 
-- - Used for player Nameplate text, UI text and Post-Round text.
+- [Retro-Font](https://www.dafont.com/bitmap.php) - Used for player Nameplate text, UI text and Post-Round text. BitmapFonts are needed specifically for pixel games as smoothing looks poor on low pixel numbers.
 
 #### Audio
 
