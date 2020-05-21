@@ -87,15 +87,19 @@ Once you have cloned our repo, the first step to set up a development environmen
 
  ![npm results](https://i.imgur.com/OueQM4T.png)
 
-#### API Setup
+#### Environment Variable Setup
 
-##### MongoDB Atlas Setup
+For simplicity sake, we have included our .env file as an example, and you may connect to our backend.
 
-instructions
+If you would like to use you own mongoDB instance:
 
-##### OAuth Setup
+- Rename the file called SAMPLE_env to ".env", and populate it with your own values.
 
-instructions
+ - mongoURI from your mongoDB atlas cluster
+ - clientID and clientSecret from google developers console
+ - finally the field "cookieKey" is decided by YOU, it just has to be a string that you keep secret!
+
+![env](https://i.imgur.com/yO7cBPq.png)
 
 #### Running the Server
 
