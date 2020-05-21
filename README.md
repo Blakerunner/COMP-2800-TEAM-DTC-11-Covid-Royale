@@ -187,6 +187,12 @@ From here the core file to run is ``server.js``
 
 ## Resources
 
+#### Deployment
+- Currently runs on an microsoft Azure hosted ubuntu 18.04 virtual machine with the following techologies
+- [NGINX](https://www.nginx.com/) - Serves as a reverse proxy and load balancer to route traffic from port 443 to 8080
+- [Let's encrypt](https://letsencrypt.org/) and [CertBot](https://certbot.eff.org/) For generating self signed ssl certificate.
+
+
 #### Frameworks
 
 - [Node.js](https://nodejs.org/en/) - Core framework, application is written in Node.js
