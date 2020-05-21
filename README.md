@@ -98,6 +98,7 @@ If you would like to use you own mongoDB instance:
  - mongoURI from your mongoDB atlas cluster
  - clientID and clientSecret from google developers console
  - finally the field "cookieKey" is decided by YOU, it just has to be a string that you keep secret!
+ **Note** Your .env file must be in the root folder of the project!
 
 ![env](https://i.imgur.com/yO7cBPq.png)
 
