@@ -9,9 +9,10 @@ const mongoose = require("mongoose");
 const User = require("./models/user-model.js");
 const MongoStore = require("connect-mongo")(session);
 const io = require("socket.io")(server);
+require("./config/passport-setup");
 
 require("dotenv").config();
-const PORT = proccess.env.PORT | 8080;
+const PORT = process.env.PORT | 8080;
 
 const sessionStore = new MongoStore({
   url: process.env.mongoURI,
@@ -28,13 +29,13 @@ const expressSession = session({
   unset: "destroy",
 });
 
-app.use(cors());
-app.use(passport.initialize());
-
 app.use(expressSession);
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(passport.initialize());
+app.use(cors());
 
 const wrap = (middleware) => (socket, next) =>
   middleware(socket.request, {}, next);

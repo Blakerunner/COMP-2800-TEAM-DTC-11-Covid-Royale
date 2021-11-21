@@ -1,28 +1,28 @@
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const User = require("../models/user-model");
 require("dotenv").config();
 
 passport.serializeUser((user, done) => {
-  done(null, user.id); //we grab the mongoDB ID assigned/created by mongo and shove it into a cookie to be sent to client
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  //Decode client side cookie and find associated user
-  console.log("(FROM PASSPORT-SETUP Deserialize user) mongodb userid:" + id);
   User.findById(id).then((user) => {
     done(null, user);
   });
 });
 
-//Tell passport to use google, with the following configuration options
+const GOOGLE_CLIENT_ID = process.env.clientID;
+const GOOGLE_CLIENT_SECRET = process.env.clientSecret;
+const GOOGLE_CALLBACK_URL = process.env.callbackUrl;
+
 passport.use(
   new GoogleStrategy(
     {
-      //options for the google strat
-      callbackURL: "/login/google/redirected",
-      clientID: process.env.clientID,
-      clientSecret: process.env.clientSecret,
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: GOOGLE_CALLBACK_URL,
     },
     (accessToken, refreshToken, profile, done) => {
       console.log("callback executed");
