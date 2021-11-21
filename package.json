@@ -1,6 +1,6 @@
 {
-  "name": "comp-2800-team-dtc-11-covid-royale",
-  "version": "1.0.0",
+  "name": "covid-royal",
+  "version": "1.1.0",
   "description": "Online Multiplayer Game to spread awareness about COVID-19",
   "main": "server.js",
   "dependencies": {
@@ -20,7 +20,9 @@
     "redis": "^3.0.2",
     "socket.io": "^2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",

@@ -28,7 +28,7 @@ passport.use(
       console.log("callback executed");
       User.findOne({ googleId: profile.id }).then((currentUser) => {
         if (currentUser) {
-         // console.log(`The user ${currentUser} is already in our DB`);
+          // console.log(`The user ${currentUser} is already in our DB`);
           done(null, currentUser);
           //This user is in our db
         } else {
@@ -41,7 +41,9 @@ passport.use(
             //Then add it to our mongoDB
             .save()
             .then((newUser) => {
-              console.log("(FROM PASSPORT-SETUP google stragey user)" + newUser);
+              console.log(
+                "(FROM PASSPORT-SETUP google stragey user)" + newUser
+              );
               done(null, newUser);
             });
         }

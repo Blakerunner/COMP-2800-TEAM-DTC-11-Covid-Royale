@@ -1,85 +1,55 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-// const io = require("socket.io").listen(server);
 const authroutes = require("./routes/auth-routes");
-const passportSetup = require("./config/passport-setup");
 const passport = require("passport");
+const passportSetup = require("./config/passport-setup");
 const session = require("express-session");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-require("dotenv").config();
 const User = require("./models/user-model.js");
 const MongoStore = require("connect-mongo")(session);
+const io = require("socket.io")(server);
+
+require("dotenv").config();
+
 const sessionStore = new MongoStore({
-  url:
-    "mongodb+srv://root:covid_royale69@covidroyale-jk2bl.mongodb.net/test?retryWrites=true&w=majority",
+  url: process.env.mongoURI,
 });
-const cookieParser = require("cookie-parser");
 
 const expressSession = session({
+  resave: true,
+  saveUninitialized: true,
   store: sessionStore,
-  key: "GOBBLE",
   secret: process.env.cookieKey,
   cookie: {
     maxAge: 1000 * 60 * 60,
   },
-  saveUninitialized: false,
-	unset: 'destroy'
+  unset: "destroy",
 });
+
 app.use(cors());
 app.use(passport.initialize());
 
-
-
-app.use(expressSession)
+app.use(expressSession);
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next);
 
-var io               = require("socket.io")(server),
-    passportSocketIo = require("passport.socketio");
+io.use(wrap(expressSession));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
 
-io.use(passportSocketIo.authorize({
-  cookieParser: cookieParser,       // the same middleware you registrer in express
-  key:          'GOBBLE',       // the name of the cookie where express/connect stores its session_id
-  secret:       process.env.cookieKey,    // the session_secret to parse the cookie
-  store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
-  success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
-  fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
-}));
- 
-function onAuthorizeSuccess(data, accept){
-  console.log(' (FROM onAuthorizeSucess of server.js) successful connection to socket.io');
-
-  // The accept-callback still allows us to decide whether to
-  // accept the connection or not.
-  accept(null, true);
-}
-
-function onAuthorizeFail(data, message, error, accept) {
-  if (error) throw new Error(message);
-  console.log(
-    "(FROM onAuthorizeFail of server.js failed connection to socket.io:",
-    message
-  );
-
-  // We use this callback to log all of our failed connections.
-  accept(null, false);
-
-  // OR
-
-  // If you use socket.io@1.X the callback looks different
-  // If you don't want to accept the connection
-  if (error) accept(new Error(message));
-  // this error will be sent to the user as a special error-package
-  // see: http://socket.io/docs/client-api/#socket > error-object
-}
-
-
-//initialize passport
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error("unauthorized"));
+  }
+});
 
 //Connect to mognodb
 mongoose.connect(
@@ -110,24 +80,23 @@ mongoose.connect(
 
     app.get("/whoami", cors(), function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
-	    if(! req.session.user){
-		    res.json({user:null})
-		    return
-	    }
-      User.findById(req.session.user._id)
-      .then(user => {
-        res.json(user)
-    });
- });
-    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 5 USER OBJECTS
-    //SORTED BY HIghSCORE 
-    app.get('/highscore', function (req, res){
-      User.find({highScore: {$exists: true}})
-      .sort('-highScore')
-      .limit(10)
-      .exec(function(err, userArray) {
-        res.json(userArray);
+      if (!req.session.user) {
+        res.json({ user: null });
+        return;
+      }
+      User.findById(req.session.user._id).then((user) => {
+        res.json(user);
       });
+    });
+    //BLAKE THIS ENDPOINT RESPONDS WITH AN ARRAY OF 5 USER OBJECTS
+    //SORTED BY HIghSCORE
+    app.get("/highscore", function (req, res) {
+      User.find({ highScore: { $exists: true } })
+        .sort("-highScore")
+        .limit(10)
+        .exec(function (err, userArray) {
+          res.json(userArray);
+        });
     });
 
     // url to get to game.html for game start
@@ -145,43 +114,61 @@ mongoose.connect(
     });
 
     //Endpoint To delete My account
-    app.get('/deleteAccount', (req, res) => {
-      if(!req.session.passport){
-        res.send("Cannot delete account because you are not logged in")
+    app.get("/deleteAccount", (req, res) => {
+      if (!req.session.passport) {
+        res.send("Cannot delete account because you are not logged in");
         return;
       }
       let mongoID = req.session.passport.user;
       User.findOneAndDelete(req.session.user._id)
-        .then(result => {
-          res.redirect('login/logout')
+        .then((result) => {
+          res.redirect("login/logout");
           // res.send(`Sucesfully deleted user ${req.session.user.username}`);
         })
-        .catch(err => res.send('An error occured deleting your account: ', err))
-      
-    })
+        .catch((err) =>
+          res.send("An error occured deleting your account: ", err)
+        );
+    });
 
     // array of players
     let players = {};
     let playersSpawnLocations = [];
-    let spawnLocationCounter = 0
+    let spawnLocationCounter = 0;
 
     // generate spawn locations
-    let numOfChunksSpawnOn = 9
-    let openLocations = [[56, 152], [408, 376], [472, 152]]
-    let tileOffset = [[80, 80], [560, 80], [1040, 80], [80, 560], [560, 560], [1040, 560], [80, 1040], [560, 1040], [1040, 1040]]
+    let numOfChunksSpawnOn = 9;
+    let openLocations = [
+      [56, 152],
+      [408, 376],
+      [472, 152],
+    ];
+    let tileOffset = [
+      [80, 80],
+      [560, 80],
+      [1040, 80],
+      [80, 560],
+      [560, 560],
+      [1040, 560],
+      [80, 1040],
+      [560, 1040],
+      [1040, 1040],
+    ];
     for (let i = 0; i < openLocations.length; i++) {
       for (let j = 0; j < numOfChunksSpawnOn; j++) {
-        playersSpawnLocations.push([tileOffset[j][0] + openLocations[i][0], tileOffset[j][1] + openLocations[i][1]])
+        playersSpawnLocations.push([
+          tileOffset[j][0] + openLocations[i][0],
+          tileOffset[j][1] + openLocations[i][1],
+        ]);
       }
     }
 
     // grab a spawn location from the list of potential locations, increment spawn counter
     function getPlayerSpawnLocation() {
       if (spawnLocationCounter >= playersSpawnLocations.length) {
-        spawnLocationCounter = 0
+        spawnLocationCounter = 0;
       }
-      spawnLocationCounter++
-      return playersSpawnLocations[spawnLocationCounter]
+      spawnLocationCounter++;
+      return playersSpawnLocations[spawnLocationCounter];
     }
 
     // number of server restarts
@@ -206,7 +193,7 @@ mongoose.connect(
       console.log("MARKER EASILY SEARCHABLE STRING", socket.request.user);
 
       // get player spawn location
-      let thisSocketSpawn = getPlayerSpawnLocation()
+      let thisSocketSpawn = getPlayerSpawnLocation();
 
       players[socket.id] = {
         playerMongoID: socket.request.user.id,
@@ -224,37 +211,38 @@ mongoose.connect(
       };
 
       // update final board
-      socket.on("roundOutcomeRequest", function() {
-        let numPlayersInfected = 0
-        let numPlayers = 0
-        let playersScoreAverage = 0
-        let bestPlayer = {name: "", score: 0}
+      socket.on("roundOutcomeRequest", function () {
+        let numPlayersInfected = 0;
+        let numPlayers = 0;
+        let playersScoreAverage = 0;
+        let bestPlayer = { name: "", score: 0 };
         Object.keys(players).forEach(function (player) {
-          numPlayers++
+          numPlayers++;
           if (players[player].playerCovidPos) {
-            numPlayersInfected++
+            numPlayersInfected++;
           }
           if (players[player].playerScore) {
-            playersScoreAverage += players[player].playerScore
+            playersScoreAverage += players[player].playerScore;
             if (players[player].playerScore > bestPlayer.score) {
-              bestPlayer.score = players[player].playerScore
-              bestPlayer.name = players[player].playerName
+              bestPlayer.score = players[player].playerScore;
+              bestPlayer.name = players[player].playerName;
             }
           }
         });
         // calculate average
-        playersScoreAverage = Math.floor(playersScoreAverage / numPlayers)
+        playersScoreAverage = Math.floor(playersScoreAverage / numPlayers);
         // calculate victory
-        let failRatio = 0.20
-        let victory = ((numPlayersInfected / numPlayers) <= failRatio) ? true : false
+        let failRatio = 0.2;
+        let victory =
+          numPlayersInfected / numPlayers <= failRatio ? true : false;
         let data = {
-          infected: numPlayersInfected, 
-          playerCount: numPlayers, 
+          infected: numPlayersInfected,
+          playerCount: numPlayers,
           scoreAvg: playersScoreAverage,
           victorious: victory,
-          bestPlayer: bestPlayer
-        }
-        socket.emit("roundOutcomeReply", data)
+          bestPlayer: bestPlayer,
+        };
+        socket.emit("roundOutcomeReply", data);
       });
 
       // send the players object to the new player
@@ -277,14 +265,17 @@ mongoose.connect(
       // socket event on disconnect
       socket.on("disconnect", function () {
         let mongoID = socket.request.user.id;
-        
+
         // User.findByIdAndUpdate(mongoID, {username: "gobble"})
         //   .then(user => console.log)
 
         console.log("user disconnected | delete", players[socket.id]);
         // remove this player from our players object
         delete players[socket.id];
-        console.log("user disconnected | delete | should be null", players[socket.id])
+        console.log(
+          "user disconnected | delete | should be null",
+          players[socket.id]
+        );
         // emit a message to all players to remove this player
         io.emit("disconnect", socket.id);
       });
@@ -305,44 +296,43 @@ mongoose.connect(
       mapData = generateMapBluprint();
 
       // Wait time buffer for all browsers to update player info
-      setTimeout( () => {
-
+      setTimeout(() => {
         //Loop through current players
-      Object.keys(players).forEach(function (player) {
-        
-        //Get the users current highscore
-        //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
-        
-        User.findById(players[player].playerMongoID)
-          .then(user => {
-            console.log("Player DB highScore is: ", user.highScore)
-            console.log("Player Round playerScore is: ", players[player].playerScore)
-            if(players[player].playerScore > user.highScore){
-              //Change HighScore here if its greater than database highscore
-              console.log("USER LOG ---------------------- ", user.id)
-               User.findByIdAndUpdate(user.id, {highScore: players[player].playerScore})
-                  .then(user => {
-                      console.log(`Updated highscore of user', ${user.username} from ${user.highScore} to ${players[player].playerScore}`)
-                  })
-            }
-          })
-        // console.log(players[player], "GOBBLED");
-      })
-        
-      }, 1000);
+        Object.keys(players).forEach(function (player) {
+          //Get the users current highscore
+          //MAKE SURE PLAYER VALS GET UPDATED BEFORE THIS
 
+          User.findById(players[player].playerMongoID).then((user) => {
+            console.log("Player DB highScore is: ", user.highScore);
+            console.log(
+              "Player Round playerScore is: ",
+              players[player].playerScore
+            );
+            if (players[player].playerScore > user.highScore) {
+              //Change HighScore here if its greater than database highscore
+              console.log("USER LOG ---------------------- ", user.id);
+              User.findByIdAndUpdate(user.id, {
+                highScore: players[player].playerScore,
+              }).then((user) => {
+                console.log(
+                  `Updated highscore of user', ${user.username} from ${user.highScore} to ${players[player].playerScore}`
+                );
+              });
+            }
+          });
+          // console.log(players[player], "GOBBLED");
+        });
+      }, 1000);
     }
 
     // Time for each game round in ms
-    let gameRoundInterval = 130000
+    let gameRoundInterval = 130000;
     // Interval for calling gameReset
     setInterval(() => {
       gameReset(io, players);
     }, gameRoundInterval);
 
-
     // socket garbage collection, kill socket on round reset
-
 
     // server to listen on port 8080
     server.listen(8080, function () {
