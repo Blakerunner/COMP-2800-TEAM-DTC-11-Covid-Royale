@@ -280,9 +280,11 @@
     </main>
 
     <script>
+      let whoamiUrl = "https://covid-royale.blakerunner.com/whoami"
+      // let whoamiUrl = "http://localhost:8080/whoami"
 
       async function getUserAsync() {
-        let response = await fetch(`https://covid-royale.blakerunner.com/whoami`, { mode: "no-cors" })
+        let response = await fetch(whoamiUrl, { mode: "no-cors" })
         let data = await response.json();
         return data;
 
