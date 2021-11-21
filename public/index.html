@@ -249,22 +249,18 @@
           <div class="col-lg-3 text-center">
             <img src="./assets/img/profile_pic_keegan.jpg" class="rounded-circle" alt="Profile picture">
             <h2>Keegan</h2>
-            <p>Nineteen</p>
           </div>
           <div class="col-lg-3 text-center">
             <img src="./assets/img/profile_pic_lawrance.jpg" class="rounded-circle" alt="Profile picture">
             <h2>Lawrance</h2>
-            <p>Lit</p>
           </div>
           <div class="col-lg-3 text-center">
             <img src="./assets/img/profile_pic_zenen.jpg" class="rounded-circle" alt="Profile picture">
             <h2>Zenen</h2>
-            <p>Very aware of time</p>
           </div>
           <div class="col-lg-3 text-center">
             <img src="./assets/img/profile_pic_blake.jpg" class="rounded-circle" alt="Profile picture">
             <h2>Blake</h2>
-            <p>Wholesome Dictator</p>
           </div>
         </div>
 
@@ -286,7 +282,7 @@
     <script>
 
       async function getUserAsync() {
-        let response = await fetch(`https://covid-royale.westus.cloudapp.azure.com/whoami`, { mode: "no-cors" })
+        let response = await fetch(`https://covid-royale.blakerunner.com/whoami`, { mode: "no-cors" })
         let data = await response.json();
         return data;
 
