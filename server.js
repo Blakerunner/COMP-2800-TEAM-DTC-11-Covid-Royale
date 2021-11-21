@@ -11,7 +11,7 @@ const MongoStore = require("connect-mongo")(session);
 const io = require("socket.io")(server);
 
 require("dotenv").config();
-const PORT = proccess.env.PORT | 8080;
+const PORT = process.env.PORT | 8080;
 
 const sessionStore = new MongoStore({
   url: process.env.mongoURI,
