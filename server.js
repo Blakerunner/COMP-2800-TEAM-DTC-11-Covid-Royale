@@ -3,7 +3,6 @@ const app = express();
 const server = require("http").Server(app);
 const authroutes = require("./routes/auth-routes");
 const passport = require("passport");
-const passportSetup = require("./config/passport-setup");
 const session = require("express-session");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -12,6 +11,7 @@ const MongoStore = require("connect-mongo")(session);
 const io = require("socket.io")(server);
 
 require("dotenv").config();
+const PORT = proccess.env.PORT | 8080;
 
 const sessionStore = new MongoStore({
   url: process.env.mongoURI,
@@ -334,9 +334,8 @@ mongoose.connect(
 
     // socket garbage collection, kill socket on round reset
 
-    // server to listen on port 8080
-    server.listen(8080, function () {
-      console.log("Server listening");
+    server.listen(PORT, function () {
+      console.log(`Server listening on ${PORT}`);
     });
   }
 );
